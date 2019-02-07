@@ -1,4 +1,4 @@
-﻿from tkinter import *
+from tkinter import *
 from PIL import Image, ImageTk,ImageGrab
 import tkinter.messagebox
 import tkinter.filedialog
@@ -22,6 +22,7 @@ def pasapas():
 Fenetre = Tk()
 Fenetre.title("Image")
 Fenetre.geometry('1280x720')
+canvas = Canvas(Fenetre, width=1280, height=700, background='yellow')
 
 menubar = Menu(Fenetre)
 
@@ -32,8 +33,8 @@ menubar.add_cascade(label="Feu", menu=menufichier)
 
 auto = Button(Fenetre, text = "Simulation Automatique", bg = "green", command = sim_auto)
 manuel = Button(Fenetre, text = "Simulation Pas à Pas", bg = "blue", command = pasapas)
-auto.grid(row = 0, column=0)
-manuel.grid(row = 1, column = 5)
+auto.grid(row = 0, column=0, sticky = "n")
+manuel.grid(row = 0, column = 1, sticky = "n")
 
 
 # Affichage du menu
@@ -41,5 +42,6 @@ Fenetre.config(menu=menubar)
 
 
 # Utilisation d'un dictionnaire pour conserver une référence
+canvas.grid(sticky = "s")
 gifdict={}
 Fenetre.mainloop()
