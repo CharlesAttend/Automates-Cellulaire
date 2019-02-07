@@ -14,11 +14,14 @@ def getNbCellulesLargeur():
 def getNbCellulesHauteur():
     return nbCellulesHauteur
 
+def getFileName():
+    return fname
+
 ###############################################################
 
 ####################### Variables ############################
 
 largeur, hauteur = 800, 800
 nbCellulesLargeur, nbCellulesHauteur = 20, 20
-
+fname = "csv.csv"
 ##############################################################

@@ -42,6 +42,6 @@ Fenetre.config(menu=menubar)
 
 
 # Utilisation d'un dictionnaire pour conserver une référence
-canvas.grid(sticky = "s")
+canvas.grid(row = 1, column=0, columnspan=2)
 gifdict={}
 Fenetre.mainloop()
