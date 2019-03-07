@@ -7,7 +7,11 @@ class varGlobales():  # Classe stockant quelques 'variables'/constantes pour evi
         self.largeurFenetre = largeur
         self.nbCellulesHauteur = nbCellHauteur  # Nombre de cellules en hauteur
         self.nbCellulesLargeur = nbCellLargeur  # Nombre de cellules en largeur
+
         self.nomCsv  = 'csv.csv'  # Nom du csv permettant la generation du csv
+
+        self.departFeu = [0, 0]  # Coordonnees de depart du feu [x, y]
+
         # Retourne les différents nom des textures
         self.textureArbre  = 'textures\arbre.png'
         self.textureSol = 'textures\sol.png'
@@ -29,3 +33,9 @@ class varGlobales():  # Classe stockant quelques 'variables'/constantes pour evi
         return self.nomCsv
     def getTexturesName(self):
         return(self.textureArbre, self.textureArbreBrule, self.textureArbreEnFeu, self.textureEau, self.textureSol)
+
+    # Fonctions dites "Mutateurs", elles permettent de modifier les valeurs des differents attributs de la classe
+
+    def setCoordDepartFeu(self, x, y):
+        self.departFeu[0] = x
+        self.departFeu[1] = y
