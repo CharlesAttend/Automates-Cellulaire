@@ -4,6 +4,11 @@ import tkinter.messagebox
 import tkinter.filedialog
 import varCommunes
 
+def Clic(event):
+    X = event.x
+    Y = event.y
+    X = int(X/100)*100
+    Y = int(Y/100)*100
 
 
 def enregistrer():
@@ -11,17 +16,17 @@ def enregistrer():
     y = canvas.winfo_rooty()
     w = canvas.winfo_width()
     h = canvas.winfo_height()
-    image=ImageGrab.grab((x+2, y+2, x+w-2, y+h-2))
+    image = ImageGrab.grab((x + 2, y + 2, x + w - 2, y + h - 2))
     image.save("Feu.png")
 
 def dix () :
-    a = varCommunes.varGlobales(900, 900, 10)
+    a = varCommunes.varGlobales(800, 800, 10)
 
 def cinquante () :
-    a = varCommunes.varGlobales(900, 900, 50)
+    a = varCommunes.varGlobales(900, 800, 50)
 
 def cent () :
-    a = varCommunes.varGlobales(900, 900, 100)
+    a = varCommunes.varGlobales(800, 800, 100)
 
 def sim_auto():
     pass
@@ -32,7 +37,7 @@ def pasapas():
 Fenetre = Tk()
 Fenetre.title("Image")
 Fenetre.geometry('1000x1000')
-canvas = Canvas(Fenetre, width=900, height=900, background='yellow')
+canvas = Canvas(Fenetre, width = 800, height = 800, background='yellow')
 menubar = Menu(Fenetre)
 
 menufichier = Menu(menubar, tearoff = 0)
@@ -47,14 +52,16 @@ menubar.add_cascade(label = "Dimensions", menu = dimensions)
 
 auto = Button(Fenetre, text = "Simulation Automatique", bg = "green", command = sim_auto)
 manuel = Button(Fenetre, text = "Simulation Pas à Pas", bg = "blue", command = pasapas)
-auto.grid(row = 0, column=0, sticky = "n")
+auto.grid(row = 0, column = 0, sticky = "n")
 manuel.grid(row = 1, column = 0, sticky = "n")
 
+canvas.bind("<Button-1>", Clic)
+
 # Affichage du menu
-Fenetre.config(menu=menubar)
+Fenetre.config(menu = menubar)
 
 
 # Utilisation d'un dictionnaire pour conserver une référence
-canvas.place(relx=0.5, rely=0.5, anchor=CENTER)
-gifdict={}
+canvas.place(relx = 0.5, rely = 0.5, anchor = CENTER)
+gifdict = {}
 Fenetre.mainloop()
