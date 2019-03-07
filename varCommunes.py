@@ -2,11 +2,10 @@
 
 class varGlobales():  # Classe stockant quelques 'variables'/constantes pour eviter les conflits de valeurs entre les fichiers
 
-    def __init__(self, hauteur, largeur, nbCellHauteur, nbCellLargeur):  # Constructeur permettant de definir les differents attributs de la classe
+    def __init__(self, hauteur, largeur, nbCell):  # Constructeur permettant de definir les differents attributs de la classe
         self.hauteurFenetre = hauteur
         self.largeurFenetre = largeur
-        self.nbCellulesHauteur = nbCellHauteur  # Nombre de cellules en hauteur
-        self.nbCellulesLargeur = nbCellLargeur  # Nombre de cellules en largeur
+        self.nbCellules = nbCell  # Nombre de cellules
 
         self.nomCsv  = 'csv.csv'  # Nom du csv permettant la generation du csv
 
@@ -25,14 +24,13 @@ class varGlobales():  # Classe stockant quelques 'variables'/constantes pour evi
         return self.hauteurFenetre
     def getLargeur(self):
         return self.largeurFenetre
-    def getNbCellulesHauteur(self):
-        return self.nbCellulesHauteur
-    def getNbCellulesLargeur(self):
-        return self.nbCellulesLargeur
+    def getNbCellules(self):
+        return self.nbCellules
     def getNomCsv(self):
         return self.nomCsv
     def getTexturesName(self):
         return (self.textureArbre, self.textureArbreBrule, self.textureArbreEnFeu, self.textureEau, self.textureSol)
+
 
     # Fonctions dites "Mutateurs", elles permettent de modifier les valeurs des differents attributs de la classe
 
