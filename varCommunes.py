@@ -32,7 +32,7 @@ class varGlobales():  # Classe stockant quelques 'variables'/constantes pour evi
     def getNomCsv(self):
         return self.nomCsv
     def getTexturesName(self):
-        return(self.textureArbre, self.textureArbreBrule, self.textureArbreEnFeu, self.textureEau, self.textureSol)
+        return (self.textureArbre, self.textureArbreBrule, self.textureArbreEnFeu, self.textureEau, self.textureSol)
 
     # Fonctions dites "Mutateurs", elles permettent de modifier les valeurs des differents attributs de la classe
 
