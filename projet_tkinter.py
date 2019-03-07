@@ -7,10 +7,10 @@ import varCommunes
 
 
 def enregistrer():
-    x = Canevas.winfo_rootx()
-    y = Canevas.winfo_rooty()
-    w = Canevas.winfo_width()
-    h = Canevas.winfo_height()
+    x = canvas.winfo_rootx()
+    y = canvas.winfo_rooty()
+    w = canvas.winfo_width()
+    h = canvas.winfo_height()
     image=ImageGrab.grab((x+2, y+2, x+w-2, y+h-2))
     image.save("Feu.png")
 
@@ -55,6 +55,6 @@ Fenetre.config(menu=menubar)
 
 
 # Utilisation d'un dictionnaire pour conserver une référence
-canvas.grid(sticky = "s")
+canvas.place(relx=0.5, rely=0.5, anchor=CENTER)
 gifdict={}
 Fenetre.mainloop()
