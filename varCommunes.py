@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+import csv, classDialectCsv
+
 class varGlobales():  # Classe stockant quelques 'variables'/constantes pour eviter les conflits de valeurs entre les fichiers
 
     def __init__(self):  # Constructeur permettant de definir les differents attributs de la classe
@@ -9,14 +11,18 @@ class varGlobales():  # Classe stockant quelques 'variables'/constantes pour evi
 
         self.nomCsv  = 'csv.csv'  # Nom du csv permettant la generation du csv
 
-        self.departFeu = [0, 0]  # Coordonnees de depart du feu [x, y]
-
         # Retourne les différents nom des textures
         self.textureArbre  = 'textures\arbre.png'
         self.textureSol = 'textures\sol.png'
         self.textureEau = 'textures\eau.png'
         self.textureArbreBrule = 'textures\arbreBrule.png'
         self.textureArbreEnFeu = 'textures\arbreEnFeu.png'
+
+        self.listeForet = []
+        self.listeCellulesEnFeu = []
+        self.cellUpdated = 0
+
+
 
     # Fonctions dites "Accesseurs", elles retournent les valeurs des differents attributs de la classe
 
@@ -32,14 +38,38 @@ class varGlobales():  # Classe stockant quelques 'variables'/constantes pour evi
         return (self.textureArbre, self.textureArbreBrule, self.textureArbreEnFeu, self.textureEau, self.textureSol)
 
 
+    def getListeForet(self):
+        return list(self.listeForet)
+    def getCellEnFeu(self):
+        return list(listeCellulesEnFeu)
+    def getCellUpdated(self):
+    	return self.cellUpdated
+
+
     # Fonctions dites "Mutateurs", elles permettent de modifier les valeurs des differents attributs de la classe
 
-    def setCoordDepartFeu(self, x, y):
-        self.departFeu[0] = x
-        self.departFeu[1] = y
     def setLargeur(self, largeur):
         self.largeurFenetre = largeur
     def setHauteur(self, hauteur):
         self.hauteurFenetre = hauteur 
     def setNbCell(self, nb):
         self.nbCellules = nb
+
+
+    def setArbreABruler(self):
+        with open("csv.csv", "r", newline='') as f:
+            reader = csv.reader(f, classDialectCsv.Dialect())
+            doubleList = []
+            for row in reader:
+                doubleList.append(row)
+            self.listeForet = list(doubleList)
+
+    def setNewListeForet(self, listeForet):
+    	self.listeForet = list(listeForet)
+
+    def augmentCellUpdated(self, val):
+        self.cellUpdated += val
+
+    def augmentCellEnFeu(self, x, y):
+        self.listeCellulesEnFeu.append(x)
+        self.listeCellulesEnFeu.append(y)
