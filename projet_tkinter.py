@@ -1,5 +1,9 @@
 ﻿# -*- coding: utf-8 -*-
 
+"""
+	Attention, si vous voulez interpréter ce code, mettez en commentaire de la ligne 44 à 72 et 78 à 95
+"""
+
 from tkinter import *
 from PIL import Image, ImageTk,ImageGrab
 import tkinter.messagebox
@@ -24,15 +28,13 @@ def enregistrer():
     image.save("resulat_simulation.png")
 
 def dix () :
-    vg.setLargeur(800)
-    vg.setHauteur(800)
     vg.setNbCell(10)
 
 def cinquante () :
-    a = varCommunes.varGlobales(900, 800, 50)
+	vg.setNbCell(50)
 
 def cent () :
-    a = varCommunes.varGlobales(800, 800, 100)
+	vg.setNbCell(100)
 
 
 # Déroulement de l'algorithme : 
@@ -44,7 +46,7 @@ def sim_auto():
 	for i in range(vg.getCellUpdated(),len(tmpCellEnFeu), 2):	#On créer une boucle permettant d'ajouter à la liste des cellules en feu les coordonnées des prochains arbre à brûler
 		vg.augmentCellEnFeu(tmpCellEnFeu[i], tmpCellEnFeu[i+1])
 
-	for i in range(vg.getCellUpdated(), len(tmpCellEnFeu), 2): #On affiche les nouveaux arbres à prendre feu...
+	for i in range(vg.getCellUpdated(), len(tmpCellEnFeu), 2):  #On affiche les nouveaux arbres à prendre feu...
 		pass 	#...
 
 	vg.augmentCellUpdated(2)
@@ -86,6 +88,8 @@ def createMap():
 
 
 vg = VC.varGlobales() #vg est une instance de varGlobales
+vg.setLargeur(1000)
+vg.setHauteur(1000)
 createmap() #On génère le csv
 vg.setListeForet() #On transforme le csv en une liste 2d utilisable pour l'algorithme
 
