@@ -3,13 +3,15 @@ from PIL import Image, ImageTk,ImageGrab
 import tkinter.messagebox
 import tkinter.filedialog
 import varCommunes
+import classDialectCsv, csv
+import loadAlgo, algorithmeForet
 
 def Clic(event):
     X = event.x
     Y = event.y
     X = int(X/100)*100
     Y = int(Y/100)*100
-
+    loadAlgoForet.augmentCellEnFeu(X, Y)
 
 def enregistrer():
     x = canvas.winfo_rootx()
@@ -21,20 +23,35 @@ def enregistrer():
 
 def dix () :
     a = varCommunes.varGlobales(800, 800, 10)
+
 def cinquante () :
     a = varCommunes.varGlobales(900, 800, 50)
+
 def cent () :
     a = varCommunes.varGlobales(800, 800, 100)
+
 def sim_auto():
-    pass
+    Fenetre.update()
+    canvas.after(2000, sim_auto)
 
 def pasapas():
-    pass
+    Fenetre.update()
 
 def drawGrid(event):
     for i in range(0, 1000, 1000//50):
         canvas.create_line(0, i, 1000, i)
         canvas.create_line(i, 0, i, 1000)
+
+def updateSimu(): #C'est avec cette fonction que tu afficheras les nouveaux arbres en feu
+    pass
+
+
+
+
+# Génère ton CSV ici.
+loadAlgoForet = loadAlgo.loadAlgo()
+#loadAlgoForet.setListeForet()
+#
 
 
 Fenetre = Tk()
