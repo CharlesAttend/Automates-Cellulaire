@@ -2,14 +2,14 @@ from tkinter import *
 from PIL import Image, ImageTk,ImageGrab
 import tkinter.messagebox
 import tkinter.filedialog
-import varCommunes
+import varCommunes as VC
 
 def Clic(event):
     X = event.x
     Y = event.y
     X = int(X/100)*100
     Y = int(Y/100)*100
-
+    vg.setCoordDepartFeu(X,Y)
 
 def enregistrer():
     x = canvas.winfo_rootx()
@@ -20,19 +20,31 @@ def enregistrer():
     image.save("Feu.png")
 
 def dix () :
-    a = varCommunes.varGlobales(800, 800, 10)
+    vg.setLargeur(800)
+    vg.setHauteur(800)
+    vg.setNbCell(10)
+    print(vg.getHauteur())
+    print(vg.getLargeur())
+    print(vg.getNbCellules())
 
 def cinquante () :
-    a = varCommunes.varGlobales(900, 800, 50)
+    vg.setLargeur(800)
+    vg.setHauteur(900)
+    vg.setNbCell(50)
+    
 
 def cent () :
-    a = varCommunes.varGlobales(800, 800, 100)
+    vg.setLargeur(800)
+    vg.setHauteur(800)
+    vg.setNbCell(100)
 
 def sim_auto():
     pass
 
 def pasapas():
     pass
+
+vg = VC.varGlobales()
 
 Fenetre = Tk()
 Fenetre.title("Image")

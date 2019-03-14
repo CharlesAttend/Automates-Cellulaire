@@ -2,10 +2,10 @@
 
 class varGlobales():  # Classe stockant quelques 'variables'/constantes pour eviter les conflits de valeurs entre les fichiers
 
-    def __init__(self, hauteur, largeur, nbCell):  # Constructeur permettant de definir les differents attributs de la classe
-        self.hauteurFenetre = hauteur
-        self.largeurFenetre = largeur
-        self.nbCellules = nbCell  # Nombre de cellules
+    def __init__(self):  # Constructeur permettant de definir les differents attributs de la classe
+        self.hauteurFenetre = 0
+        self.largeurFenetre = 0
+        self.nbCellules = 0  # Nombre de cellules
 
         self.nomCsv  = 'csv.csv'  # Nom du csv permettant la generation du csv
 
@@ -37,3 +37,9 @@ class varGlobales():  # Classe stockant quelques 'variables'/constantes pour evi
     def setCoordDepartFeu(self, x, y):
         self.departFeu[0] = x
         self.departFeu[1] = y
+    def setLargeur(self, largeur):
+        self.largeurFenetre = largeur
+    def setHauteur(self, hauteur):
+        self.hauteurFenetre = hauteur 
+    def setNbCell(self, nb):
+        self.nbCellules = nb
