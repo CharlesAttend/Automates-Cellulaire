@@ -10,7 +10,7 @@ def Clic(event):
     Y = event.y
     X = int(X/100)*100
     Y = int(Y/100)*100
-    vg.setCoordDepartFeu(X,Y)
+    loadAlgoForet.augmentCellEnFeu(X, Y)
 
 def enregistrer():
     x = canvas.winfo_rootx()
@@ -26,24 +26,20 @@ def dix () :
     vg.setNbCell(10)
 
 def cinquante () :
-    vg.setLargeur(800)
-    vg.setHauteur(900)
-    vg.setNbCell(50)
-    
+    a = varCommunes.varGlobales(900, 800, 50)
 
 def cent () :
-    vg.setLargeur(800)
-    vg.setHauteur(800)
-    vg.setNbCell(100)
+    a = varCommunes.varGlobales(800, 800, 100)
 
 def sim_auto():
-    pass
+    Fenetre.update()
+    canvas.after(2000, sim_auto)
 
 def pasapas():
-    pass
+    Fenetre.update()
 
 def drawGrid(event):
-    for i in range(0, 1000, 1000//50):
+    for i in range(0, 1000, 1000//vg.getNbCellules()):
         canvas.create_line(0, i, 1000, i)
         canvas.create_line(i, 0, i, 1000)
 
@@ -60,6 +56,17 @@ def createMap():
                 canvas.create_image(cordX, cordY, anchor=tkinter.NW, image=grass )
 
 vg = VC.varGlobales()
+def updateSimu(): #C'est avec cette fonction que tu afficheras les nouveaux arbres en feu
+    pass
+
+
+
+
+# Génère ton CSV ici.
+loadAlgoForet = loadAlgo.loadAlgo()
+#loadAlgoForet.setListeForet()
+#
+
 
 Fenetre = Tk()
 Fenetre.title("Image")
