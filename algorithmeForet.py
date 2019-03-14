@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-
+import csv
+import classDialectCsv
 ####################################################################################################
 
 def propagationFeu(nbCellLignes, cellulesFeu, foret):                # Fonction permettant la propagation du feu,
@@ -43,23 +44,10 @@ def propagationFeu(nbCellLignes, cellulesFeu, foret):                # Fonction 
                         listeForet[y][x] = 2
         return list(cellEnFeu), list(listeForet)
 
-
-def transformationCsvListe(nbCell, listeForet):   # Fonction convertissant le csv en une liste a deux dimensions de nombres entiers
-    csvForet = open("foret.csv", "r") # Csv permettant de generer la foret
-    liste = []
-    for i in range(nbCell):           # Nombre de cellules en hauteur
-        tmp = []
-        for j in list(csvForet.readline()):
-            if (j != "\n"):
-                tmp.append(int(j))
-        liste.append(tmp.copy())
-        tmp.clear()
-    csvForet.close()
-    return liste
-
 def CsvToList():
     with open("csv.csv", "r", newline='') as f:
         reader = csv.reader(f, classDialectCsv.Dialect())
         doubleList = []
         for row in reader:
             doubleList.append(row)
+        return doubleList
