@@ -29,8 +29,11 @@ class loadAlgo():
                 doubleList.append(row)
             self.listeForet = list(doubleList)
 
-    def augmentCellUpdated(self):
-        self.cellUpdated += 2
+    def setNewListeForet(self, listeForet):
+    	self.listeForet = list(listeForet)
+
+    def augmentCellUpdated(self, val):
+        self.cellUpdated += val
 
     def augmentCellEnFeu(self, x, y):
         self.listeCellulesEnFeu.append(x)
