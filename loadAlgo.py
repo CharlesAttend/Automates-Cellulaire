@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+import csv, classDialectCsv
+
 class loadAlgo():
     def __init__ (self):
         self.listeForet = []
