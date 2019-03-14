@@ -3,6 +3,7 @@ from PIL import Image, ImageTk,ImageGrab
 import tkinter.messagebox
 import tkinter.filedialog
 import varCommunes as VC
+import AlgoCSV
 
 def Clic(event):
     X = event.x
@@ -23,9 +24,6 @@ def dix () :
     vg.setLargeur(800)
     vg.setHauteur(800)
     vg.setNbCell(10)
-    print(vg.getHauteur())
-    print(vg.getLargeur())
-    print(vg.getNbCellules())
 
 def cinquante () :
     vg.setLargeur(800)
@@ -44,12 +42,24 @@ def sim_auto():
 def pasapas():
     pass
 
-vg = VC.varGlobales()
 def drawGrid(event):
     for i in range(0, 1000, 1000//50):
         canvas.create_line(0, i, 1000, i)
         canvas.create_line(i, 0, i, 1000)
 
+def createMap():
+    AlgoCSV.createCsv(vg.getHauteur, vg.getLargeur, vg.getNbCellules)
+    reader = AlgoCSV.getReader()
+    tailleImg = vg.getNbCellules()
+    grass = ImageTk.PhotoImage(Image.open("textures/sol.png"))
+    for row in reader:
+        for i in row:
+            cordX = cordX+tailleImg
+            cordY = cordY+tailleImg
+            if i == 0:
+                canvas.create_image(cordX, cordY, anchor=tkinter.NW, image=grass )
+
+vg = VC.varGlobales()
 
 Fenetre = Tk()
 Fenetre.title("Image")
