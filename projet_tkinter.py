@@ -1,7 +1,7 @@
 ﻿# -*- coding: utf-8 -*-
 
 """
-	Attention, si vous voulez interpréter ce code, mettez en commentaire de la ligne 44 à 72 et 78 à 95
+	Attention, si vous voulez interpréter ce code, mettez en commentaire de la ligne 42 à 67 et 76 à 94
 """
 
 from tkinter import *
