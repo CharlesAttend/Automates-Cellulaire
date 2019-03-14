@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
-import csv
-import classDialectCsv
+
 ####################################################################################################
 
 def propagationFeu(nbCellLignes, cellulesFeu, foret):                # Fonction permettant la propagation du feu,
@@ -43,11 +42,3 @@ def propagationFeu(nbCellLignes, cellulesFeu, foret):                # Fonction 
                         cellEnFeu.append(y)
                         listeForet[y][x] = 2
         return list(cellEnFeu), list(listeForet)
-
-def CsvToList():
-    with open("csv.csv", "r", newline='') as f:
-        reader = csv.reader(f, classDialectCsv.Dialect())
-        doubleList = []
-        for row in reader:
-            doubleList.append(row)
-        return doubleList
