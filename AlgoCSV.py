@@ -3,6 +3,15 @@ import csv
 from random import randint
 import classDialectCsv
 
+def csvToList():
+    with open("csv.csv", "r", newline='') as f:
+        reader = csv.reader(f, classDialectCsv.Dialect())
+        doubleList = []
+        for row in reader:
+            doubleList.append(row)
+        print(doubleList)
+    return doubleList
+
 def transformationCsvListe():   # Fonction convertissant le csv en une liste a deux dimensions de nombres entiers
     for i in range(10): # Nombre de cellules en hauteur
         tmp = []
@@ -22,7 +31,9 @@ with open("csv.csv", "w", newline='') as f:
 
 with open("csv.csv", "r", newline='') as f:
     reader = csv.reader(f, classDialectCsv.Dialect())
-    doubleList
-    for row in reader:
+    doubleList = 0
+    #for row in reader:
+     #   print(row)
 
-        print(row[0])
+liste = csvToList()
+print(liste[2][1])
