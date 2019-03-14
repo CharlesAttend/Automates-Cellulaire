@@ -38,7 +38,7 @@ def pasapas():
     Fenetre.update()
 
 def drawGrid(event):
-    for i in range(0, 1000, 1000//50):
+    for i in range(0, 1000, 1000//vg.getNbCellules()):
         canvas.create_line(0, i, 1000, i)
         canvas.create_line(i, 0, i, 1000)
 
