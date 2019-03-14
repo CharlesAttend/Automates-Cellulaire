@@ -1,4 +1,4 @@
-from tkinter import *
+﻿from tkinter import *
 from PIL import Image, ImageTk,ImageGrab
 import tkinter.messagebox
 import tkinter.filedialog
@@ -21,23 +21,26 @@ def enregistrer():
 
 def dix () :
     a = varCommunes.varGlobales(800, 800, 10)
-
 def cinquante () :
     a = varCommunes.varGlobales(900, 800, 50)
-
 def cent () :
     a = varCommunes.varGlobales(800, 800, 100)
-
 def sim_auto():
     pass
 
 def pasapas():
     pass
 
+def drawGrid(event):
+    for i in range(0, 1000, 1000//50):
+        canvas.create_line(0, i, 1000, i)
+        canvas.create_line(i, 0, i, 1000)
+
+
 Fenetre = Tk()
 Fenetre.title("Image")
 Fenetre.geometry('1000x1000')
-canvas = Canvas(Fenetre, width = 800, height = 800, background='yellow')
+canvas = Canvas(Fenetre, width = 800, height = 800, background='grey')
 menubar = Menu(Fenetre)
 
 menufichier = Menu(menubar, tearoff = 0)
@@ -56,7 +59,7 @@ auto.grid(row = 0, column = 0, sticky = "n")
 manuel.grid(row = 1, column = 0, sticky = "n")
 
 canvas.bind("<Button-1>", Clic)
-
+canvas.bind("<Button-3>", drawGrid)
 # Affichage du menu
 Fenetre.config(menu = menubar)
 
