@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
-import csv, classDialectCsv
+import csv
+import classDialectCsv
 
 class varGlobales():  # Classe stockant quelques 'variables'/constantes pour eviter les conflits de valeurs entre les fichiers
 
@@ -20,6 +21,7 @@ class varGlobales():  # Classe stockant quelques 'variables'/constantes pour evi
 
         self.listeForet = []
         self.listeCellulesEnFeu = []
+        self.listeCellToCheck = []
         self.cellUpdated = 0
 
 
@@ -41,22 +43,23 @@ class varGlobales():  # Classe stockant quelques 'variables'/constantes pour evi
     def getListeForet(self):
         return list(self.listeForet)
     def getCellEnFeu(self):
-        return list(listeCellulesEnFeu)
+        return list(self.listeCellulesEnFeu)
     def getCellUpdated(self):
     	return self.cellUpdated
-
+    def getCellToCheck(self):
+        return list(self.listeCellToCheck)
 
     # Fonctions dites "Mutateurs", elles permettent de modifier les valeurs des differents attributs de la classe
 
     def setLargeur(self, largeur):
         self.largeurFenetre = largeur
     def setHauteur(self, hauteur):
-        self.hauteurFenetre = hauteur 
+        self.hauteurFenetre = hauteur
     def setNbCell(self, nb):
         self.nbCellules = nb
 
 
-    def setArbreABruler(self):
+    def setListeForet(self):
         with open("csv.csv", "r", newline='') as f:
             reader = csv.reader(f, classDialectCsv.Dialect())
             doubleList = []
@@ -67,9 +70,19 @@ class varGlobales():  # Classe stockant quelques 'variables'/constantes pour evi
     def setNewListeForet(self, listeForet):
     	self.listeForet = list(listeForet)
 
-    def augmentCellUpdated(self, val):
-        self.cellUpdated += val
+    def setCellUpdated(self, val):
+        self.cellUpdated = val
 
     def augmentCellEnFeu(self, x, y):
         self.listeCellulesEnFeu.append(x)
         self.listeCellulesEnFeu.append(y)
+
+    def augmentCellToCheck(self, x, y):
+        self.listeCellToCheck.append(x)
+        self.listeCellToCheck.append(y)
+
+    def emptyCellEnFeu(self):
+        self.listeCellulesEnFeu.clear()
+
+    def emptyCellToCheck(self):
+        self.listeCellToCheck.clear()

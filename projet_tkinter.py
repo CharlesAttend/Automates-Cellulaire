@@ -1,9 +1,5 @@
 ﻿# -*- coding: utf-8 -*-
 
-"""
-	Attention, si vous voulez interpréter ce code, mettez en commentaire de la ligne 42 à 67 et 76 à 94
-"""
-
 from tkinter import *
 from PIL import Image, ImageTk,ImageGrab
 import tkinter.messagebox
@@ -19,7 +15,8 @@ def Clic(event):
     Y = event.y
     X = int(X/100)*100
     Y = int(Y/100)*100
-    loadAlgoForet.augmentCellEnFeu(X, Y)
+    vg.augmentCellEnFeu(X, Y)
+    vg.augmentCellToCheck(X,Y)
 
 def enregistrer():
     x = canvas.winfo_rootx()
@@ -39,15 +36,53 @@ def cent () :
     vg.setNbCell(100)
 
 
-# Déroulement de l'algorithme : 
+# Déroulement de l'algorithme :
 
 def sim_auto():
-    pass#On appelle de nouveau la fonction de simulation après 2 secondes
+    for i in range(vg.getCellUpdated(), len(vg.getCellToCheck())//2):
+        tmpCellEnFeu, tmpListeForet = algoForet.propagationFeu(vg.getNbCellules(), vg.getCellToCheck(), vg.getListeForet(), vg.getCellUpdated()) #On test d'abord si le feu peut se propager
+        vg.setNewListeForet(tmpListeForet)
+
+        for j in range(len(tmpCellEnFeu)):
+            vg.augmentCellEnFeu(tmpCellEnFeu[j], tmpCellEnFeu[j+1])
+
+        vg.setCellUpdated(vg.getCellUpdated()+2)
+
+    cellEnFeu = vg.getCellEnFeu()
+    for i in range(0, CellEnFeu, 2):
+        vg.augmentCellToCheck(cellEnFeu[i], cellEnFeu[i+1])
+
+    if(len(vg.getCellEnFeu()) > 0):
+        for i in range(0, len(vg.getCellEnFeu()), 2):
+            Fenetre.update()
+            pass             #On affiche les nouveaux arbres à brûler
+
+    vg.emptyCellEnFeu()
+    canvas.after(2000, sim_auto)
 
 def pasapas():
-    pass			#On raffraîchit l'écran
+    for i in range(vg.getCellUpdated(), len(vg.getCellToCheck())//2):
+        tmpCellEnFeu, tmpListeForet = algoForet.propagationFeu(vg.getNbCellules(), vg.getCellToCheck(), vg.getListeForet(), vg.getCellUpdated()) #On test d'abord si le feu peut se propager
+        vg.setNewListeForet(tmpListeForet)
+
+        for j in range(len(tmpCellEnFeu)):
+            vg.augmentCellEnFeu(tmpCellEnFeu[j], tmpCellEnFeu[j+1])
+
+        vg.setCellUpdated(vg.getCellUpdated()+2)
+
+    cellEnFeu = vg.getCellEnFeu()
+    for i in range(0, CellEnFeu, 2):
+        vg.augmentCellToCheck(cellEnFeu[i], cellEnFeu[i+1])
+
+    if(len(vg.getCellEnFeu()) > 0):
+        for i in range(0, len(vg.getCellEnFeu()), 2):
+            Fenetre.update()
+            pass             #On affiche les nouveaux arbres à brûler
+
+    vg.emptyCellEnFeu()
 
 # Fin des fonctions concernant l'algorithme
+
 
 def drawGrid(event): #Fonction qui dessine une grille sur le Canvas pour tester la position des textures
     for i in range(0, 1000, 1000//vg.getNbCellules()):
@@ -74,8 +109,6 @@ def createMap(event):
             cordY = cordY+tailleImg
     canvas.mainloop()
 	
-
-
 
 vg = VC.varGlobales() #vg est une instance de varGlobales
 vg.setLargeur(800)
