@@ -12,11 +12,11 @@ class varGlobales():  # Classe stockant quelques 'variables'/constantes pour evi
         self.nomCsv  = 'csv.csv'  # Nom du csv permettant la generation du csv
 
         # Retourne les différents nom des textures
-        self.textureArbre  = 'textures\arbre.png'
-        self.textureSol = 'textures\sol.png'
-        self.textureEau = 'textures\eau.png'
-        self.textureArbreBrule = 'textures\arbreBrule.png'
-        self.textureArbreEnFeu = 'textures\arbreEnFeu.png'
+        self.textureArbre  = 'textures/arbre.png'
+        self.textureSol = 'textures/grass80x80.png'
+        self.textureEau = 'textures/eau.png'
+        self.textureArbreBrule = 'textures/arbreBrule.png'
+        self.textureArbreEnFeu = 'textures/arbreEnFeu.png'
 
         self.listeForet = []
         self.listeCellulesEnFeu = []

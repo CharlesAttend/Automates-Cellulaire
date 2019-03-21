@@ -18,6 +18,6 @@ def createCsv(hauteur, largeur, tailleTx):
             writer.writerow([randint(0,1) for j in range(largeur//tailleTx)])
 
 def getReader():
-    with open("csv.csv", "r", newline='') as f:
-        reader = csv.reader(f, classDialectCsv.Dialect())
-        return reader
+	with open("csv.csv", "r", newline='') as f:
+	    reader = csv.reader(f, classDialectCsv.Dialect())
+	    return reader

@@ -11,6 +11,8 @@ import tkinter.filedialog
 import AlgoCSV #ALGOCSV permet de générer un csv en fonction du nombre de cellules choisies par l'utilisateur
 import varCommunes as VC #varCommunes contient une classe qui rassemble toutes les variables utiles aux différents fichiers
 import algorithmeForet as algoForet #Fichier qui contient l'algorithme
+import csv
+import classDialectCsv
 
 def Clic(event):
     X = event.x
@@ -31,40 +33,19 @@ def dix () :
     vg.setNbCell(10)
 
 def cinquante () :
-	vg.setNbCell(50)
+    vg.setNbCell(50)
 
 def cent () :
-	vg.setNbCell(100)
+    vg.setNbCell(100)
 
 
 # Déroulement de l'algorithme : 
 
 def sim_auto():
-	tmpCellEnFeu, tmpListeForet = algoForet.propagationFeu(vg.getNbCellules(), vg.getCellEnFeu(), vg.getListeForet()) #On test d'abord si le feu peut se propager
-																																			#sur les 8 cases autour de l'arbre
-	vg.setNewListeForet(tmpListeForet)							#On actualise la liste de la foret
-	for i in range(vg.getCellUpdated(),len(tmpCellEnFeu), 2):	#On créer une boucle permettant d'ajouter à la liste des cellules en feu les coordonnées des prochains arbre à brûler
-		vg.augmentCellEnFeu(tmpCellEnFeu[i], tmpCellEnFeu[i+1])
-
-	for i in range(vg.getCellUpdated(), len(tmpCellEnFeu), 2):  #On affiche les nouveaux arbres à prendre feu...
-		pass 	#...
-
-	vg.augmentCellUpdated(2)
-    Fenetre.update()				#On raffraîchit l'écran
-    canvas.after(2000, sim_auto)	#On appelle de nouveau la fonction de simulation après 2 secondes
+    pass#On appelle de nouveau la fonction de simulation après 2 secondes
 
 def pasapas():
-    tmpCellEnFeu, tmpListeForet = algoForet.propagationFeu(vg.getNbCellules(), vg.getCellEnFeu(), vg.getListeForet()) #On test d'abord si le feu peut se propager
-																																			#sur les 8 cases autour de l'arbre
-	vg.setNewListeForet(tmpListeForet)							#On actualise la liste de la foret
-	for i in range(vg.getCellUpdated(),len(tmpCellEnFeu), 2):	#On créer une boucle permettant d'ajouter à la liste des cellules en feu les coordonnées des prochains arbre à brûler
-		vg.augmentCellEnFeu(tmpCellEnFeu[i], tmpCellEnFeu[i+1])
-
-	for i in range(vg.getCellUpdated(), len(tmpCellEnFeu), 2): #On affiche les nouveaux arbres à prendre feu...
-		pass 	#...
-
-	vg.augmentCellUpdated(2)
-    Fenetre.update()				#On raffraîchit l'écran
+    pass			#On raffraîchit l'écran
 
 # Fin des fonctions concernant l'algorithme
 
@@ -73,25 +54,33 @@ def drawGrid(event): #Fonction qui dessine une grille sur le Canvas pour tester 
         canvas.create_line(0, i, 1000, i)
         canvas.create_line(i, 0, i, 1000)
 
-def createMap():
-    AlgoCSV.createCsv(vg.getHauteur, vg.getLargeur, vg.getNbCellules)
-    reader = AlgoCSV.getReader()
-    tailleImg = vg.getNbCellules()
-    grass = ImageTk.PhotoImage(Image.open("textures/sol.png"))
-    for row in reader:
-        for i in row:
-            cordX = cordX+tailleImg
+
+def createMap(event):
+    AlgoCSV.createCsv(vg.getHauteur(), vg.getLargeur(), vg.getNbCellules())
+    tailleImg = 80
+    grass = ImageTk.PhotoImage(Image.open("textures/grass80x80.png"))
+    cordY = 0
+    with open("csv.csv", "r", newline='') as f:
+        reader = csv.reader(f, classDialectCsv.Dialect())
+        for row in reader:
+            cordX = 0
+            for i in row:
+                int(i)
+                if i == 0:
+                    canvas.create_image(cordX, cordY, anchor=tkinter.NW, image=grass)
+                elif i==10:
+                    canvas.create_image(cordX, cordY, anchor=tkinter.NW, image=grass)
+                cordX = cordX+tailleImg
             cordY = cordY+tailleImg
-            if i == 0:
-                canvas.create_image(cordX, cordY, anchor=tkinter.NW, image=grass)
+    canvas.mainloop()
+	
 
 
 
 vg = VC.varGlobales() #vg est une instance de varGlobales
-vg.setLargeur(1000)
-vg.setHauteur(1000)
-createmap() #On génère le csv
-vg.setListeForet() #On transforme le csv en une liste 2d utilisable pour l'algorithme
+vg.setLargeur(800)
+vg.setHauteur(800)
+vg.setNbCell(10)
 
 Fenetre = Tk()
 Fenetre.title("Image")
@@ -115,10 +104,10 @@ auto.grid(row = 0, column = 0, sticky = "n")
 manuel.grid(row = 1, column = 0, sticky = "n")
 
 canvas.bind("<Button-1>", Clic)
-canvas.bind("<Button-3>", drawGrid)
+#canvas.bind("<Button-3>", drawGrid)
+canvas.bind("<Button-3>", createMap)
 # Affichage du menu
 Fenetre.config(menu = menubar)
-
 
 # Utilisation d'un dictionnaire pour conserver une référence
 canvas.place(relx = 0.5, rely = 0.5, anchor = CENTER)
