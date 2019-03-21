@@ -32,7 +32,7 @@ def cinquante () :
 
 def cent () :
 	vg.setNbCell(100)
-"""
+
 
 # Déroulement de l'algorithme :
 
@@ -40,9 +40,15 @@ def sim_auto():
     for i in range(vg.getCellUpdated(), len(vg.getCellToCheck())//2):
         tmpCellEnFeu, tmpListeForet = algoForet.propagationFeu(vg.getNbCellules(), vg.getCellToCheck(), vg.getListeForet(), vg.getCellUpdated()) #On test d'abord si le feu peut se propager
         vg.setNewListeForet(tmpListeForet)
+
         for j in range(len(tmpCellEnFeu)):
             vg.augmentCellEnFeu(tmpCellEnFeu[j], tmpCellEnFeu[j+1])
+
         vg.setCellUpdated(vg.getCellUpdated()+2)
+
+    cellEnFeu = vg.getCellEnFeu()
+    for i in range(0, CellEnFeu, 2):
+        vg.augmentCellToCheck(cellEnFeu[i], cellEnFeu[i+1])
 
     if(len(vg.getCellEnFeu()) > 0):
         for i in range(0, len(vg.getCellEnFeu()), 2):
@@ -53,17 +59,34 @@ def sim_auto():
     canvas.after(2000, sim_auto)
 
 def pasapas():
-    tmpCellEnFeu, tmpListeForet = algoForet.propagationFeu(vg.getNbCellules(), vg.getCellEnFeu(), vg.getListeForet()) #On test d'abord si le feu peut se propager
-    vg.setNewListeForet(tmpListeForet)
+    for i in range(vg.getCellUpdated(), len(vg.getCellToCheck())//2):
+        tmpCellEnFeu, tmpListeForet = algoForet.propagationFeu(vg.getNbCellules(), vg.getCellToCheck(), vg.getListeForet(), vg.getCellUpdated()) #On test d'abord si le feu peut se propager
+        vg.setNewListeForet(tmpListeForet)
+
+        for j in range(len(tmpCellEnFeu)):
+            vg.augmentCellEnFeu(tmpCellEnFeu[j], tmpCellEnFeu[j+1])
+
+        vg.setCellUpdated(vg.getCellUpdated()+2)
+
+    cellEnFeu = vg.getCellEnFeu()
+    for i in range(0, CellEnFeu, 2):
+        vg.augmentCellToCheck(cellEnFeu[i], cellEnFeu[i+1])
+
+    if(len(vg.getCellEnFeu()) > 0):
+        for i in range(0, len(vg.getCellEnFeu()), 2):
+            Fenetre.update()
+            pass             #On affiche les nouveaux arbres à brûler
+
+    vg.emptyCellEnFeu()
 
 # Fin des fonctions concernant l'algorithme
- """
+
 
 def drawGrid(event): #Fonction qui dessine une grille sur le Canvas pour tester la position des textures
     for i in range(0, 1000, 1000//vg.getNbCellules()):
         canvas.create_line(0, i, 1000, i)
         canvas.create_line(i, 0, i, 1000)
-"""
+
 def createMap():
     AlgoCSV.createCsv(vg.getHauteur(), vg.getLargeur(), vg.getNbCellules())
     reader = AlgoCSV.getReader()
@@ -81,7 +104,7 @@ vg.setLargeur(1000)
 vg.setHauteur(1000)
 createmap() #On génère le csv
 vg.setListeForet() #On transforme le csv en une liste 2d utilisable pour l'algorithme
-"""
+
 Fenetre = Tk()
 Fenetre.title("Image")
 Fenetre.geometry('1000x1000')
@@ -97,12 +120,12 @@ dimensions.add_command(label = "50x50", command = cinquante)
 dimensions.add_command(label = "100x100", command = cent)
 menubar.add_cascade(label = "Fichier", menu = menufichier)
 menubar.add_cascade(label = "Dimensions", menu = dimensions)
-"""
+
 auto = Button(Fenetre, text = "Simulation Automatique", bg = "green", command = sim_auto)
 manuel = Button(Fenetre, text = "Simulation Pas à Pas", bg = "blue", command = pasapas)
 auto.grid(row = 0, column = 0, sticky = "n")
 manuel.grid(row = 1, column = 0, sticky = "n")
-"""
+
 canvas.bind("<Button-1>", Clic)
 canvas.bind("<Button-3>", drawGrid)
 # Affichage du menu
