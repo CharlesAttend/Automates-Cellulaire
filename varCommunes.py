@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
-import csv, classDialectCsv
+import csv
+import classDialectCsv
 
 class varGlobales():  # Classe stockant quelques 'variables'/constantes pour eviter les conflits de valeurs entre les fichiers
 
@@ -20,6 +21,7 @@ class varGlobales():  # Classe stockant quelques 'variables'/constantes pour evi
 
         self.listeForet = []
         self.listeCellulesEnFeu = []
+        self.listCellToCheck = []
         self.cellUpdated = 0
 
 
@@ -41,7 +43,9 @@ class varGlobales():  # Classe stockant quelques 'variables'/constantes pour evi
     def getListeForet(self):
         return list(self.listeForet)
     def getCellEnFeu(self):
-        return list(listeCellulesEnFeu)
+        return list(self.listeCellulesEnFeu)
+    def getCellToCheck(self):
+        return list(self.listCellToCheck)
     def getCellUpdated(self):
     	return self.cellUpdated
 
@@ -51,12 +55,12 @@ class varGlobales():  # Classe stockant quelques 'variables'/constantes pour evi
     def setLargeur(self, largeur):
         self.largeurFenetre = largeur
     def setHauteur(self, hauteur):
-        self.hauteurFenetre = hauteur 
+        self.hauteurFenetre = hauteur
     def setNbCell(self, nb):
         self.nbCellules = nb
 
 
-    def setArbreABruler(self):
+    def setListeForet(self):
         with open("csv.csv", "r", newline='') as f:
             reader = csv.reader(f, classDialectCsv.Dialect())
             doubleList = []
@@ -73,3 +77,7 @@ class varGlobales():  # Classe stockant quelques 'variables'/constantes pour evi
     def augmentCellEnFeu(self, x, y):
         self.listeCellulesEnFeu.append(x)
         self.listeCellulesEnFeu.append(y)
+
+    def addCellToCheck(self, x, y):
+        self.listCellToCheck.append(x)
+        self.listCellToCheck.append(y)

@@ -1,9 +1,5 @@
 ﻿# -*- coding: utf-8 -*-
 
-"""
-	Attention, si vous voulez interpréter ce code, mettez en commentaire de la ligne 42 à 67 et 76 à 94
-"""
-
 from tkinter import *
 from PIL import Image, ImageTk,ImageGrab
 import tkinter.messagebox
@@ -17,7 +13,8 @@ def Clic(event):
     Y = event.y
     X = int(X/100)*100
     Y = int(Y/100)*100
-    loadAlgoForet.augmentCellEnFeu(X, Y)
+    vg.augmentCellEnFeu(X, Y)
+    vg.addCellToCheck(X, Y)
 
 def enregistrer():
     x = canvas.winfo_rootx()
@@ -37,34 +34,17 @@ def cent () :
 	vg.setNbCell(100)
 
 
-# Déroulement de l'algorithme : 
+# Déroulement de l'algorithme :
 
 def sim_auto():
-	tmpCellEnFeu, tmpListeForet = algoForet.propagationFeu(vg.getNbCellules(), vg.getCellEnFeu(), vg.getListeForet()) #On test d'abord si le feu peut se propager
-																																			#sur les 8 cases autour de l'arbre
-	vg.setNewListeForet(tmpListeForet)							#On actualise la liste de la foret
-	for i in range(vg.getCellUpdated(),len(tmpCellEnFeu), 2):	#On créer une boucle permettant d'ajouter à la liste des cellules en feu les coordonnées des prochains arbre à brûler
-		vg.augmentCellEnFeu(tmpCellEnFeu[i], tmpCellEnFeu[i+1])
-
-	for i in range(vg.getCellUpdated(), len(tmpCellEnFeu), 2):  #On affiche les nouveaux arbres à prendre feu...
-		pass 	#...
-
-	vg.augmentCellUpdated(2)
-    Fenetre.update()				#On raffraîchit l'écran
-    canvas.after(2000, sim_auto)	#On appelle de nouveau la fonction de simulation après 2 secondes
+    for i in range(len(vg.getCellToCheck())//2):
+        pass
+    tmpCellEnFeu, tmpListeForet = algoForet.propagationFeu(vg.getNbCellules(), vg.getCellEnFeu(), vg.getListeForet()) #On test d'abord si le feu peut se propager
+	vg.setNewListeForet(tmpListeForet)
 
 def pasapas():
     tmpCellEnFeu, tmpListeForet = algoForet.propagationFeu(vg.getNbCellules(), vg.getCellEnFeu(), vg.getListeForet()) #On test d'abord si le feu peut se propager
-																																			#sur les 8 cases autour de l'arbre
-	vg.setNewListeForet(tmpListeForet)							#On actualise la liste de la foret
-	for i in range(vg.getCellUpdated(),len(tmpCellEnFeu), 2):	#On créer une boucle permettant d'ajouter à la liste des cellules en feu les coordonnées des prochains arbre à brûler
-		vg.augmentCellEnFeu(tmpCellEnFeu[i], tmpCellEnFeu[i+1])
-
-	for i in range(vg.getCellUpdated(), len(tmpCellEnFeu), 2): #On affiche les nouveaux arbres à prendre feu...
-		pass 	#...
-
-	vg.augmentCellUpdated(2)
-    Fenetre.update()				#On raffraîchit l'écran
+    vg.setNewListeForet(tmpListeForet)
 
 # Fin des fonctions concernant l'algorithme
 
@@ -74,7 +54,7 @@ def drawGrid(event): #Fonction qui dessine une grille sur le Canvas pour tester 
         canvas.create_line(i, 0, i, 1000)
 
 def createMap():
-    AlgoCSV.createCsv(vg.getHauteur, vg.getLargeur, vg.getNbCellules)
+    AlgoCSV.createCsv(vg.getHauteur(), vg.getLargeur(), vg.getNbCellules())
     reader = AlgoCSV.getReader()
     tailleImg = vg.getNbCellules()
     grass = ImageTk.PhotoImage(Image.open("textures/sol.png"))
@@ -84,8 +64,6 @@ def createMap():
             cordY = cordY+tailleImg
             if i == 0:
                 canvas.create_image(cordX, cordY, anchor=tkinter.NW, image=grass)
-
-
 
 vg = VC.varGlobales() #vg est une instance de varGlobales
 vg.setLargeur(1000)
