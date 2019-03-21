@@ -14,7 +14,7 @@ def Clic(event):
     X = int(X/100)*100
     Y = int(Y/100)*100
     vg.augmentCellEnFeu(X, Y)
-    vg.addCellToCheck(X, Y)
+    vg.augmentCellToCheck(X,Y)
 
 def enregistrer():
     x = canvas.winfo_rootx()
@@ -37,10 +37,20 @@ def cent () :
 # Déroulement de l'algorithme :
 
 def sim_auto():
-    for i in range(len(vg.getCellToCheck())//2):
-        pass
-    tmpCellEnFeu, tmpListeForet = algoForet.propagationFeu(vg.getNbCellules(), vg.getCellEnFeu(), vg.getListeForet()) #On test d'abord si le feu peut se propager
-	vg.setNewListeForet(tmpListeForet)
+    for i in range(vg.getCellUpdated(), len(vg.getCellToCheck())//2):
+        tmpCellEnFeu, tmpListeForet = algoForet.propagationFeu(vg.getNbCellules(), vg.getCellToCheck(), vg.getListeForet(), vg.getCellUpdated()) #On test d'abord si le feu peut se propager
+        vg.setNewListeForet(tmpListeForet)
+        for j in range(len(tmpCellEnFeu)):
+            vg.augmentCellEnFeu(tmpCellEnFeu[j], tmpCellEnFeu[j+1])
+        vg.setCellUpdated(vg.getCellUpdated()+2)
+
+    if(len(vg.getCellEnFeu()) > 0):
+        for i in range(0, len(vg.getCellEnFeu()), 2):
+            Fenetre.update()
+            pass             #On affiche les nouveaux arbres à brûler
+
+    vg.emptyCellEnFeu()
+    canvas.after(2000, sim_auto)
 
 def pasapas():
     tmpCellEnFeu, tmpListeForet = algoForet.propagationFeu(vg.getNbCellules(), vg.getCellEnFeu(), vg.getListeForet()) #On test d'abord si le feu peut se propager
