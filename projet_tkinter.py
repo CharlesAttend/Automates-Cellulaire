@@ -49,7 +49,7 @@ def sim_auto():
         vg.setCellUpdated(vg.getCellUpdated()+2)
 
     cellEnFeu = vg.getCellEnFeu()
-    for i in range(0, CellEnFeu, 2):
+    for i in range(0, cellEnFeu, 2):
         vg.augmentCellToCheck(cellEnFeu[i], cellEnFeu[i+1])
 
     if(len(vg.getCellEnFeu()) > 0):
@@ -71,7 +71,7 @@ def pasapas():
         vg.setCellUpdated(vg.getCellUpdated()+2)
 
     cellEnFeu = vg.getCellEnFeu()
-    for i in range(0, CellEnFeu, 2):
+    for i in range(0, cellEnFeu, 2):
         vg.augmentCellToCheck(cellEnFeu[i], cellEnFeu[i+1])
 
     if(len(vg.getCellEnFeu()) > 0):
