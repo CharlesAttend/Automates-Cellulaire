@@ -42,14 +42,14 @@ def cent () :
 # Déroulement de l'algorithme :
 
 def sim_auto():
-    for i in range(vg.getCellUpdated(), len(vg.getCellToCheck())//2):
-        tmpCellEnFeu, tmpListeForet = algoForet.propagationFeu(vg.getNbCellules(), vg.getCellToCheck(), vg.getListeForet(), vg.getCellUpdated()) #On test d'abord si le feu peut se propager
+    for i in range(vg.getCurrenCell(), len(vg.getCellToCheck())//2):
+        tmpCellEnFeu, tmpListeForet = algoForet.propagationFeu(vg.getNbCellules(), vg.getCellToCheck(), vg.getListeForet(), vg.getCurrentCell()) #On test d'abord si le feu peut se propager
         vg.setNewListeForet(tmpListeForet)
 
         for j in range(len(tmpCellEnFeu)):                              #On ajoute tout les arbres a bruler dans la liste cellEnFeu
             vg.augmentCellEnFeu(tmpCellEnFeu[j], tmpCellEnFeu[j+1])
 
-        vg.setCellUpdated(vg.getCellUpdated()+2)
+        vg.augmentCurrentCell()
 
     cellEnFeu = vg.getCellEnFeu()
     for i in range(0, len(cellEnFeu), 2):
@@ -60,31 +60,31 @@ def sim_auto():
             #On affiche les nouveaux arbres à brûler
             pass
 
-    vg.augmentCurrentCell()
+    vg.augmentCellUpdated()
     vg.emptyCellEnFeu()
     vg.augmentLoopCount()
     canvas.after(2000, sim_auto)
 
 def pasapas():
-    for i in range(vg.getCellUpdated(), len(vg.getCellToCheck())//2):
-        tmpCellEnFeu, tmpListeForet = algoForet.propagationFeu(vg.getNbCellules(), vg.getCellToCheck(), vg.getListeForet(), vg.getCellUpdated()) #On test d'abord si le feu peut se propager
+    for i in range(vg.getCurrenCell(), len(vg.getCellToCheck())//2):
+        tmpCellEnFeu, tmpListeForet = algoForet.propagationFeu(vg.getNbCellules(), vg.getCellToCheck(), vg.getListeForet(), vg.getCurrentCell()) #On test d'abord si le feu peut se propager
         vg.setNewListeForet(tmpListeForet)
 
-        for j in range(len(tmpCellEnFeu)):
+        for j in range(len(tmpCellEnFeu)):                              #On ajoute tout les arbres a bruler dans la liste cellEnFeu
             vg.augmentCellEnFeu(tmpCellEnFeu[j], tmpCellEnFeu[j+1])
 
-        vg.setCellUpdated(vg.getCellUpdated()+2)
+        vg.augmentCurrentCell()
 
     cellEnFeu = vg.getCellEnFeu()
     for i in range(0, len(cellEnFeu), 2):
         vg.augmentCellToCheck(cellEnFeu[i], cellEnFeu[i+1])
 
-    if(len(vg.getCellEnFeu()) > 0):
-        for i in range(0, len(cellEnFeu), 2):
+    if(len(cellEnFeu) > 0):
+        for i in range(0, len(vg.getCellEnFeu()), 2):
             #On affiche les nouveaux arbres à brûler
             pass
-                    
-    vg.augmentCurrentCell()
+
+    vg.augmentCellUpdated()
     vg.emptyCellEnFeu()
     vg.augmentLoopCount()
 

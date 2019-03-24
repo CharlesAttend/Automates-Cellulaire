@@ -79,8 +79,8 @@ class varGlobales():  # Classe stockant quelques 'variables'/constantes pour evi
     def setNewListeForet(self, listeForet):
     	self.listeForet = list(listeForet)
 
-    def setCellUpdated(self, val):
-        self.cellUpdated = val
+    def augmentCellCurrentCell(self):
+        self.currentCell += 2
 
     def augmentCellEnFeu(self, x, y):
         self.listeCellulesEnFeu.append(x)
@@ -90,11 +90,8 @@ class varGlobales():  # Classe stockant quelques 'variables'/constantes pour evi
         self.listeCellToCheck.append(x)
         self.listeCellToCheck.append(y)
 
-    def augmentCurrentCell(self):
-        self.currentCell += 2
+    def augmentCellUpdated(self):
+        self.cellUpdated += 2
 
     def emptyCellEnFeu(self):
         self.listeCellulesEnFeu.clear()
-
-    def emptyCellToCheck(self):
-        self.listeCellToCheck.clear()
