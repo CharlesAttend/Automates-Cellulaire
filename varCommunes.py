@@ -9,6 +9,7 @@ class varGlobales():  # Classe stockant quelques 'variables'/constantes pour evi
         self.hauteurFenetre = 0
         self.largeurFenetre = 0
         self.nbCellules = 0  # Nombre de cellules
+        self.loopCount = 0
 
         self.nomCsv  = 'csv.csv'  # Nom du csv permettant la generation du csv
 
@@ -23,7 +24,7 @@ class varGlobales():  # Classe stockant quelques 'variables'/constantes pour evi
         self.listeCellulesEnFeu = []
         self.listeCellToCheck = []
         self.cellUpdated = 0
-
+        self.currentCell = 0
 
 
     # Fonctions dites "Accesseurs", elles retournent les valeurs des differents attributs de la classe
@@ -38,6 +39,8 @@ class varGlobales():  # Classe stockant quelques 'variables'/constantes pour evi
         return self.nomCsv
     def getTexturesName(self):
         return (self.textureArbre, self.textureArbreBrule, self.textureArbreEnFeu, self.textureEau, self.textureSol)
+    def getLoopCount(self):
+        return self.loopCount
 
 
     def getListeForet(self):
@@ -48,6 +51,8 @@ class varGlobales():  # Classe stockant quelques 'variables'/constantes pour evi
     	return self.cellUpdated
     def getCellToCheck(self):
         return list(self.listeCellToCheck)
+    def getCurrentCell(self):
+        return self.currentCell
 
     # Fonctions dites "Mutateurs", elles permettent de modifier les valeurs des differents attributs de la classe
 
@@ -57,8 +62,6 @@ class varGlobales():  # Classe stockant quelques 'variables'/constantes pour evi
         self.hauteurFenetre = hauteur
     def setNbCell(self, nb):
         self.nbCellules = nb
-
-
     def setListeForet(self):
         with open("csv.csv", "r", newline='') as f:
             reader = csv.reader(f, classDialectCsv.Dialect())
@@ -66,6 +69,10 @@ class varGlobales():  # Classe stockant quelques 'variables'/constantes pour evi
             for row in reader:
                 doubleList.append(row)
             self.listeForet = list(doubleList)
+    def augmentLoopCount(self):
+        self.loopCount += 1
+
+
 
     def setNewListeForet(self, listeForet):
     	self.listeForet = list(listeForet)
@@ -80,6 +87,9 @@ class varGlobales():  # Classe stockant quelques 'variables'/constantes pour evi
     def augmentCellToCheck(self, x, y):
         self.listeCellToCheck.append(x)
         self.listeCellToCheck.append(y)
+
+    def augmentCurrentCell(self):
+        self.currentCell += 2
 
     def emptyCellEnFeu(self):
         self.listeCellulesEnFeu.clear()

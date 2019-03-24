@@ -1,12 +1,12 @@
 ﻿# -*- coding: utf-8 -*-
 
 from tkinter import *
-from PIL import Image, ImageTk,ImageGrab
+from PIL import Image, ImageTk,Image
 import tkinter.messagebox
 import tkinter.filedialog
-import AlgoCSV #ALGOCSV permet de générer un csv en fonction du nombre de cellules choisies par l'utilisateur
-import varCommunes as VC #varCommunes contient une classe qui rassemble toutes les variables utiles aux différents fichiers
-import algorithmeForet as algoForet #Fichier qui contient l'algorithme
+import AlgoCSV  #ALGOCSV permet de générer un csv en fonction du nombre de cellules choisies par l'utilisateur
+import varCommunes as VC  #varCommunes contient une classe qui rassemble toutes les variables utiles aux différents fichiers
+import algorithmeForet as algoForet  #Fichier qui contient l'algorithme
 import csv
 import classDialectCsv
 
@@ -17,13 +17,15 @@ def Clic(event):
     Y = int(Y/100)*100
     vg.augmentCellEnFeu(X, Y)
     vg.augmentCellToCheck(X,Y)
+    print(vg.getCellToCheck())
+    print(vg.getCellEnFeu())
 
 def enregistrer():
     x = canvas.winfo_rootx()
     y = canvas.winfo_rooty()
     w = canvas.winfo_width()
     h = canvas.winfo_height()
-    image = ImageGrab.grab((x + 2, y + 2, x + w - 2, y + h - 2))
+    image = Image.grab((x + 2, y + 2, x + w - 2, y + h - 2))
     image.save("resulat_simulation.png")
 
 def dix () :
@@ -35,7 +37,6 @@ def cinquante () :
 def cent () :
     vg.setNbCell(100)
 
-
 # Déroulement de l'algorithme :
 
 def sim_auto():
@@ -43,21 +44,23 @@ def sim_auto():
         tmpCellEnFeu, tmpListeForet = algoForet.propagationFeu(vg.getNbCellules(), vg.getCellToCheck(), vg.getListeForet(), vg.getCellUpdated()) #On test d'abord si le feu peut se propager
         vg.setNewListeForet(tmpListeForet)
 
-        for j in range(len(tmpCellEnFeu)):
+        for j in range(len(tmpCellEnFeu)):                              #On ajoute tout les arbres a bruler dans la liste cellEnFeu
             vg.augmentCellEnFeu(tmpCellEnFeu[j], tmpCellEnFeu[j+1])
 
         vg.setCellUpdated(vg.getCellUpdated()+2)
 
     cellEnFeu = vg.getCellEnFeu()
-    for i in range(0, cellEnFeu, 2):
+    for i in range(0, len(cellEnFeu), 2):
         vg.augmentCellToCheck(cellEnFeu[i], cellEnFeu[i+1])
 
-    if(len(vg.getCellEnFeu()) > 0):
+    if(len(cellEnFeu) > 0):
         for i in range(0, len(vg.getCellEnFeu()), 2):
-            Fenetre.update()
-            pass             #On affiche les nouveaux arbres à brûler
+            #On affiche les nouveaux arbres à brûler
+            pass
 
+    vg.augmentCurrentCell()
     vg.emptyCellEnFeu()
+    vg.augmentLoopCount()
     canvas.after(2000, sim_auto)
 
 def pasapas():
@@ -71,15 +74,17 @@ def pasapas():
         vg.setCellUpdated(vg.getCellUpdated()+2)
 
     cellEnFeu = vg.getCellEnFeu()
-    for i in range(0, cellEnFeu, 2):
+    for i in range(0, len(cellEnFeu), 2):
         vg.augmentCellToCheck(cellEnFeu[i], cellEnFeu[i+1])
 
     if(len(vg.getCellEnFeu()) > 0):
-        for i in range(0, len(vg.getCellEnFeu()), 2):
-            Fenetre.update()
-            pass             #On affiche les nouveaux arbres à brûler
-
+        for i in range(0, len(cellEnFeu), 2):
+            #On affiche les nouveaux arbres à brûler
+            pass
+                    
+    vg.augmentCurrentCell()
     vg.emptyCellEnFeu()
+    vg.augmentLoopCount()
 
 # Fin des fonctions concernant l'algorithme
 
@@ -100,14 +105,14 @@ def createMap(event):
         for row in reader:
             cordX = 0
             for i in row:
-                int(i)
+                i = int(i)
                 if i == 0:
                     canvas.create_image(cordX, cordY, anchor=tkinter.NW, image=grass)
                 elif i==10:
                     canvas.create_image(cordX, cordY, anchor=tkinter.NW, image=grass)
                 cordX = cordX+tailleImg
             cordY = cordY+tailleImg
-    canvas.mainloop()
+    Fenetre.mainloop()
 	
 
 vg = VC.varGlobales() #vg est une instance de varGlobales
@@ -116,7 +121,7 @@ vg.setHauteur(800)
 vg.setNbCell(10)
 
 Fenetre = Tk()
-Fenetre.title("Image")
+Fenetre.title("Fenetre de simulation")
 Fenetre.geometry('1000x1000')
 canvas = Canvas(Fenetre, width = 800, height = 800, background='grey')
 menubar = Menu(Fenetre)
