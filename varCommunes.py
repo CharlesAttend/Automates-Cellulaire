@@ -35,6 +35,8 @@ class varGlobales():  # Classe stockant quelques 'variables'/constantes pour evi
         return self.largeurFenetre
     def getNbCellules(self):
         return self.nbCellules
+    def getLengthCell(self):
+    	return self.largeurFenetre/self.nbCellules
     def getNomCsv(self):
         return self.nomCsv
     def getTexturesName(self):

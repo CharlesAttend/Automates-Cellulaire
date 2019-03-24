@@ -2,6 +2,7 @@
 
 from tkinter import *
 from PIL import Image, ImageTk,Image
+from math import ceil
 import tkinter.messagebox
 import tkinter.filedialog
 import AlgoCSV  #ALGOCSV permet de générer un csv en fonction du nombre de cellules choisies par l'utilisateur
@@ -15,8 +16,9 @@ def Clic(event):
     Y = event.y
     X = int(X/100)*100
     Y = int(Y/100)*100
-    vg.augmentCellEnFeu(X, Y)
-    vg.augmentCellToCheck(X,Y)
+    print(vg.getLengthCell())
+    vg.augmentCellEnFeu(ceil(X/vg.getLengthCell()), ceil(Y/vg.getLengthCell()))
+    vg.augmentCellToCheck(ceil(X/vg.getLengthCell()), ceil(Y/vg.getLengthCell()))
     print(vg.getCellToCheck())
     print(vg.getCellEnFeu())
 
