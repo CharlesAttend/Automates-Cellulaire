@@ -37,11 +37,11 @@ def propagationFeu(nbCellLignes, cellulesToCheck, foret, currentCell):          
     for j in range(yMin, yMax, 1):
         for i in range(xMin, xMax, 1):
             if(i != cellToCheck[currentCell] and j != cellToCheck[currentCell+1]):
-                if(listeForet[j][i] == 1):
+                if(listeForet[j][i] == "0"):
                     listeCellEnFeu.append(i)
                     listeCellEnFeu.append(j)
-                    listeForet[j][i] = 2
+                    listeForet[j][i] = "2"
             else:
-                listeForet[j][i] = 2
+                listeForet[j][i] = "2"
 
     return list(listeCellEnFeu), list(listeForet)

@@ -21,6 +21,7 @@ def Clic(event):
     vg.augmentCellToCheck(ceil(X/vg.getLengthCell()), ceil(Y/vg.getLengthCell()))
     print(vg.getCellToCheck())
     print(vg.getCellEnFeu())
+    vg.setListeForet()
 
 def enregistrer():
     x = canvas.winfo_rootx()
@@ -42,7 +43,7 @@ def cent () :
 # Déroulement de l'algorithme :
 
 def sim_auto():
-    for i in range(vg.getCurrenCell(), len(vg.getCellToCheck())//2):
+    for i in range(vg.getCurrentCell(), len(vg.getCellToCheck())//2):
         tmpCellEnFeu, tmpListeForet = algoForet.propagationFeu(vg.getNbCellules(), vg.getCellToCheck(), vg.getListeForet(), vg.getCurrentCell()) #On test d'abord si le feu peut se propager
         vg.setNewListeForet(tmpListeForet)
 
@@ -66,7 +67,7 @@ def sim_auto():
     canvas.after(2000, sim_auto)
 
 def pasapas():
-    for i in range(vg.getCurrenCell(), len(vg.getCellToCheck())//2):
+    for i in range(vg.getCurrentCell(), len(vg.getCellToCheck())//2):
         tmpCellEnFeu, tmpListeForet = algoForet.propagationFeu(vg.getNbCellules(), vg.getCellToCheck(), vg.getListeForet(), vg.getCurrentCell()) #On test d'abord si le feu peut se propager
         vg.setNewListeForet(tmpListeForet)
 
@@ -115,7 +116,6 @@ def createMap(event):
                 cordX = cordX+tailleImg
             cordY = cordY+tailleImg
     Fenetre.mainloop()
-	
 
 vg = VC.varGlobales() #vg est une instance de varGlobales
 vg.setLargeur(800)
