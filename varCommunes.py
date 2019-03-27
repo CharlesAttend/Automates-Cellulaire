@@ -31,16 +31,22 @@ class varGlobales():  # Classe stockant quelques 'variables'/constantes pour evi
 
     def getHauteur(self):
         return self.hauteurFenetre
+        
     def getLargeur(self):
         return self.largeurFenetre
+
     def getNbCellules(self):
         return self.nbCellules
+
     def getLengthCell(self):
     	return self.largeurFenetre/self.nbCellules
+
     def getNomCsv(self):
         return self.nomCsv
+
     def getTexturesName(self):
         return (self.textureArbre, self.textureArbreBrule, self.textureArbreEnFeu, self.textureEau, self.textureSol)
+
     def getLoopCount(self):
         return self.loopCount
 
@@ -60,10 +66,13 @@ class varGlobales():  # Classe stockant quelques 'variables'/constantes pour evi
 
     def setLargeur(self, largeur):
         self.largeurFenetre = largeur
+
     def setHauteur(self, hauteur):
         self.hauteurFenetre = hauteur
+
     def setNbCell(self, nb):
         self.nbCellules = nb
+
     def setListeForet(self):
         with open(self.nomCsv, "r", newline='') as f:
             reader = csv.reader(f, classDialectCsv.Dialect())
@@ -72,6 +81,7 @@ class varGlobales():  # Classe stockant quelques 'variables'/constantes pour evi
                 doubleList.append(row)
             self.listeForet = list(doubleList)
             print("Liste Foret : ", self.listeForet)
+
     def augmentLoopCount(self):
         self.loopCount += 1
 

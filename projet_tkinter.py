@@ -77,9 +77,10 @@ def pasapas():
             vg.augmentCellEnFeu(tmpCellEnFeu[j], tmpCellEnFeu[j+1])
 
         vg.augmentCurrentCell()
+        print(tmpCellEnFeu)
 
     cellEnFeu = vg.getCellEnFeu()
-    for i in range(len(cellEnFeu)):
+    for i in range(0, len(cellEnFeu), 2):
         vg.augmentCellToCheck(cellEnFeu[i], cellEnFeu[i+1])
 
     if(len(cellEnFeu) > 0):
@@ -90,6 +91,7 @@ def pasapas():
     vg.augmentCellUpdated()
     vg.emptyCellEnFeu()
     vg.augmentLoopCount()
+    print("executed!")
 
 # Fin des fonctions concernant l'algorithme
 
