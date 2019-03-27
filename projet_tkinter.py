@@ -47,10 +47,11 @@ def sim_auto():
         tmpCellEnFeu, tmpListeForet = algoForet.propagationFeu(vg.getNbCellules(), vg.getCellToCheck(), vg.getListeForet(), vg.getCurrentCell()) #On test d'abord si le feu peut se propager
         vg.setNewListeForet(tmpListeForet)
 
-        for j in range(len(tmpCellEnFeu)):                              #On ajoute tout les arbres a bruler dans la liste cellEnFeu
+        for j in range(0, len(tmpCellEnFeu), 2):                              #On ajoute tout les arbres a bruler dans la liste cellEnFeu
             vg.augmentCellEnFeu(tmpCellEnFeu[j], tmpCellEnFeu[j+1])
 
         vg.augmentCurrentCell()
+        print(tmpCellEnFeu)
 
     cellEnFeu = vg.getCellEnFeu()
     for i in range(0, len(cellEnFeu), 2):
@@ -64,6 +65,7 @@ def sim_auto():
     vg.augmentCellUpdated()
     vg.emptyCellEnFeu()
     vg.augmentLoopCount()
+    print("executed!")
     canvas.after(2000, sim_auto)
 
 def pasapas():
@@ -71,13 +73,13 @@ def pasapas():
         tmpCellEnFeu, tmpListeForet = algoForet.propagationFeu(vg.getNbCellules(), vg.getCellToCheck(), vg.getListeForet(), vg.getCurrentCell()) #On test d'abord si le feu peut se propager
         vg.setNewListeForet(tmpListeForet)
 
-        for j in range(len(tmpCellEnFeu)):                              #On ajoute tout les arbres a bruler dans la liste cellEnFeu
+        for j in range(0, len(tmpCellEnFeu), 2):                              #On ajoute tout les arbres a bruler dans la liste cellEnFeu
             vg.augmentCellEnFeu(tmpCellEnFeu[j], tmpCellEnFeu[j+1])
 
         vg.augmentCurrentCell()
 
     cellEnFeu = vg.getCellEnFeu()
-    for i in range(0, len(cellEnFeu), 2):
+    for i in range(len(cellEnFeu)):
         vg.augmentCellToCheck(cellEnFeu[i], cellEnFeu[i+1])
 
     if(len(cellEnFeu) > 0):
@@ -103,7 +105,7 @@ def createMap(event):
     tailleImg = 80
     grass = ImageTk.PhotoImage(Image.open("textures/grass80x80.png"))
     cordY = 0
-    with open("csv.csv", "r", newline='') as f:
+    with open("foret.csv", "r", newline='') as f:
         reader = csv.reader(f, classDialectCsv.Dialect())
         for row in reader:
             cordX = 0

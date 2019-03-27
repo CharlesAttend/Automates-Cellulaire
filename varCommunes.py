@@ -11,7 +11,7 @@ class varGlobales():  # Classe stockant quelques 'variables'/constantes pour evi
         self.nbCellules = 0  # Nombre de cellules
         self.loopCount = 0
 
-        self.nomCsv  = 'csv.csv'  # Nom du csv permettant la generation du csv
+        self.nomCsv  = 'foret.csv'  # Nom du csv permettant la generation du csv
 
         # Retourne les différents nom des textures
         self.textureArbre  = 'textures/arbre.png'
@@ -65,7 +65,7 @@ class varGlobales():  # Classe stockant quelques 'variables'/constantes pour evi
     def setNbCell(self, nb):
         self.nbCellules = nb
     def setListeForet(self):
-        with open("csv.csv", "r", newline='') as f:
+        with open(self.nomCsv, "r", newline='') as f:
             reader = csv.reader(f, classDialectCsv.Dialect())
             doubleList = []
             for row in reader:
@@ -86,8 +86,6 @@ class varGlobales():  # Classe stockant quelques 'variables'/constantes pour evi
     def augmentCellEnFeu(self, x, y):
         self.listeCellulesEnFeu.append(x)
         self.listeCellulesEnFeu.append(y)
-        print("vg liste cellEnFeu :")
-        print(self.listeCellulesEnFeu)
 
     def augmentCellToCheck(self, x, y):
         self.listeCellToCheck.append(x)
