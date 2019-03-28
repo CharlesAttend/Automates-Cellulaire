@@ -12,15 +12,15 @@ def propagationFeu(nbCellLignes, cellulesToCheck, foret, currentCell):          
 
     if(cellToCheck[currentCell] == 0):
         xMin = cellToCheck[currentCell]
-        XMax = cellToCheck[currentCell]+1
+        xMax = cellToCheck[currentCell]+1
 
     elif(cellToCheck[currentCell] == nbCellLignes):
         xMin = cellToCheck[currentCell]-1
-        XMax = cellToCheck[currentCell]
+        xMax = cellToCheck[currentCell]
 
     else:
         xMin = cellToCheck[currentCell]-1
-        XMax = cellToCheck[currentCell]+1
+        xMax = cellToCheck[currentCell]+1
 
     if(cellToCheck[currentCell+1] == 0):
         yMin = cellToCheck[currentCell+1]
@@ -32,16 +32,21 @@ def propagationFeu(nbCellLignes, cellulesToCheck, foret, currentCell):          
 
     else:
         yMin = cellToCheck[currentCell+1]-1
-        yMax = cellToCheck[currentCell+1]-1
+        yMax = cellToCheck[currentCell+1]+1
 
-    for j in range(yMin, yMax, 1):
-        for i in range(xMin, xMax, 1):
-            if(i != cellToCheck[currentCell] and j != cellToCheck[currentCell+1]):
-                if(listeForet[j][i] == 1):
+    print("xMin:xMax",xMin,":",xMax)
+    print("yMin:yMax",yMin,":",yMax)
+
+    for j in range(yMin, yMax):
+        for i in range(xMin, xMax):
+            #if(i != cellToCheck[currentCell] and j != cellToCheck[currentCell+1]):
+                if(listeForet[j][i] == "0"):
+                    print("Une cellule voisine est un arbre!")
                     listeCellEnFeu.append(i)
                     listeCellEnFeu.append(j)
-                    listeForet[j][i] = 2
-            else:
-                listeForet[j][i] = 2
-
+                    listeForet[j][i] = "2"
+            #else:
+                #listeForet[j][i] = "2"
+    print("Liste cellules en feu (En Sortie d'algo):  ", list(listeCellEnFeu))
+    print("Test égalité ancienne et nouvelle liste forêt : ", list(foret) == list(listeForet))
     return list(listeCellEnFeu), list(listeForet)
