@@ -53,12 +53,16 @@ class varGlobales():  # Classe stockant quelques 'variables'/constantes pour evi
 
     def getListeForet(self):
         return list(self.listeForet)
+
     def getCellEnFeu(self):
         return list(self.listeCellulesEnFeu)
+
     def getCellUpdated(self):
     	return self.cellUpdated
+
     def getCellToCheck(self):
         return list(self.listeCellToCheck)
+
     def getCurrentCell(self):
         return self.currentCell
 
@@ -80,7 +84,6 @@ class varGlobales():  # Classe stockant quelques 'variables'/constantes pour evi
             for row in reader:
                 doubleList.append(row)
             self.listeForet = list(doubleList)
-            print("Liste Foret : ", self.listeForet)
 
     def augmentLoopCount(self):
         self.loopCount += 1

@@ -14,11 +14,11 @@ import classDialectCsv
 def Clic(event):
     X = event.x
     Y = event.y
-    X = int(X/100)*100
-    Y = int(Y/100)*100
+    #X = int(X/100)*100
+    #Y = int(Y/100)*100
     print(vg.getLengthCell())
-    vg.augmentCellEnFeu(ceil(X/vg.getLengthCell()), ceil(Y/vg.getLengthCell()))
-    vg.augmentCellToCheck(ceil(X/vg.getLengthCell()), ceil(Y/vg.getLengthCell()))
+    vg.augmentCellEnFeu(X, Y)
+    vg.augmentCellToCheck(X, Y)
     print(vg.getCellToCheck())
     print(vg.getCellEnFeu())
     vg.setListeForet()
@@ -97,9 +97,9 @@ def pasapas():
 
 
 def drawGrid(event): #Fonction qui dessine une grille sur le Canvas pour tester la position des textures
-    for i in range(0, 1000, 1000//vg.getNbCellules()):
-        canvas.create_line(0, i, 1000, i)
-        canvas.create_line(i, 0, i, 1000)
+    for i in range(0, 800, 800//vg.getNbCellules()):
+        canvas.create_line(0, i, 800, i)
+        canvas.create_line(i, 0, i, 800)
 
 
 def createMap(event):
@@ -118,6 +118,7 @@ def createMap(event):
                 cordX = cordX+tailleImg
             cordY = cordY+tailleImg
     Fenetre.mainloop()
+    drawGrid()
 
 vg = VC.varGlobales() #vg est une instance de varGlobales
 vg.setLargeur(800)
@@ -148,7 +149,7 @@ auto.grid(row = 0, column = 0, sticky = "n")
 manuel.grid(row = 1, column = 0, sticky = "n")
 
 canvas.bind("<Button-1>", Clic)
-#canvas.bind("<Button-3>", drawGrid)
+canvas.bind("<Button-3>", drawGrid)
 canvas.bind("<Button-3>", createMap)
 # Affichage du menu
 Fenetre.config(menu = menubar)

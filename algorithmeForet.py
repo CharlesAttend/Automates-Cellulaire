@@ -48,5 +48,4 @@ def propagationFeu(nbCellLignes, cellulesToCheck, foret, currentCell):          
             #else:
                 #listeForet[j][i] = "2"
     print("Liste cellules en feu (En Sortie d'algo):  ", list(listeCellEnFeu))
-    print("Test égalité ancienne et nouvelle liste forêt : ", list(foret) == list(listeForet))
     return list(listeCellEnFeu), list(listeForet)
