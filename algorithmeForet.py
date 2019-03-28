@@ -37,8 +37,16 @@ def propagationFeu(nbCellLignes, cellulesToCheck, foret, currentCell):          
     print("xMin:xMax",xMin,":",xMax)
     print("yMin:yMax",yMin,":",yMax)
 
-    for j in range(yMin, yMax):
-        for i in range(xMin, xMax):
+    for j in range(yMin, yMax+1):
+        for i in range(xMin, xMax+1):
+
+            print("Cellules à ne pas tester: ", cellToCheck[currentCell], " ", cellToCheck[currentCell+1])
+            print("i: ", i, "j: ", j)
+            print("i != cellToCheck[currentCell]: ", i != cellToCheck[currentCell])
+            print("j != cellToCheck[currentCell+1]: ", j != cellToCheck[currentCell+1])
+
+            print(i != cellToCheck[currentCell] and j != cellToCheck[currentCell+1])
+
             if(i != cellToCheck[currentCell] and j != cellToCheck[currentCell+1]):
                 if(listeForet[j][i] == "1"):
                     print("Une cellule voisine est un arbre!")
