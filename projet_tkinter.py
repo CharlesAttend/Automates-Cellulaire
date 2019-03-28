@@ -104,12 +104,13 @@ def drawGrid(): #Fonction qui dessine une grille sur le Canvas pour tester la po
 
 def updateMap(cellEnFeu):
     #for i in range()
-    print("ye")
+    pass
 
 def createMap(event):
     algocvs.createCsv()
     grass = ImageTk.PhotoImage(Image.open("textures/grass80x80.png"))
     tree = ImageTk.PhotoImage(Image.open("textures/tree80x80.png"))
+    water = ImageTk.PhotoImage(Image.open("textures/water80x80.png"))
     cordY = 0
     tailleImg = vg.getLengthCell()
     with open("csv.csv", "r", newline='') as f:
@@ -123,6 +124,8 @@ def createMap(event):
                     canvas.create_image(cordX, cordY, anchor=tkinter.NW, image=grass)
                 elif i == 1:
                     canvas.create_image(cordX, cordY, anchor=tkinter.NW, image=tree)
+                else:
+                    canvas.create_image(cordX, cordY, anchor=tkinter.NW, image=water)
                 cordX = cordX+tailleImg                     #On augmente les cords pour afficher l'image au bon endroit après
             cordY = cordY+tailleImg
     Fenetre.mainloop()
@@ -165,3 +168,4 @@ Fenetre.config(menu = menubar)
 canvas.place(relx = 0.5, rely = 0.5, anchor = CENTER)
 gifdict = {}
 Fenetre.mainloop()
+
