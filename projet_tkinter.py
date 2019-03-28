@@ -59,8 +59,9 @@ def sim_auto():
 
     if(len(cellEnFeu) > 0):
         for i in range(0, len(vg.getCellEnFeu()), 2):
+            updateMap(cellEnFeu)
             #On affiche les nouveaux arbres à brûler
-            pass
+            
 
     vg.augmentCellUpdated()
     vg.emptyCellEnFeu()
@@ -96,26 +97,33 @@ def pasapas():
 # Fin des fonctions concernant l'algorithme
 
 
-def drawGrid(event): #Fonction qui dessine une grille sur le Canvas pour tester la position des textures
+def drawGrid(): #Fonction qui dessine une grille sur le Canvas pour tester la position des textures
     for i in range(0, 800, 800//vg.getNbCellules()):
         canvas.create_line(0, i, 800, i)
         canvas.create_line(i, 0, i, 800)
 
+def updateMap(cellEnFeu):
+    #for i in range()
+    print("ye")
 
 def createMap(event):
     algocvs.createCsv()
     grass = ImageTk.PhotoImage(Image.open("textures/grass80x80.png"))
+    tree = ImageTk.PhotoImage(Image.open("textures/tree80x80.png"))
     cordY = 0
-    tailleImg = 80
+    tailleImg = vg.getLengthCell()
     with open("csv.csv", "r", newline='') as f:
         reader = csv.reader(f, classDialectCsv.Dialect())
-        for row in reader:
-            cordX = 0
-            for i in row:
-                i = int(i)
-                if i == 0:
+        for row in reader:                                  #On regarde d'abord les lignes
+            cordX = 0                                       #On reset X à chaque nouvelle ligne
+            for i in row:                                   #Ici c'est la boucle des collones || On met la valeur de la case dans i
+                i = int(i)                                  #Mon reader renvoie un i sous forme de String donc je le converti
+                #On test le i, 0=grass, 1=tree
+                if i == 0:  
                     canvas.create_image(cordX, cordY, anchor=tkinter.NW, image=grass)
-                cordX = cordX+tailleImg
+                elif i == 1:
+                    canvas.create_image(cordX, cordY, anchor=tkinter.NW, image=tree)
+                cordX = cordX+tailleImg                     #On augmente les cords pour afficher l'image au bon endroit après
             cordY = cordY+tailleImg
     Fenetre.mainloop()
     drawGrid()
