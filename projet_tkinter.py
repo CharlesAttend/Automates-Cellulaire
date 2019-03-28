@@ -46,11 +46,11 @@ def sim_auto():
         tmpCellEnFeu, tmpListeForet = algoForet.propagationFeu(vg.getNbCellules(), vg.getCellToCheck(), vg.getListeForet(), vg.getCurrentCell()) #On test d'abord si le feu peut se propager
         vg.setNewListeForet(tmpListeForet)
 
-        for j in range(0, len(tmpCellEnFeu), 2):                              #On ajoute tout les arbres a bruler dans la liste cellEnFeu
-            vg.augmentCellEnFeu(tmpCellEnFeu[j], tmpCellEnFeu[j+1])
-
+        vg.changeCellEnFeu(tmpCellEnFeu)
         vg.augmentCurrentCell()
+
         print("tmpCellEnFeu : ", tmpCellEnFeu)
+        print("Nouvelle liste CellEnFeu : ", vg.getCellEnFeu())
 
     cellEnFeu = vg.getCellEnFeu()
     for i in range(0, len(cellEnFeu), 2):

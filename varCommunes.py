@@ -96,9 +96,8 @@ class varGlobales():  # Classe stockant quelques 'variables'/constantes pour evi
     def augmentCurrentCell(self):
         self.currentCell += 2
 
-    def augmentCellEnFeu(self, x, y):
-        self.listeCellulesEnFeu.append(x)
-        self.listeCellulesEnFeu.append(y)
+    def changeCellEnFeu(self, listeCellEnFeu):
+        self.listeCellulesEnFeu = list(listeCellEnFeu)
 
     def augmentCellToCheck(self, x, y):
         self.listeCellToCheck.append(x)
