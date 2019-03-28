@@ -39,7 +39,7 @@ class varGlobales():  # Classe stockant quelques 'variables'/constantes pour evi
         return self.nbCellules
 
     def getLengthCell(self):
-    	return self.largeurFenetre/self.nbCellules
+    	return self.largeurFenetre//self.nbCellules
 
     def getNomCsv(self):
         return self.nomCsv
