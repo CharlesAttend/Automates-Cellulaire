@@ -5,3 +5,5 @@ __pycache__/varCommunes.cpython-37.pyc
 __pycache__/AlgoCSV.cpython-37.pyc
 *.csv
 *.csv
+*.csv
+*.pyc

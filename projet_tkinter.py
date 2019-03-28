@@ -103,7 +103,7 @@ def drawGrid(event): #Fonction qui dessine une grille sur le Canvas pour tester 
 
 
 def createMap(event):
-    AlgoCSV.createCsv(vg.getHauteur(), vg.getLargeur(), vg.getNbCellules())
+    AlgoCSV.createCsv(800, 800, 80)
     tailleImg = 80
     grass = ImageTk.PhotoImage(Image.open("textures/grass80x80.png"))
     cordY = 0
@@ -114,8 +114,6 @@ def createMap(event):
             for i in row:
                 i = int(i)
                 if i == 0:
-                    canvas.create_image(cordX, cordY, anchor=tkinter.NW, image=grass)
-                elif i==10:
                     canvas.create_image(cordX, cordY, anchor=tkinter.NW, image=grass)
                 cordX = cordX+tailleImg
             cordY = cordY+tailleImg
