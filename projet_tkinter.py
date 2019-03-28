@@ -65,9 +65,7 @@ def sim_auto():
     print("Nouvelle liste CellToCheck : ", vg.getCellToCheck())
 
     if(len(cellEnFeu) > 0):
-        for i in range(0, len(cellEnFeu), 2):
-            updateMap(cellEnFeu)
-            #On affiche les nouveaux arbres à brûler
+        updateMap(cellEnFeu) #On affiche les nouveaux arbres à brûler si  il y en a
             
     vg.augmentCurrentCell(vg.getCellUpdated())
     vg.emptyCellEnFeu()
@@ -101,9 +99,7 @@ def pasapas():
     print("Nouvelle liste CellToCheck : ", vg.getCellToCheck())
 
     if(len(cellEnFeu) > 0):
-        for i in range(0, len(cellEnFeu), 2):
-            updateMap(cellEnFeu)
-            #On affiche les nouveaux arbres à brûler
+        updateMap(cellEnFeu) #On affiche les nouveaux arbres à brûler si  il y en a
             
     vg.augmentCurrentCell(vg.getCellUpdated())
     vg.emptyCellEnFeu()
@@ -120,8 +116,11 @@ def drawGrid(): #Fonction qui dessine une grille sur le Canvas pour tester la po
         canvas.create_line(i, 0, i, 800)
 
 def updateMap(cellEnFeu):
-    #for i in range()
-    pass
+    tailleImg = vg.getLengthCell()
+    burningTree = ImageTk.PhotoImage(Image.open("textures/"+str(tailleImg)+"/burning_tree.png"))
+    for i in range(0, len(cellEnFeu), 2):
+        canvas.create_image(tailleImg*cellEnFeu[i]-tailleImg, tailleImg*cellEnFeu[i+1]-tailleImg, anchor=tkinter.NW, image=burningTree)
+    Fenetre.mainloop()
 
 def createMap(event):
     algocvs.createCsv()

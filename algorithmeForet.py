@@ -10,8 +10,8 @@ def propagationFeu(nbCellLignes, cellulesToCheck, foret, currentCell):          
     xMin, xMax, yMin, yMax = 0, 0, 0, 0
 
 
-    if(cellToCheck[currentCell] == 0):
-        xMin = cellToCheck[currentCell]
+    if(cellToCheck[currentCell] == 1):
+        xMin = cellToCheck[currentCell]-1
         xMax = cellToCheck[currentCell]+1
 
     elif(cellToCheck[currentCell] == nbCellLignes):
@@ -20,10 +20,10 @@ def propagationFeu(nbCellLignes, cellulesToCheck, foret, currentCell):          
 
     else:
         xMin = cellToCheck[currentCell]-1
-        xMax = cellToCheck[currentCell]+1
+        xMax = cellToCheck[currentCell]
 
-    if(cellToCheck[currentCell+1] == 0):
-        yMin = cellToCheck[currentCell+1]
+    if(cellToCheck[currentCell+1] == 1):
+        yMin = cellToCheck[currentCell+1]-1
         yMax = cellToCheck[currentCell+1]+1
 
     elif(cellToCheck[currentCell+1] == nbCellLignes):
