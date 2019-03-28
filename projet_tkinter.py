@@ -14,8 +14,8 @@ import classDialectCsv
 def Clic(event):
     X = event.x
     Y = event.y
-    #X = int(X/100)*100
-    #Y = int(Y/100)*100
+    X = ceil(X/vg.getLengthCell())
+    Y = ceil(Y/vg.getLengthCell())
     print(vg.getLengthCell())
     vg.augmentCellEnFeu(X, Y)
     vg.augmentCellToCheck(X, Y)
@@ -51,7 +51,7 @@ def sim_auto():
             vg.augmentCellEnFeu(tmpCellEnFeu[j], tmpCellEnFeu[j+1])
 
         vg.augmentCurrentCell()
-        print(tmpCellEnFeu)
+        print("tmpCellEnFeu : ", tmpCellEnFeu)
 
     cellEnFeu = vg.getCellEnFeu()
     for i in range(0, len(cellEnFeu), 2):
@@ -126,7 +126,6 @@ def createMap(event):
                 cordX = cordX+tailleImg                     #On augmente les cords pour afficher l'image au bon endroit après
             cordY = cordY+tailleImg
     Fenetre.mainloop()
-    drawGrid()
 
 vg = VC.varGlobales() #vg est une instance de varGlobales
 vg.setLargeur(800)
@@ -157,7 +156,7 @@ auto.grid(row = 0, column = 0, sticky = "n")
 manuel.grid(row = 1, column = 0, sticky = "n")
 
 canvas.bind("<Button-1>", Clic)
-canvas.bind("<Button-3>", drawGrid)
+#canvas.bind("<Button-3>", drawGrid)
 canvas.bind("<Button-3>", createMap)
 # Affichage du menu
 Fenetre.config(menu = menubar)
