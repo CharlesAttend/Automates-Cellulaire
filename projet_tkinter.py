@@ -5,7 +5,7 @@ from PIL import Image, ImageTk,Image
 from math import ceil
 import tkinter.messagebox
 import tkinter.filedialog
-import AlgoCSV  #ALGOCSV permet de générer un csv en fonction du nombre de cellules choisies par l'utilisateur
+import AlgoCSV as AC  #ALGOCSV permet de générer un csv en fonction du nombre de cellules choisies par l'utilisateur
 import varCommunes as VC  #varCommunes contient une classe qui rassemble toutes les variables utiles aux différents fichiers
 import algorithmeForet as algoForet  #Fichier qui contient l'algorithme
 import csv
@@ -103,10 +103,10 @@ def drawGrid(event): #Fonction qui dessine une grille sur le Canvas pour tester 
 
 
 def createMap(event):
-    AlgoCSV.createCsv(800, 800, 80)
-    tailleImg = 80
+    algocvs.createCsv()
     grass = ImageTk.PhotoImage(Image.open("textures/grass80x80.png"))
     cordY = 0
+    tailleImg = 80
     with open("csv.csv", "r", newline='') as f:
         reader = csv.reader(f, classDialectCsv.Dialect())
         for row in reader:
@@ -123,6 +123,8 @@ vg = VC.varGlobales() #vg est une instance de varGlobales
 vg.setLargeur(800)
 vg.setHauteur(800)
 vg.setNbCell(10)
+
+algocvs = AC.algoCSV(vg.getNomCsv(), vg.getNbCellules())
 
 Fenetre = Tk()
 Fenetre.title("Fenetre de simulation")
