@@ -16,11 +16,9 @@ def Clic(event):
     Y = event.y
     X = ceil(X/vg.getLengthCell())
     Y = ceil(Y/vg.getLengthCell())
-    print(vg.getLengthCell())
-    vg.augmentCellEnFeu(X, Y)
     vg.augmentCellToCheck(X, Y)
+    vg.augmentCellEnFeu(X, Y)
     print(vg.getCellToCheck())
-    print(vg.getCellEnFeu())
     vg.setListeForet()
 
 def enregistrer():
@@ -43,6 +41,7 @@ def cent () :
 # Déroulement de l'algorithme :
 
 def sim_auto():
+
     for i in range(vg.getCurrentCell(), len(vg.getCellToCheck())//2):
         tmpCellEnFeu, tmpListeForet = algoForet.propagationFeu(vg.getNbCellules(), vg.getCellToCheck(), vg.getListeForet(), vg.getCurrentCell()) #On test d'abord si le feu peut se propager
         vg.setNewListeForet(tmpListeForet)
@@ -68,7 +67,8 @@ def sim_auto():
     print("executed!")
     canvas.after(2000, sim_auto)
 
-def pasapas():
+"""def pasapas():
+
     for i in range(vg.getCurrentCell(), len(vg.getCellToCheck())//2):
         tmpCellEnFeu, tmpListeForet = algoForet.propagationFeu(vg.getNbCellules(), vg.getCellToCheck(), vg.getListeForet(), vg.getCurrentCell()) #On test d'abord si le feu peut se propager
         vg.setNewListeForet(tmpListeForet)
@@ -92,7 +92,7 @@ def pasapas():
     vg.emptyCellEnFeu()
     vg.augmentLoopCount()
     print("executed!")
-
+"""
 # Fin des fonctions concernant l'algorithme
 
 

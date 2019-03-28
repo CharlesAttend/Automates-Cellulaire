@@ -39,13 +39,13 @@ def propagationFeu(nbCellLignes, cellulesToCheck, foret, currentCell):          
 
     for j in range(yMin, yMax):
         for i in range(xMin, xMax):
-            #if(i != cellToCheck[currentCell] and j != cellToCheck[currentCell+1]):
-                if(listeForet[j][i] == "0"):
+            if(i != cellToCheck[currentCell] and j != cellToCheck[currentCell+1]):
+                if(listeForet[j][i] == "1"):
                     print("Une cellule voisine est un arbre!")
                     listeCellEnFeu.append(i)
                     listeCellEnFeu.append(j)
                     listeForet[j][i] = "2"
-            #else:
-                #listeForet[j][i] = "2"
+            else:
+                listeForet[j][i] = "2"
     print("Liste cellules en feu (En Sortie d'algo):  ", list(listeCellEnFeu))
     return list(listeCellEnFeu), list(listeForet)
