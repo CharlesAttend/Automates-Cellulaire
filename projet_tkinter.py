@@ -104,11 +104,11 @@ def updateMap(cellEnFeu):
 
 def createMap(event):
     algocvs.createCsv()
-    grass = ImageTk.PhotoImage(Image.open("textures/"+str(vg.getLengthCell)+"grass.png"))
-    tree = ImageTk.PhotoImage(Image.open("textures/"+str(vg.getLengthCell)+"tree.png"))
-    water = ImageTk.PhotoImage(Image.open("textures/"+str(vg.getLengthCell)+"water.png"))
-    cordY = 0
     tailleImg = vg.getLengthCell()
+    grass = ImageTk.PhotoImage(Image.open("textures/"+str(tailleImg)+"/grass.png"))
+    tree = ImageTk.PhotoImage(Image.open("textures/"+str(tailleImg)+"/tree.png"))
+    water = ImageTk.PhotoImage(Image.open("textures/"+str(tailleImg)+"/water.png"))
+    cordY = 0
     with open("csv.csv", "r", newline='') as f:
         reader = csv.reader(f, classDialectCsv.Dialect())
         for row in reader:                                  #On regarde d'abord les lignes
