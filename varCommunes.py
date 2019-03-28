@@ -96,6 +96,15 @@ class varGlobales():  # Classe stockant quelques 'variables'/constantes pour evi
     def augmentCurrentCell(self):
         self.currentCell += 2
 
+    def changeCellEnFeu(self, listeCellEnFeu):
+        self.listeCellulesEnFeu = list(listeCellEnFeu)
+
+    def changeCellToCheck(self, listeCellulesToCheck):
+        self.listeCellToCheck = list(listeCellulesToCheck)
+
+    def augmentCellUpdated(self):
+        self.cellUpdated += 2
+
     def augmentCellEnFeu(self, x, y):
         self.listeCellulesEnFeu.append(x)
         self.listeCellulesEnFeu.append(y)
@@ -103,9 +112,6 @@ class varGlobales():  # Classe stockant quelques 'variables'/constantes pour evi
     def augmentCellToCheck(self, x, y):
         self.listeCellToCheck.append(x)
         self.listeCellToCheck.append(y)
-
-    def augmentCellUpdated(self):
-        self.cellUpdated += 2
 
     def emptyCellEnFeu(self):
         self.listeCellulesEnFeu.clear()
