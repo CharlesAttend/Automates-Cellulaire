@@ -11,7 +11,7 @@ class varGlobales():  # Classe stockant quelques 'variables'/constantes pour evi
         self.nbCellules = 0  # Nombre de cellules
         self.loopCount = 0
 
-        self.nomCsv  = 'foret.csv'  # Nom du csv permettant la generation du csv
+        self.nomCsv  = 'csv.csv'  # Nom du csv permettant la generation du csv
 
         # Retourne les différents nom des textures
         self.textureArbre  = 'textures/arbre.png'
@@ -31,7 +31,7 @@ class varGlobales():  # Classe stockant quelques 'variables'/constantes pour evi
 
     def getHauteur(self):
         return self.hauteurFenetre
-        
+
     def getLargeur(self):
         return self.largeurFenetre
 

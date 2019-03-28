@@ -107,7 +107,7 @@ def createMap(event):
     tailleImg = 80
     grass = ImageTk.PhotoImage(Image.open("textures/grass80x80.png"))
     cordY = 0
-    with open("foret.csv", "r", newline='') as f:
+    with open("csv.csv", "r", newline='') as f:
         reader = csv.reader(f, classDialectCsv.Dialect())
         for row in reader:
             cordX = 0
