@@ -44,27 +44,25 @@ def sim_auto():
 
     for i in range(vg.getCurrentCell(), len(vg.getCellToCheck())//2):
         tmpCellEnFeu, tmpListeForet = algoForet.propagationFeu(vg.getNbCellules(), vg.getCellToCheck(), vg.getListeForet(), vg.getCurrentCell()) #On test d'abord si le feu peut se propager
-        vg.setNewListeForet(tmpListeForet)
 
+        vg.setNewListeForet(tmpListeForet)
         vg.changeCellEnFeu(tmpCellEnFeu)
         vg.augmentCurrentCell()
 
         print("tmpCellEnFeu : ", tmpCellEnFeu)
         print("Nouvelle liste CellEnFeu : ", vg.getCellEnFeu())
 
-    cellEnFeu = vg.getCellEnFeu()
-    for i in range(0, len(cellEnFeu), 2):
-        vg.augmentCellToCheck(cellEnFeu[i], cellEnFeu[i+1])
+    cellEnFeu = list(vg.getCellEnFeu())
+    vg.changeCellToCheck(cellEnFeu)
 
     if(len(cellEnFeu) > 0):
         for i in range(0, len(vg.getCellEnFeu()), 2):
             #On affiche les nouveaux arbres à brûler
             pass
 
-    vg.augmentCellUpdated()
     vg.emptyCellEnFeu()
     vg.augmentLoopCount()
-    print("executed!")
+    print(vg.getLoopCount())
     canvas.after(2000, sim_auto)
 
 """def pasapas():
