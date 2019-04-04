@@ -39,6 +39,3 @@ class algoCSV():
             doubleListe.append(listX)
         return doubleListe
 
-    #Water = 5%
-    #Tree = 70%
-    #Grass = 25%
