@@ -5,7 +5,7 @@ import classDialectCsv
 import copy
 
 class algoCSV():
-    def __init__(self,csvName1, nbCellule1):
+    def __init__(self, csvName1, nbCellule1):
         self.csvName = csvName1
         self.nbCellule = nbCellule1
 

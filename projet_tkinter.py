@@ -92,12 +92,6 @@ def pasapas():
     print("Génération n°", vg.getLoopCount())
 # Fin des fonctions concernant l'algorithme
 
-
-def drawGrid(): #Fonction qui dessine une grille sur le Canvas pour tester la position des textures
-    for i in range(0, 800, 800//vg.getNbCellules()):
-        canvas.create_line(0, i, 800, i)
-        canvas.create_line(i, 0, i, 800)
-
 def updateMap(cellEnFeu):
     tailleImg = vg.getLengthCell()
     burningTree = ImageTk.PhotoImage(Image.open("textures/"+str(tailleImg)+"/burning_tree.png"))
@@ -158,7 +152,6 @@ auto.grid(row = 0, column = 0, sticky = "n")
 manuel.grid(row = 1, column = 0, sticky = "n")
 
 canvas.bind("<Button-1>", Clic)
-#canvas.bind("<Button-3>", drawGrid)
 canvas.bind("<Button-3>", createMap)
 # Affichage du menu
 Fenetre.config(menu = menubar)
@@ -167,4 +160,3 @@ Fenetre.config(menu = menubar)
 canvas.place(relx = 0.5, rely = 0.5, anchor = CENTER)
 gifdict = {}
 Fenetre.mainloop()
-

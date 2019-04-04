@@ -8,17 +8,10 @@ class varGlobales():  # Classe stockant quelques 'variables'/constantes pour evi
     def __init__(self):  # Constructeur permettant de definir les differents attributs de la classe
         self.hauteurFenetre = 0
         self.largeurFenetre = 0
-        self.nbCellules = 0  # Nombre de cellules
+        self.nbCellules = 0  # Nombre de cellules par lignes
         self.loopCount = 0
 
         self.nomCsv  = 'csv.csv'  # Nom du csv permettant la generation du csv
-
-        # Retourne les différents nom des textures
-        self.textureArbre  = 'textures/arbre.png'
-        self.textureSol = 'textures/grass80x80.png'
-        self.textureEau = 'textures/eau.png'
-        self.textureArbreBrule = 'textures/arbreBrule.png'
-        self.textureArbreEnFeu = 'textures/arbreEnFeu.png'
 
         self.listeForet = []
         self.listeCellulesEnFeu = []
@@ -40,9 +33,6 @@ class varGlobales():  # Classe stockant quelques 'variables'/constantes pour evi
 
     def getNomCsv(self):
         return self.nomCsv
-
-    def getTexturesName(self):
-        return (self.textureArbre, self.textureArbreBrule, self.textureArbreEnFeu, self.textureEau, self.textureSol)
 
     def getLoopCount(self):
         return self.loopCount
@@ -68,7 +58,7 @@ class varGlobales():  # Classe stockant quelques 'variables'/constantes pour evi
     def setNbCell(self, nb):
         self.nbCellules = nb
 
-    def setListeForet(self):
+    def setListeForet(self):    #Transformation du csv.csv en une liste à deux dimensions fonctionnelle et plus rapide d'accès
         with open(self.nomCsv, "r", newline='') as f:
             reader = csv.reader(f, classDialectCsv.Dialect())
             doubleList = []
