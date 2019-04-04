@@ -2,7 +2,7 @@
 import csv
 from random import random, randint
 import classDialectCsv
-
+import copy
 
 class algoCSV():
     def __init__(self,csvName1, nbCellule1):
@@ -39,3 +39,6 @@ class algoCSV():
             doubleListe.append(listX)
         return doubleListe
 
+    #Water = 5%
+    #Tree = 70%
+    #Grass = 25%

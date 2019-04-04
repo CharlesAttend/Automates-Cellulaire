@@ -12,16 +12,18 @@ import csv
 import classDialectCsv
 
 def Clic(event):
+    vg.setListeForet()                      #On créer la listeForet à partir du CSV
+    listeForet = list(vg.getListeForet())
     X = event.x
     Y = event.y
     X = ceil(X/vg.getLengthCell())-1
     Y = ceil(Y/vg.getLengthCell())-1
 
+    if(listeForet[Y][X] != '1'): return False
+
     vg.augmentCellToCheck(X, Y)
     print("Coords:  ", X, ", ", Y)
     vg.augmentCellEnFeu(X, Y)
-    vg.setListeForet()                      #On créer la listeForet à partir du CSV
-    listeForet = list(vg.getListeForet())
     listeForet[Y][X] = '3'
     vg.setNewListeForet(listeForet)
     updateMap(vg.getCellEnFeu())
