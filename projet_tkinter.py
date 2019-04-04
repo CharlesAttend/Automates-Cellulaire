@@ -119,7 +119,8 @@ def updateMap(cellEnFeu):
     tailleImg = vg.getLengthCell()
     burningTree = ImageTk.PhotoImage(Image.open("textures/"+str(tailleImg)+"/burning_tree.png"))
     for i in range(0, len(cellEnFeu), 2):
-        canvas.create_image(tailleImg*cellEnFeu[i]-tailleImg, tailleImg*cellEnFeu[i+1]-tailleImg, anchor=tkinter.NW, image=burningTree)
+        canvas.itemconfigure(str(cellEnFeu[i])+","+str(cellEnFeu[i+1]), image=burningTree)
+        #canvas.create_image(tailleImg*cellEnFeu[i]-tailleImg, tailleImg*cellEnFeu[i+1]-tailleImg, anchor=tkinter.NW, image=burningTree)
     Fenetre.mainloop()
 
 def createMap(event):
@@ -129,21 +130,26 @@ def createMap(event):
     tree = ImageTk.PhotoImage(Image.open("textures/"+str(tailleImg)+"/tree.png"))
     water = ImageTk.PhotoImage(Image.open("textures/"+str(tailleImg)+"/water.png"))
     cordY = 0
+    gridY = 0
     with open("csv.csv", "r", newline='') as f:
+        canvas.delete("all")                                #Reset du canvas précédent
         reader = csv.reader(f, classDialectCsv.Dialect())
         for row in reader:                                  #On regarde d'abord les lignes
             cordX = 0                                       #On reset X à chaque nouvelle ligne
+            gridX = 0
             for i in row:                                   #Ici c'est la boucle des collones || On met la valeur de la case dans i
                 i = int(i)                                  #Mon reader renvoie un i sous forme de String donc je le converti
                 #On test le i, 0=grass, 1=tree
                 if i == 0:  
-                    canvas.create_image(cordX, cordY, anchor=tkinter.NW, image=grass)
+                    canvas.create_image(cordX, cordY, anchor=tkinter.NW, image=grass, tag=str(gridX)+","+str(gridY))
                 elif i == 1:
-                    canvas.create_image(cordX, cordY, anchor=tkinter.NW, image=tree)
+                    canvas.create_image(cordX, cordY, anchor=tkinter.NW, image=tree, tag=str(gridX)+","+str(gridY))
                 else:
-                    canvas.create_image(cordX, cordY, anchor=tkinter.NW, image=water)
+                    canvas.create_image(cordX, cordY, anchor=tkinter.NW, image=water, tag=str(gridX)+","+str(gridY))
                 cordX = cordX+tailleImg                     #On augmente les cords pour afficher l'image au bon endroit après
+                gridX+=1
             cordY = cordY+tailleImg
+            gridY+=1
     Fenetre.mainloop()
 
 vg = VC.varGlobales() #vg est une instance de varGlobales
@@ -156,7 +162,7 @@ algocvs = AC.algoCSV(vg.getNomCsv(), vg.getNbCellules())
 Fenetre = Tk()
 Fenetre.title("Fenetre de simulation")
 Fenetre.geometry('1000x1000')
-canvas = Canvas(Fenetre, width = 800, height = 800, background='grey')
+canvas = Canvas(Fenetre, width = vg.getLargeur(), height = vg.getHauteur(), background='grey')
 menubar = Menu(Fenetre)
 
 menufichier = Menu(menubar, tearoff = 0)
