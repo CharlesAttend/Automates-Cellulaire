@@ -17,9 +17,12 @@ def Clic(event):
     X = ceil(X/vg.getLengthCell())
     Y = ceil(Y/vg.getLengthCell())
     vg.augmentCellToCheck(X, Y)
-    vg.augmentCellEnFeu(X, Y)
-    print(vg.getCellToCheck())
-    vg.setListeForet()
+    #vg.augmentCellEnFeu(X, Y)
+    vg.setListeForet()                      #On créer la listeForet à partir du CSV
+    listeForet = list(vg.getListeForet())
+    listeForet[Y-1][X-1] = '3'
+    print(listeForet)
+    vg.setNewListeForet(listeForet)
 
 def enregistrer():
     x = canvas.winfo_rootx()
@@ -42,71 +45,51 @@ def cent () :
 
 def sim_auto():
 
-    print("Length cell to check : ", len(vg.getCellToCheck())//2)
-    print("Current cell : ", vg.getCurrentCell())
-    
-    for i in range(vg.getCurrentCell(), len(vg.getCellToCheck())//2):
-        tmpCellEnFeu, tmpListeForet = algoForet.propagationFeu(vg.getNbCellules(), vg.getCellToCheck(), vg.getListeForet(), i) #On test d'abord si le feu peut se propager
+    for i in range(0, len(vg.getCellToCheck()), 2):
 
+        tmpCellEnFeu, tmpListeForet = algoForet.propagationFeu(vg.getNbCellules(), vg.returnCellToCheck(i), vg.returnCellToCheck(i+1), vg.getListeForet()) #On test d'abord si le feu peut se propager
         vg.setNewListeForet(tmpListeForet)
 
         for j in range(0, len(tmpCellEnFeu), 2):
             vg.augmentCellEnFeu(tmpCellEnFeu[j], tmpCellEnFeu[j+1])
 
-        vg.augmentCellUpdated()
-
-        print("tmpCellEnFeu : ", tmpCellEnFeu)
-        print("Nouvelle liste CellEnFeu : ", vg.getCellEnFeu())
 
     cellEnFeu = list(vg.getCellEnFeu())
-    for i in range(0, len(cellEnFeu), 2):
-        vg.augmentCellToCheck(cellEnFeu[i], cellEnFeu[i+1])
+    vg.changeCellToCheck(cellEnFeu)
 
+    print("Nouvelle liste CellEnFeu : ", vg.getCellEnFeu())
     print("Nouvelle liste CellToCheck : ", vg.getCellToCheck())
 
     if(len(cellEnFeu) > 0):
         updateMap(cellEnFeu) #On affiche les nouveaux arbres à brûler si  il y en a
-            
-    vg.augmentCurrentCell(vg.getCellUpdated())
+
     vg.emptyCellEnFeu()
-    vg.emptyCellUpdated()
     vg.augmentLoopCount()
     print("Génération n°", vg.getLoopCount())
     canvas.after(2000, sim_auto)
 
 def pasapas():
 
-    print("Length cell to check : ", len(vg.getCellToCheck())//2)
-    print("Current cell : ", vg.getCurrentCell())
-    
-    for i in range(vg.getCurrentCell(), len(vg.getCellToCheck())//2):
-        tmpCellEnFeu, tmpListeForet = algoForet.propagationFeu(vg.getNbCellules(), vg.getCellToCheck(), vg.getListeForet(), i) #On test d'abord si le feu peut se propager
+    for i in range(0, len(vg.getCellToCheck()), 2):
 
+        tmpCellEnFeu, tmpListeForet = algoForet.propagationFeu(vg.getNbCellules(), vg.returnCellToCheck(i), vg.returnCellToCheck(i+1), vg.getListeForet()) #On test d'abord si le feu peut se propager
         vg.setNewListeForet(tmpListeForet)
 
         for j in range(0, len(tmpCellEnFeu), 2):
             vg.augmentCellEnFeu(tmpCellEnFeu[j], tmpCellEnFeu[j+1])
 
-        vg.augmentCellUpdated()
-
-        print("tmpCellEnFeu : ", tmpCellEnFeu)
-        print("Nouvelle liste CellEnFeu : ", vg.getCellEnFeu())
-
     cellEnFeu = list(vg.getCellEnFeu())
-    for i in range(0, len(cellEnFeu), 2):
-        vg.augmentCellToCheck(cellEnFeu[i], cellEnFeu[i+1])
+    vg.changeCellToCheck(cellEnFeu)
 
+    print("Nouvelle liste CellEnFeu : ", vg.getCellEnFeu())
     print("Nouvelle liste CellToCheck : ", vg.getCellToCheck())
 
     if(len(cellEnFeu) > 0):
         updateMap(cellEnFeu) #On affiche les nouveaux arbres à brûler si  il y en a
-            
-    vg.augmentCurrentCell(vg.getCellUpdated())
+
     vg.emptyCellEnFeu()
-    vg.emptyCellUpdated()
     vg.augmentLoopCount()
     print("Génération n°", vg.getLoopCount())
-
 # Fin des fonctions concernant l'algorithme
 
 
@@ -129,26 +112,21 @@ def createMap(event):
     tree = ImageTk.PhotoImage(Image.open("textures/"+str(tailleImg)+"/tree.png"))
     water = ImageTk.PhotoImage(Image.open("textures/"+str(tailleImg)+"/water.png"))
     cordY = 0
-    gridY = 0
     with open("csv.csv", "r", newline='') as f:
-        canvas.delete("all")                                #Reset du canvas précédent
         reader = csv.reader(f, classDialectCsv.Dialect())
         for row in reader:                                  #On regarde d'abord les lignes
             cordX = 0                                       #On reset X à chaque nouvelle ligne
-            gridX = 0
             for i in row:                                   #Ici c'est la boucle des collones || On met la valeur de la case dans i
                 i = int(i)                                  #Mon reader renvoie un i sous forme de String donc je le converti
                 #On test le i, 0=grass, 1=tree
-                if i == 0:  
-                    canvas.create_image(cordX, cordY, anchor=tkinter.NW, image=grass, tag=str(gridX)+","+str(gridY))
+                if i == 0:
+                    canvas.create_image(cordX, cordY, anchor=tkinter.NW, image=grass)
                 elif i == 1:
-                    canvas.create_image(cordX, cordY, anchor=tkinter.NW, image=tree, tag=str(gridX)+","+str(gridY))
+                    canvas.create_image(cordX, cordY, anchor=tkinter.NW, image=tree)
                 else:
-                    canvas.create_image(cordX, cordY, anchor=tkinter.NW, image=water, tag=str(gridX)+","+str(gridY))
+                    canvas.create_image(cordX, cordY, anchor=tkinter.NW, image=water)
                 cordX = cordX+tailleImg                     #On augmente les cords pour afficher l'image au bon endroit après
-                gridX+=1
             cordY = cordY+tailleImg
-            gridY+=1
     Fenetre.mainloop()
 
 vg = VC.varGlobales() #vg est une instance de varGlobales
@@ -161,7 +139,7 @@ algocvs = AC.algoCSV(vg.getNomCsv(), vg.getNbCellules())
 Fenetre = Tk()
 Fenetre.title("Fenetre de simulation")
 Fenetre.geometry('1000x1000')
-canvas = Canvas(Fenetre, width = vg.getLargeur(), height = vg.getHauteur(), background='grey')
+canvas = Canvas(Fenetre, width = 800, height = 800, background='grey')
 menubar = Menu(Fenetre)
 
 menufichier = Menu(menubar, tearoff = 0)
@@ -189,4 +167,3 @@ Fenetre.config(menu = menubar)
 canvas.place(relx = 0.5, rely = 0.5, anchor = CENTER)
 gifdict = {}
 Fenetre.mainloop()
-

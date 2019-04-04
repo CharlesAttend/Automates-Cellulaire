@@ -16,9 +16,6 @@ class varGlobales():  # Classe stockant quelques 'variables'/constantes pour evi
         self.listeForet = []
         self.listeCellulesEnFeu = []
         self.listeCellToCheck = []
-        self.cellUpdated = 0
-        self.currentCell = 0
-
 
     # Fonctions dites "Accesseurs", elles retournent les valeurs des differents attributs de la classe
 
@@ -47,14 +44,8 @@ class varGlobales():  # Classe stockant quelques 'variables'/constantes pour evi
     def getCellEnFeu(self):
         return list(self.listeCellulesEnFeu)
 
-    def getCellUpdated(self):
-    	return self.cellUpdated
-
     def getCellToCheck(self):
         return list(self.listeCellToCheck)
-
-    def getCurrentCell(self):
-        return self.currentCell
 
     # Fonctions dites "Mutateurs", elles permettent de modifier les valeurs des differents attributs de la classe
 
@@ -83,17 +74,11 @@ class varGlobales():  # Classe stockant quelques 'variables'/constantes pour evi
     def setNewListeForet(self, listeForet):
     	self.listeForet = list(listeForet)
 
-    def augmentCurrentCell(self, val):
-        self.currentCell += val
-
     def changeCellEnFeu(self, listeCellEnFeu):
         self.listeCellulesEnFeu = list(listeCellEnFeu)
 
     def changeCellToCheck(self, listeCellulesToCheck):
         self.listeCellToCheck = list(listeCellulesToCheck)
-
-    def augmentCellUpdated(self):
-        self.cellUpdated += 2
 
     def augmentCellEnFeu(self, x, y):
         self.listeCellulesEnFeu.append(x)
@@ -103,8 +88,8 @@ class varGlobales():  # Classe stockant quelques 'variables'/constantes pour evi
         self.listeCellToCheck.append(x)
         self.listeCellToCheck.append(y)
 
+    def returnCellToCheck(self, index):
+        return self.listeCellToCheck[index]
+
     def emptyCellEnFeu(self):
         self.listeCellulesEnFeu.clear()
-
-    def emptyCellUpdated(self):
-        self.cellUpdated = 0
