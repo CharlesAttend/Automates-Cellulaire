@@ -120,7 +120,6 @@ def updateMap(cellEnFeu):
     burningTree = ImageTk.PhotoImage(Image.open("textures/"+str(tailleImg)+"/burning_tree.png"))
     for i in range(0, len(cellEnFeu), 2):
         canvas.itemconfigure(str(cellEnFeu[i])+","+str(cellEnFeu[i+1]), image=burningTree)
-        #canvas.create_image(tailleImg*cellEnFeu[i]-tailleImg, tailleImg*cellEnFeu[i+1]-tailleImg, anchor=tkinter.NW, image=burningTree)
     Fenetre.mainloop()
 
 def createMap(event):

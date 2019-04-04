@@ -13,13 +13,6 @@ class varGlobales():  # Classe stockant quelques 'variables'/constantes pour evi
 
         self.nomCsv  = 'csv.csv'  # Nom du csv permettant la generation du csv
 
-        # Retourne les différents nom des textures
-        self.textureArbre  = 'textures/arbre.png'
-        self.textureSol = 'textures/grass80x80.png'
-        self.textureEau = 'textures/eau.png'
-        self.textureArbreBrule = 'textures/arbreBrule.png'
-        self.textureArbreEnFeu = 'textures/arbreEnFeu.png'
-
         self.listeForet = []
         self.listeCellulesEnFeu = []
         self.listeCellToCheck = []
@@ -43,9 +36,6 @@ class varGlobales():  # Classe stockant quelques 'variables'/constantes pour evi
 
     def getNomCsv(self):
         return self.nomCsv
-
-    def getTexturesName(self):
-        return (self.textureArbre, self.textureArbreBrule, self.textureArbreEnFeu, self.textureEau, self.textureSol)
 
     def getLoopCount(self):
         return self.loopCount
