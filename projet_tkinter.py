@@ -26,7 +26,7 @@ def Clic(event):
     vg.augmentCellEnFeu(X, Y)
     listeForet[Y][X] = '3'
     vg.setNewListeForet(listeForet)
-    updateMap(vg.getCellEnFeu())
+    updateMap(vg.getCellEnFeu(), 1)
     vg.emptyCellEnFeu()
 
 def enregistrer():
@@ -63,12 +63,12 @@ def sim_auto():
     vg.changeCellToCheck(list(cellEnFeu))
 
     if(len(cellEnFeu) > 0):
-        updateMap(cellEnFeu) #On affiche les nouveaux arbres à brûler si  il y en a
+        updateMap(cellEnFeu, 1) #On affiche les nouveaux arbres à brûler si  il y en a
 
     vg.emptyCellEnFeu()
     vg.augmentLoopCount()
     print("Génération n°", vg.getLoopCount())
-    canvas.after(2000, sim_auto)
+    Fenetre.after(2, sim_auto)
 
 def pasapas():
 
@@ -85,22 +85,30 @@ def pasapas():
     vg.changeCellToCheck(list(cellEnFeu))
 
     if(len(cellEnFeu) > 0):
-        updateMap(cellEnFeu) #On affiche les nouveaux arbres à brûler si  il y en a
-
+        updateMap(cellEnFeu, 1) #On affiche les nouveaux arbres à brûler si  il y en a
+        #if(vg.getLoopCount() > 0):
+        #    updateMap(vg.getOldCellEnFeu(), 3)
+    
+    #vg.emptyOldCellEnFeu()
+    #vg.changeOldCellEnFeu(cellEnFeu)
     vg.emptyCellEnFeu()
     vg.augmentLoopCount()
     print("Génération n°", vg.getLoopCount())
 # Fin des fonctions concernant l'algorithme
 
-def updateMap(cellEnFeu):
+def updateMap(cellEnFeu, cellType):
     tailleImg = vg.getLengthCell()
-    burningTree = ImageTk.PhotoImage(Image.open("textures/"+str(tailleImg)+"/burning_tree.png"))
+    if(cellType == 1):
+        photo = ImageTk.PhotoImage(Image.open("textures/"+str(tailleImg)+"/burning_tree.png"))
+    elif(cellType == 3):
+        photo = ImageTk.PhotoImage(Image.open("textures/"+str(tailleImg)+"/burned_tree.png"))
+
     for i in range(0, len(cellEnFeu), 2):
-        canvas.create_image(tailleImg*cellEnFeu[i], tailleImg*cellEnFeu[i+1], anchor=tkinter.NW, image=burningTree)
+        canvas.create_image(tailleImg*cellEnFeu[i], tailleImg*cellEnFeu[i+1], anchor=tkinter.NW, image=photo)
     Fenetre.mainloop()
 
 def createMap(event):
-    algocvs.createCsv()
+    algocsv.createCsv()
     tailleImg = vg.getLengthCell()
     grass = ImageTk.PhotoImage(Image.open("textures/"+str(tailleImg)+"/grass.png"))
     tree = ImageTk.PhotoImage(Image.open("textures/"+str(tailleImg)+"/tree.png"))
@@ -128,7 +136,7 @@ vg.setLargeur(800)
 vg.setHauteur(800)
 vg.setNbCell(10)
 
-algocvs = AC.algoCSV(vg.getNomCsv(), vg.getNbCellules())
+algocsv = AC.algoCSV(vg.getNomCsv(), vg.getNbCellules())
 
 Fenetre = Tk()
 Fenetre.title("Fenetre de simulation")

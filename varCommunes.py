@@ -15,6 +15,7 @@ class varGlobales():  # Classe stockant quelques 'variables'/constantes pour evi
 
         self.listeForet = []
         self.listeCellulesEnFeu = []
+        self.listeOldCellulesEnFeu = []
         self.listeCellToCheck = []
 
     # Fonctions dites "Accesseurs", elles retournent les valeurs des differents attributs de la classe
@@ -46,6 +47,9 @@ class varGlobales():  # Classe stockant quelques 'variables'/constantes pour evi
 
     def getCellToCheck(self):
         return list(self.listeCellToCheck)
+
+    def getOldCellEnFeu(self):
+        return list(self.listeOldCellulesEnFeu)
 
     # Fonctions dites "Mutateurs", elles permettent de modifier les valeurs des differents attributs de la classe
 
@@ -80,6 +84,9 @@ class varGlobales():  # Classe stockant quelques 'variables'/constantes pour evi
     def changeCellToCheck(self, listeCellulesToCheck):
         self.listeCellToCheck = list(listeCellulesToCheck)
 
+    def changeOldCellEnFeu(self, listOldCellEnFeu):
+        self.listeOldCellulesEnFeu = list(listOldCellEnFeu)
+
     def augmentCellEnFeu(self, x, y):
         self.listeCellulesEnFeu.append(x)
         self.listeCellulesEnFeu.append(y)
@@ -93,3 +100,6 @@ class varGlobales():  # Classe stockant quelques 'variables'/constantes pour evi
 
     def emptyCellEnFeu(self):
         self.listeCellulesEnFeu.clear()
+
+    def emptyOldCellEnFeu(self):
+        self.listeOldCellulesEnFeu.clear()
