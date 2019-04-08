@@ -3,7 +3,8 @@
 import csv
 import classDialectCsv
 
-class varGlobales():  # Classe stockant quelques 'variables'/constantes pour eviter les conflits de valeurs entre les fichiers
+class varGlobales():  # Classe stockant quelques 'variables'/constantes
+                      # On évite ainsi les conflits de valeurs entre les fichiers et les variables de type global
 
     def __init__(self):  # Constructeur permettant de definir les differents attributs de la classe
         self.hauteurFenetre = 0
@@ -16,7 +17,7 @@ class varGlobales():  # Classe stockant quelques 'variables'/constantes pour evi
         self.listeForet = []
         self.listeCellulesEnFeu = []
         self.listeOldCellulesEnFeu = []
-        self.listeCellToCheck = []
+        self.listeCellToCheck = []      #Liste contenant des cellules de type 'Arbre' où l'on va tester si le feu se propage
 
     # Fonctions dites "Accesseurs", elles retournent les valeurs des differents attributs de la classe
 
