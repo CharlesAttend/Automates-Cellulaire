@@ -31,7 +31,7 @@ def top_horloge():
     Fenetre.after(1000,top_horloge)
 
 def Clic(event):
-    vg.setListeForet()                      #On créer la listeForet à partir du CSV
+    vg.setListeForet()                          #On crée la listeForet à partir du CSV
     listeForet = list(vg.getListeForet())
     X = event.x
     Y = event.y
@@ -48,7 +48,7 @@ def Clic(event):
     updateMap(vg.getCellEnFeu())
     vg.emptyCellEnFeu()
 
-def enregistrer():                              # Fonction permettant de prendre un capture d'écran de la simulation, ainsi que de l'enregistrer
+def enregistrer():                              # Fonction permettant de prendre une capture d'écran de la simulation, ainsi que de l'enregistrer
     x = canvas.winfo_rootx()
     y = canvas.winfo_rooty()
     w = canvas.winfo_width()
