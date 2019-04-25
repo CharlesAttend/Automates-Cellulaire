@@ -92,4 +92,4 @@ class varGlobales():  # Classe stockant quelques 'variables'/constantes pour evi
         return self.listeCellToCheck[index]
 
     def emptyCellEnFeu(self):
-self.listeCellulesEnFeu.clear()
+        self.listeCellulesEnFeu.clear()

@@ -12,21 +12,29 @@ import csv
 import classDialectCsv
 
 def Clic(event):
+    vg.setListeForet()                      #On créer la listeForet à partir du CSV
+    listeForet = list(vg.getListeForet())
     X = event.x
     Y = event.y
-    X = ceil(X/vg.getLengthCell())
-    Y = ceil(Y/vg.getLengthCell())
+    X = ceil(X/vg.getLengthCell())-1
+    Y = ceil(Y/vg.getLengthCell())-1
+
+    if(listeForet[Y][X] != '1'): return False
+
     vg.augmentCellToCheck(X, Y)
+    print("Coords:  ", X, ", ", Y)
     vg.augmentCellEnFeu(X, Y)
-    print(vg.getCellToCheck())
-    vg.setListeForet()
+    listeForet[Y][X] = '3'
+    vg.setNewListeForet(listeForet)
+    updateMap(vg.getCellEnFeu())
+    vg.emptyCellEnFeu()
 
 def enregistrer():
     x = canvas.winfo_rootx()
     y = canvas.winfo_rooty()
     w = canvas.winfo_width()
     h = canvas.winfo_height()
-    image = Image.grab((x + 2, y + 2, x + w - 2, y + h - 2))
+    image = Image.grab((x+2, y+2, x+w-2, y+h-2))
     image.save("resulat_simulation.png")
 
 def dix () :
@@ -42,73 +50,47 @@ def cent () :
 
 def sim_auto():
 
-    print("Length cell to check : ", len(vg.getCellToCheck())//2)
-    print("Current cell : ", vg.getCurrentCell())
-    
-    for i in range(vg.getCurrentCell(), len(vg.getCellToCheck())//2):
-        tmpCellEnFeu, tmpListeForet = algoForet.propagationFeu(vg.getNbCellules(), vg.getCellToCheck(), vg.getListeForet(), i) #On test d'abord si le feu peut se propager
+    for i in range(0, len(vg.getCellToCheck()), 2):
 
+        tmpCellEnFeu, tmpListeForet = algoForet.propagationFeu(vg.getNbCellules(), vg.returnCellToCheck(i), vg.returnCellToCheck(i+1), vg.getListeForet()) #On test d'abord si le feu peut se propager
         vg.setNewListeForet(tmpListeForet)
 
         for j in range(0, len(tmpCellEnFeu), 2):
             vg.augmentCellEnFeu(tmpCellEnFeu[j], tmpCellEnFeu[j+1])
 
-        vg.augmentCellUpdated()
-
-        print("tmpCellEnFeu : ", tmpCellEnFeu)
-        print("Nouvelle liste CellEnFeu : ", vg.getCellEnFeu())
 
     cellEnFeu = list(vg.getCellEnFeu())
-    for i in range(0, len(cellEnFeu), 2):
-        vg.augmentCellToCheck(cellEnFeu[i], cellEnFeu[i+1])
-
-    print("Nouvelle liste CellToCheck : ", vg.getCellToCheck())
+    vg.changeCellToCheck(list(cellEnFeu))
 
     if(len(cellEnFeu) > 0):
         updateMap(cellEnFeu) #On affiche les nouveaux arbres à brûler si  il y en a
-            
-    vg.augmentCurrentCell(vg.getCellUpdated())
+
     vg.emptyCellEnFeu()
-    vg.emptyCellUpdated()
     vg.augmentLoopCount()
     print("Génération n°", vg.getLoopCount())
     canvas.after(2000, sim_auto)
 
 def pasapas():
 
-    print("Length cell to check : ", len(vg.getCellToCheck())//2)
-    print("Current cell : ", vg.getCurrentCell())
-    
-    for i in range(vg.getCurrentCell(), len(vg.getCellToCheck())//2):
-        tmpCellEnFeu, tmpListeForet = algoForet.propagationFeu(vg.getNbCellules(), vg.getCellToCheck(), vg.getListeForet(), i) #On test d'abord si le feu peut se propager
+    for i in range(0, len(vg.getCellToCheck()), 2):
 
+        tmpCellEnFeu, tmpListeForet = algoForet.propagationFeu(vg.getNbCellules(), vg.returnCellToCheck(i), vg.returnCellToCheck(i+1), vg.getListeForet()) #On test d'abord si le feu peut se propager
         vg.setNewListeForet(tmpListeForet)
 
         for j in range(0, len(tmpCellEnFeu), 2):
             vg.augmentCellEnFeu(tmpCellEnFeu[j], tmpCellEnFeu[j+1])
 
-        vg.augmentCellUpdated()
-
-        print("tmpCellEnFeu : ", tmpCellEnFeu)
-        print("Nouvelle liste CellEnFeu : ", vg.getCellEnFeu())
 
     cellEnFeu = list(vg.getCellEnFeu())
-    for i in range(0, len(cellEnFeu), 2):
-        vg.augmentCellToCheck(cellEnFeu[i], cellEnFeu[i+1])
-
-    print("Nouvelle liste CellToCheck : ", vg.getCellToCheck())
+    vg.changeCellToCheck(list(cellEnFeu))
 
     if(len(cellEnFeu) > 0):
         updateMap(cellEnFeu) #On affiche les nouveaux arbres à brûler si  il y en a
-            
-    vg.augmentCurrentCell(vg.getCellUpdated())
+
     vg.emptyCellEnFeu()
-    vg.emptyCellUpdated()
     vg.augmentLoopCount()
     print("Génération n°", vg.getLoopCount())
-
 # Fin des fonctions concernant l'algorithme
-
 
 def drawGrid(): #Fonction qui dessine une grille sur le Canvas pour tester la position des textures
     for i in range(0, 800, 800//vg.getNbCellules()):

@@ -46,4 +46,4 @@ def propagationFeu(nbCellLignes, x, y, foret):                # Fonction permett
                     listeCellEnFeu.append(j)
                     listeForet[j][i] = "3"
 
-return list(listeCellEnFeu), list(listeForet)
+    return list(listeCellEnFeu), list(listeForet)
