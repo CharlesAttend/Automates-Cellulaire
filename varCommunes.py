@@ -3,21 +3,18 @@
 import csv
 import classDialectCsv
 
-class varGlobales():  # Classe stockant quelques 'variables'/constantes
-                      # On évite ainsi les conflits de valeurs entre les fichiers et les variables de type global
+class varGlobales():   # Classe stockant quelques 'variables'/constantes
+                       # On évite ainsi les conflits de valeurs entre les fichiers et les variables de type global
 
     def __init__(self):  # Constructeur permettant de definir les differents attributs de la classe
         self.hauteurFenetre = 0
-        self.largeurFenetre = 0
-        self.nbCellules = 0  # Nombre de cellules par lignes
-        self.loopCount = 0
 
         self.nomCsv  = 'csv.csv'  # Nom du csv permettant la generation du csv
 
         self.listeForet = []
         self.listeCellulesEnFeu = []
         self.listeOldCellulesEnFeu = []
-        self.listeCellToCheck = []      #Liste contenant des cellules de type 'Arbre' où l'on va tester si le feu se propage
+        self.listeCellToCheck = []    # Liste contenant des cellules de type 'Arbre' où l'on va tester si le feu se propage
 
     # Fonctions dites "Accesseurs", elles retournent les valeurs des differents attributs de la classe
 
@@ -36,8 +33,9 @@ class varGlobales():  # Classe stockant quelques 'variables'/constantes
     def getNomCsv(self):
         return self.nomCsv
 
-    def getLoopCount(self):
-        return self.loopCount
+    def getTexturesName(self):
+        return (self.textureArbre, self.textureArbreBrule, self.textureArbreEnFeu, self.textureEau, self.textureSol)
+
 
 
     def getListeForet(self):
@@ -48,9 +46,6 @@ class varGlobales():  # Classe stockant quelques 'variables'/constantes
 
     def getCellToCheck(self):
         return list(self.listeCellToCheck)
-
-    def getOldCellEnFeu(self):
-        return list(self.listeOldCellulesEnFeu)
 
     # Fonctions dites "Mutateurs", elles permettent de modifier les valeurs des differents attributs de la classe
 
@@ -63,17 +58,13 @@ class varGlobales():  # Classe stockant quelques 'variables'/constantes
     def setNbCell(self, nb):
         self.nbCellules = nb
 
-    def setListeForet(self):    #Transformation du csv.csv en une liste à deux dimensions fonctionnelle et plus rapide d'accès
+    def setListeForet(self):
         with open(self.nomCsv, "r", newline='') as f:
             reader = csv.reader(f, classDialectCsv.Dialect())
             doubleList = []
             for row in reader:
                 doubleList.append(row)
             self.listeForet = list(doubleList)
-
-    def augmentLoopCount(self):
-        self.loopCount += 1
-
 
 
     def setNewListeForet(self, listeForet):
@@ -84,9 +75,6 @@ class varGlobales():  # Classe stockant quelques 'variables'/constantes
 
     def changeCellToCheck(self, listeCellulesToCheck):
         self.listeCellToCheck = list(listeCellulesToCheck)
-
-    def changeOldCellEnFeu(self, listOldCellEnFeu):
-        self.listeOldCellulesEnFeu = list(listOldCellEnFeu)
 
     def augmentCellEnFeu(self, x, y):
         self.listeCellulesEnFeu.append(x)
@@ -101,6 +89,3 @@ class varGlobales():  # Classe stockant quelques 'variables'/constantes
 
     def emptyCellEnFeu(self):
         self.listeCellulesEnFeu.clear()
-
-    def emptyOldCellEnFeu(self):
-        self.listeOldCellulesEnFeu.clear()
