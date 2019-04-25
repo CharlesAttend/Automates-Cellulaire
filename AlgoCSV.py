@@ -2,10 +2,10 @@
 import csv
 from random import random, randint
 import classDialectCsv
-
+import copy
 
 class algoCSV():
-    def __init__(self,csvName1, nbCellule1):
+    def __init__(self, csvName1, nbCellule1):
         self.csvName = csvName1
         self.nbCellule = nbCellule1
 
@@ -41,4 +41,4 @@ class algoCSV():
 
     #Water = 5%
     #Tree = 70%
-    #Grass = 25%
+#Grass = 25%

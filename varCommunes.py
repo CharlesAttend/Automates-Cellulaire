@@ -8,24 +8,14 @@ class varGlobales():  # Classe stockant quelques 'variables'/constantes pour evi
     def __init__(self):  # Constructeur permettant de definir les differents attributs de la classe
         self.hauteurFenetre = 0
         self.largeurFenetre = 0
-        self.nbCellules = 0  # Nombre de cellules
+        self.nbCellules = 0  # Nombre de cellules par lignes
         self.loopCount = 0
 
         self.nomCsv  = 'csv.csv'  # Nom du csv permettant la generation du csv
 
-        # Retourne les différents nom des textures
-        self.textureArbre  = 'textures/arbre.png'
-        self.textureSol = 'textures/grass80x80.png'
-        self.textureEau = 'textures/eau.png'
-        self.textureArbreBrule = 'textures/arbreBrule.png'
-        self.textureArbreEnFeu = 'textures/arbreEnFeu.png'
-
         self.listeForet = []
         self.listeCellulesEnFeu = []
         self.listeCellToCheck = []
-        self.cellUpdated = 0
-        self.currentCell = 0
-
 
     # Fonctions dites "Accesseurs", elles retournent les valeurs des differents attributs de la classe
 
@@ -44,9 +34,6 @@ class varGlobales():  # Classe stockant quelques 'variables'/constantes pour evi
     def getNomCsv(self):
         return self.nomCsv
 
-    def getTexturesName(self):
-        return (self.textureArbre, self.textureArbreBrule, self.textureArbreEnFeu, self.textureEau, self.textureSol)
-
     def getLoopCount(self):
         return self.loopCount
 
@@ -57,14 +44,8 @@ class varGlobales():  # Classe stockant quelques 'variables'/constantes pour evi
     def getCellEnFeu(self):
         return list(self.listeCellulesEnFeu)
 
-    def getCellUpdated(self):
-    	return self.cellUpdated
-
     def getCellToCheck(self):
         return list(self.listeCellToCheck)
-
-    def getCurrentCell(self):
-        return self.currentCell
 
     # Fonctions dites "Mutateurs", elles permettent de modifier les valeurs des differents attributs de la classe
 
@@ -77,7 +58,7 @@ class varGlobales():  # Classe stockant quelques 'variables'/constantes pour evi
     def setNbCell(self, nb):
         self.nbCellules = nb
 
-    def setListeForet(self):
+    def setListeForet(self):    #Transformation du csv.csv en une liste à deux dimensions fonctionnelle et plus rapide d'accès
         with open(self.nomCsv, "r", newline='') as f:
             reader = csv.reader(f, classDialectCsv.Dialect())
             doubleList = []
@@ -93,17 +74,11 @@ class varGlobales():  # Classe stockant quelques 'variables'/constantes pour evi
     def setNewListeForet(self, listeForet):
     	self.listeForet = list(listeForet)
 
-    def augmentCurrentCell(self, val):
-        self.currentCell += val
-
     def changeCellEnFeu(self, listeCellEnFeu):
         self.listeCellulesEnFeu = list(listeCellEnFeu)
 
     def changeCellToCheck(self, listeCellulesToCheck):
         self.listeCellToCheck = list(listeCellulesToCheck)
-
-    def augmentCellUpdated(self):
-        self.cellUpdated += 2
 
     def augmentCellEnFeu(self, x, y):
         self.listeCellulesEnFeu.append(x)
@@ -113,8 +88,8 @@ class varGlobales():  # Classe stockant quelques 'variables'/constantes pour evi
         self.listeCellToCheck.append(x)
         self.listeCellToCheck.append(y)
 
-    def emptyCellEnFeu(self):
-        self.listeCellulesEnFeu.clear()
+    def returnCellToCheck(self, index):
+        return self.listeCellToCheck[index]
 
-    def emptyCellUpdated(self):
-        self.cellUpdated = 0
+    def emptyCellEnFeu(self):
+self.listeCellulesEnFeu.clear()
