@@ -137,7 +137,7 @@ def createMap(event):
 vg = VC.varGlobales() #vg est une instance de varGlobales
 vg.setLargeur(800)
 vg.setHauteur(800)
-vg.setNbCell(100)
+vg.setNbCell(50)
 
 algocvs = AC.algoCSV(vg.getNomCsv(), vg.getNbCellules())
 

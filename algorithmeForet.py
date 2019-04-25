@@ -2,11 +2,11 @@
 
 ####################################################################################################
 
-def propagationFeu(nbCellLignes, x, y, foret):                # Fonction permettant la propagation du feu,
-                                                                 #prend en paramèrts le nb de cellules sur une ligne, une liste contenant les coordonnées de l'arbre en feu et une grill au format du .csv
-    clicX, clicY = x, y
+def propagationFeu(nbCellLignes, x, y, foret): # Algorithme gérant la propagation du feu
+
+    clicX, clicY = x, y # On récupère les coordonnées de la cellule par rapport à la double-liste forêt
     listeForet = list(foret)
-    listeCellEnFeu = []
+    listeCellEnFeu = []   # Liste retournée par la fonction, elle contient les coordonnées dans la double-liste forêt des cellules où le feu va se propager
     xMin, xMax, yMin, yMax = 0, 0, 0, 0
 
     if(clicX == 0):
@@ -33,17 +33,13 @@ def propagationFeu(nbCellLignes, x, y, foret):                # Fonction permett
         yMin = clicY-1
         yMax = clicY+1
 
-    #print("xMin:xMax",xMin,":",xMax)
-    #print("yMin:yMax",yMin,":",yMax)
-
     for j in range(yMin, yMax+1):
         for i in range(xMin, xMax+1):
 
-            if(i != clicX or j != clicY):
-                #print("i : ", i, "j : ", j, ", Valeur dans la liste foret : ", listeForet[j][i])
-                if(listeForet[j][i] == "1"):
+            if(i != clicX or j != clicY): # Si la cellule à tester est la cellule déjà en feu, on ne fait rien
+                if(listeForet[j][i] == "1"): # Si la cellule voisine est un arbre, alors on l'ajoute dans la liste des cellules à incendier
                     listeCellEnFeu.append(i)
                     listeCellEnFeu.append(j)
-                    listeForet[j][i] = "3"
+                    listeForet[j][i] = "3"   # Comme la cellule est un arbre qui va prendre feu, alors on le met à l'état 3, soit arbres en feu
 
-    return list(listeCellEnFeu), list(listeForet)
+return list(listeCellEnFeu), list(listeForet)

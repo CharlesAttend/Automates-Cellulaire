@@ -4,7 +4,7 @@ import csv
 import classDialectCsv
 
 class varGlobales():  # Classe stockant quelques 'variables'/constantes pour eviter les conflits de valeurs entre les fichiers
-
+                        # On évite ainsi les conflits de valeurs entre les fichiers et les variables de type global
     def __init__(self):  # Constructeur permettant de definir les differents attributs de la classe
         self.hauteurFenetre = 0
         self.largeurFenetre = 0
