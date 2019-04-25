@@ -42,4 +42,4 @@ def propagationFeu(nbCellLignes, x, y, foret): # Algorithme gérant la propagati
                     listeCellEnFeu.append(j)
                     listeForet[j][i] = "3"   # Comme la cellule est un arbre qui va prendre feu, alors on le met à l'état 3, soit arbres en feu
 
-return list(listeCellEnFeu), list(listeForet)
+    return list(listeCellEnFeu), list(listeForet)

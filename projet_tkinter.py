@@ -19,7 +19,7 @@ def Clic(event):
     X = ceil(X/vg.getLengthCell())-1
     Y = ceil(Y/vg.getLengthCell())-1
 
-    if(listeForet[Y][X] != '1'): return False
+    if(listeForet[Y][X] != '1'): return False   # On test si la cellule sur laquelle on a cliqué est un arbre, si oui on le met en feu sinon, il ne se passe rien
 
     vg.augmentCellToCheck(X, Y)
     print("Coords:  ", X, ", ", Y)
@@ -29,7 +29,7 @@ def Clic(event):
     updateMap(vg.getCellEnFeu())
     vg.emptyCellEnFeu()
 
-def enregistrer():
+def enregistrer():                              # Fonction permettant de prendre un capture d'écran de la simulation, ainsi que de l'enregistrer
     x = canvas.winfo_rootx()
     y = canvas.winfo_rooty()
     w = canvas.winfo_width()
