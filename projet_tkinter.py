@@ -11,6 +11,25 @@ import algorithmeForet as algoForet  #Fichier qui contient l'algorithme
 import csv
 import classDialectCsv
 
+def lancer_chrono():
+    global depart,flag
+    flag=1
+    depart = time.time()
+    top_horloge()
+
+def stoper_chrono():
+    global flag
+    flag=0
+
+def top_horloge():
+    global depart,flag
+    y=time.time()-depart
+    minutes = time.localtime(y)[4]
+    secondes = time.localtime(y)[5]
+    if flag :
+        message.configure(text = "%i min %i sec " %(minutes,secondes))
+    Fenetre.after(1000,top_horloge)
+
 def Clic(event):
     vg.setListeForet()                      #On créer la listeForet à partir du CSV
     listeForet = list(vg.getListeForet())
@@ -122,7 +141,7 @@ def createMap(event):
             for i in row:                                   #Ici c'est la boucle des collones || On met la valeur de la case dans i
                 i = int(i)                                  #Mon reader renvoie un i sous forme de String donc je le converti
                 #On test le i, 0=grass, 1=tree
-                if i == 0:  
+                if i == 0:
                     canvas.create_image(cordX, cordY, anchor=tkinter.NW, image=grass, tag=str(gridX)+","+str(gridY))
                 elif i == 1:
                     canvas.create_image(cordX, cordY, anchor=tkinter.NW, image=tree, tag=str(gridX)+","+str(gridY))
