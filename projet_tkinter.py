@@ -88,6 +88,7 @@ def sim_auto():
     vg.augmentLoopCount()
     print("Génération n°", vg.getLoopCount())
     canvas.after(2000, sim_auto)
+    lancer_chrono()
 
 def pasapas():
 
