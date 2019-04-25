@@ -1,28 +1,44 @@
 # -*- coding: utf-8 -*-
 import csv
-from random import randint
+from random import random, randint
 import classDialectCsv
+import copy
 
-def transformationCsvListe():   # Fonction convertissant le csv en une liste a deux dimensions de nombres entiers
-    for i in range(10): # Nombre de cellules en hauteur
-        tmp = []
-        for j in list(csvForet.readline()):
-            if (j != "\n"):
-                tmp.append(int(j))
-        listeForet.append(tmp.copy())
-        tmp.clear()
+class algoCSV():
+    def __init__(self, csvName1, nbCellule1):
+        self.csvName = csvName1
+        self.nbCellule = nbCellule1
 
-hauteur = 1000
-largeur = 1000
-tailleTx = 100
-with open("csv.csv", "w", newline='') as f:
-    writer = csv.writer(f, classDialectCsv.Dialect())
-    for i in range(hauteur//tailleTx):
-        writer.writerow([randint(0,1) for j in range(largeur//tailleTx)])
+    def csvToList(self):
+        with open(self.csvName, "r", newline='') as f:
+            reader = csv.reader(f, classDialectCsv.Dialect())
+            doubleList = []
+            for row in reader:
+                doubleList.append(row)
+            return doubleList
 
-with open("csv.csv", "r", newline='') as f:
-    reader = csv.reader(f, classDialectCsv.Dialect())
-    doubleList
-    for row in reader:
+    def createCsv(self):
+        doubleListe = self.genList()
+        with open(self.csvName, "w", newline='') as f:
+            writer = csv.writer(f, classDialectCsv.Dialect())
+            for i in range(self.nbCellule):
+                writer.writerow(doubleListe[i]) #[randint(0,2) for j in range(self.nbCellule)]
+    
+    def genList(self):
+        doubleListe = []
+        for i in range(self.nbCellule):
+            listX = []
+            for j in range(self.nbCellule):
+                nb = random()
+                if nb < 0.75:
+                    listX.append(1)
+                elif nb < 0.97:
+                    listX.append(0)
+                else:
+                    listX.append(2)
+            doubleListe.append(listX)
+        return doubleListe
 
-        print(row[0])
+    #Water = 5%
+    #Tree = 70%
+    #Grass = 25%
