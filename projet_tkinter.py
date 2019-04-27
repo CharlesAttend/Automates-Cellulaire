@@ -1,10 +1,18 @@
 ﻿# -*- coding: utf-8 -*-
+from os import system
+
+def bootstrap():                                                                #Update les bibliothèques importantes
+    system("python -m pip install -U pip")
+    system("python -m pip install -U pillow")
+#bootstrap()
 
 from tkinter import *
 from PIL import Image, ImageTk,Image
 from math import ceil
 import tkinter.messagebox
 import tkinter.filedialog
+import time
+
 import AlgoCSV as AC  #ALGOCSV permet de générer un csv en fonction du nombre de cellules choisies par l'utilisateur
 import varCommunes as VC  #varCommunes contient une classe qui rassemble toutes les variables utiles aux différents fichiers
 import algorithmeForet as algoForet  #Fichier qui contient l'algorithme
@@ -58,12 +66,24 @@ def enregistrer():                              # Fonction permettant de prendre
 
 def dix () :
     vg.setNbCell(10)
+    refreshTxPath()
 
 def cinquante () :
     vg.setNbCell(50)
+    refreshTxPath()
 
 def cent () :
     vg.setNbCell(100)
+    refreshTxPath()
+
+def refreshTxPath():                            #Reactualise l'emplacement des Textures après un changement de taille
+    global grass, tree, water, burningTree, tailleImg
+    tailleImg = vg.getLengthCell()
+    grass = ImageTk.PhotoImage(Image.open("textures/"+str(tailleImg)+"/grass.png"))
+    tree = ImageTk.PhotoImage(Image.open("textures/"+str(tailleImg)+"/tree.png"))
+    water = ImageTk.PhotoImage(Image.open("textures/"+str(tailleImg)+"/water.png"))
+    burningTree = ImageTk.PhotoImage(Image.open("textures/"+str(tailleImg)+"/burning_tree.png"))
+
 
 # Déroulement de l'algorithme :
 
@@ -87,7 +107,7 @@ def sim_auto():
     vg.emptyCellEnFeu()
     vg.augmentLoopCount()
     print("Génération n°", vg.getLoopCount())
-    canvas.after(2000, sim_auto)
+    canvas.after(500, sim_auto)
     lancer_chrono()
 
 def pasapas():
@@ -117,20 +137,13 @@ def drawGrid(): #Fonction qui dessine une grille sur le Canvas pour tester la po
         canvas.create_line(0, i, 800, i)
         canvas.create_line(i, 0, i, 800)
 
-def updateMap(cellEnFeu):
-    tailleImg = vg.getLengthCell()
-    burningTree = ImageTk.PhotoImage(Image.open("textures/"+str(tailleImg)+"/burning_tree.png"))
+def updateMap(cellEnFeu): 
     for i in range(0, len(cellEnFeu), 2):
         canvas.itemconfigure(str(cellEnFeu[i])+","+str(cellEnFeu[i+1]), image=burningTree)
-        #canvas.create_image(tailleImg*cellEnFeu[i]-tailleImg, tailleImg*cellEnFeu[i+1]-tailleImg, anchor=tkinter.NW, image=burningTree)
-    Fenetre.mainloop()
+
 
 def createMap(event):
     algocvs.createCsv()
-    tailleImg = vg.getLengthCell()
-    grass = ImageTk.PhotoImage(Image.open("textures/"+str(tailleImg)+"/grass.png"))
-    tree = ImageTk.PhotoImage(Image.open("textures/"+str(tailleImg)+"/tree.png"))
-    water = ImageTk.PhotoImage(Image.open("textures/"+str(tailleImg)+"/water.png"))
     cordY = 0
     gridY = 0
     with open("csv.csv", "r", newline='') as f:
@@ -152,7 +165,9 @@ def createMap(event):
                 gridX+=1
             cordY = cordY+tailleImg
             gridY+=1
-    Fenetre.mainloop()
+
+
+
 
 vg = VC.varGlobales() #vg est une instance de varGlobales
 vg.setLargeur(800)
@@ -191,5 +206,13 @@ Fenetre.config(menu = menubar)
 # Utilisation d'un dictionnaire pour conserver une référence
 canvas.place(relx = 0.5, rely = 0.5, anchor = CENTER)
 gifdict = {}
+
+#Definition des textures en dehors des fonctions:
+tailleImg = vg.getLengthCell()
+grass = ImageTk.PhotoImage(Image.open("textures/"+str(tailleImg)+"/grass.png"))
+tree = ImageTk.PhotoImage(Image.open("textures/"+str(tailleImg)+"/tree.png"))
+water = ImageTk.PhotoImage(Image.open("textures/"+str(tailleImg)+"/water.png"))
+burningTree = ImageTk.PhotoImage(Image.open("textures/"+str(tailleImg)+"/burning_tree.png"))
+
 Fenetre.mainloop()
 
