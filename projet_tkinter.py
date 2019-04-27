@@ -111,9 +111,7 @@ def sim_auto():
     lancer_chrono()
 
 def pasapas():
-
     for i in range(0, len(vg.getCellToCheck()), 2):
-
         tmpCellEnFeu, tmpListeForet = algoForet.propagationFeu(vg.getNbCellules(), vg.returnCellToCheck(i), vg.returnCellToCheck(i+1), vg.getListeForet()) #On test d'abord si le feu peut se propager
         vg.setNewListeForet(tmpListeForet)
 
@@ -137,10 +135,16 @@ def drawGrid(): #Fonction qui dessine une grille sur le Canvas pour tester la po
         canvas.create_line(0, i, 800, i)
         canvas.create_line(i, 0, i, 800)
 
-def updateMap(cellEnFeu): 
+def updateMap(cellEnFeu):
+    global burnedCell
     for i in range(0, len(cellEnFeu), 2):
         canvas.itemconfigure(str(cellEnFeu[i])+","+str(cellEnFeu[i+1]), image=burningTree)
-
+    updateBurning()
+    burnedCell = list(cellEnFeu)
+    
+def updateBurning():
+    for i in range(0, len(burnedCell), 2):
+        canvas.itemconfigure(str(burnedCell[i])+","+str(burnedCell[i+1]), image=burnedTree)
 
 def createMap(event):
     algocvs.createCsv()
@@ -175,6 +179,8 @@ vg.setHauteur(800)
 vg.setNbCell(50)
 
 algocvs = AC.algoCSV(vg.getNomCsv(), vg.getNbCellules())
+
+vg.setListeForet()   
 
 Fenetre = Tk()
 Fenetre.title("Fenetre de simulation")
@@ -213,6 +219,10 @@ grass = ImageTk.PhotoImage(Image.open("textures/"+str(tailleImg)+"/grass.png"))
 tree = ImageTk.PhotoImage(Image.open("textures/"+str(tailleImg)+"/tree.png"))
 water = ImageTk.PhotoImage(Image.open("textures/"+str(tailleImg)+"/water.png"))
 burningTree = ImageTk.PhotoImage(Image.open("textures/"+str(tailleImg)+"/burning_tree.png"))
+burnedTree = ImageTk.PhotoImage(Image.open("textures/"+str(tailleImg)+"/burned_tree.png"))
+burningGrass = ImageTk.PhotoImage(Image.open("textures/"+str(tailleImg)+"/burning_tree.png"))
+burnedGrass = ImageTk.PhotoImage(Image.open("textures/"+str(tailleImg)+"/burned_grass.png"))
+burnedCell = []
 
 Fenetre.mainloop()
 
