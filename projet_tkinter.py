@@ -1,4 +1,4 @@
-﻿ # -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 
 # Projet d'ISN - (2018-2019) - Simulation d'un feu de forêt (Automates Cellulaires)
 # Réalisé par Viard Augustin, Vin Charles et Hubinet Benjamin
@@ -8,11 +8,10 @@
 
 from os import system
 
-def bootstrap():      # Update les bibliothèques importantes
+def bootstrap():                                                                #Update les bibliothèques importantes
     system("python -m pip install -U pip")
     system("python -m pip install -U pillow")
 #bootstrap()
-
 
 from tkinter import *
 from PIL import Image, ImageTk,Image
@@ -21,9 +20,9 @@ import time
 import tkinter.messagebox
 import tkinter.filedialog
 
-import AlgoCSV as AC                 # ALGOCSV permet de générer un csv en fonction du nombre de cellules choisies par l'utilisateur
-import varCommunes as VC             # varCommunes contient une classe qui rassemble toutes les variables utiles aux différents fichiers
-import algorithmeForet as algoForet  # Fichier qui contient l'algorithme
+import AlgoCSV as AC  #ALGOCSV permet de générer un csv en fonction du nombre de cellules choisies par l'utilisateur
+import varCommunes as VC  #varCommunes contient une classe qui rassemble toutes les variables utiles aux différents fichiers
+import algorithmeForet as algoForet  #Fichier qui contient l'algorithme
 import csv
 import classDialectCsv
 
@@ -97,7 +96,7 @@ def refreshTxPath():                            #Reactualise l'emplacement des T
     tree = ImageTk.PhotoImage(Image.open("textures/"+str(tailleImg)+"/tree.png"))
     water = ImageTk.PhotoImage(Image.open("textures/"+str(tailleImg)+"/water.png"))
     burningTree = ImageTk.PhotoImage(Image.open("textures/"+str(tailleImg)+"/burning_tree.png"))
-
+    
 # Déroulement de l'algorithme :
 
 def sim_auto():
@@ -145,6 +144,8 @@ def pasapas():
     vg.augmentLoopCount()
     vg.emptyCellEnFeu()
     vg.emptyOldCellToCheck()
+    vg.emptyCellEnFeu()
+    
 # Fin des fonctions concernant l'algorithme
 
 def drawGrid():     #Fonction qui dessine une grille sur le Canvas pour tester la position des textures
@@ -179,7 +180,7 @@ def createMap(event):
                 gridX+=1
             cordY = cordY+tailleImg
             gridY+=1
-
+            
 ##################################################################################################################################################
 
 vg = VC.varGlobales() #vg est une instance de varGlobales
@@ -219,6 +220,15 @@ Fenetre.config(menu = menubar)
 # Utilisation d'un dictionnaire pour conserver une référence
 canvas.place(relx = 0.5, rely = 0.5, anchor = CENTER)
 gifdict = {}
+
+#Definition des textures en dehors des fonctions:
+tailleImg = vg.getLengthCell()
+grass = ImageTk.PhotoImage(Image.open("textures/"+str(tailleImg)+"/grass.png"))
+tree = ImageTk.PhotoImage(Image.open("textures/"+str(tailleImg)+"/tree.png"))
+water = ImageTk.PhotoImage(Image.open("textures/"+str(tailleImg)+"/water.png"))
+burningTree = ImageTk.PhotoImage(Image.open("textures/"+str(tailleImg)+"/burning_tree.png"))
+
+Fenetre.mainloop()
 
 #Definition des textures en dehors des fonctions:
 tailleImg = vg.getLengthCell()

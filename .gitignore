@@ -8,3 +8,9 @@ __pycache__/AlgoCSV.cpython-37.pyc
 *.csv
 *.pyc
 *.pyc
+.vscode/settings.json
+__pycache__/AlgoCSV.cpython-37.pyc
+__pycache__/algorithmeForet.cpython-37.pyc
+__pycache__/classDialectCsv.cpython-37.pyc
+__pycache__/varCommunes.cpython-37.pyc
+csv.csv
