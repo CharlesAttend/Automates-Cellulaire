@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-####################################################################################################
+################################################################################################################################################################
 
 def propagationFeu(nbCellLignes, x, y, foret): # Algorithme gérant la propagation du feu
 
@@ -13,9 +13,9 @@ def propagationFeu(nbCellLignes, x, y, foret): # Algorithme gérant la propagati
         xMin = clicX
         xMax = clicX+1
 
-    elif(clicX == nbCellLignes):
+    elif(clicX == nbCellLignes-1):
         xMin = clicX-1
-        xMax = clicX-1
+        xMax = clicX
 
     else:
         xMin = clicX-1
@@ -25,9 +25,9 @@ def propagationFeu(nbCellLignes, x, y, foret): # Algorithme gérant la propagati
         yMin = clicY
         yMax = clicY+1
 
-    elif(clicY == nbCellLignes):
+    elif(clicY == nbCellLignes-1):
         yMin = clicY-1
-        yMax = clicY-1
+        yMax = clicY
 
     else:
         yMin = clicY-1
