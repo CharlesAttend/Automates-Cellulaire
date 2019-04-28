@@ -64,15 +64,15 @@ def enregistrer():                              # Fonction permettant de prendre
     image = Image.grab((x+2, y+2, x+w-2, y+h-2))
     image.save("resulat_simulation.png")
 
-def dix () :
+def dix():
     vg.setNbCell(10)
     refreshTxPath()
 
-def cinquante () :
+def cinquante():
     vg.setNbCell(50)
     refreshTxPath()
 
-def cent () :
+def cent():
     vg.setNbCell(100)
     refreshTxPath()
 
@@ -106,9 +106,8 @@ def sim_auto():
 
     vg.emptyCellEnFeu()
     vg.augmentLoopCount()
-    print("Génération n°", vg.getLoopCount())
     canvas.after(500, sim_auto)
-    lancer_chrono()
+    #lancer_chrono()
 
 def pasapas():
 
@@ -128,8 +127,6 @@ def pasapas():
         updateMap(cellEnFeu) #On affiche les nouveaux arbres à brûler si  il y en a
 
     vg.emptyCellEnFeu()
-    vg.augmentLoopCount()
-    print("Génération n°", vg.getLoopCount())
 # Fin des fonctions concernant l'algorithme
 
 def drawGrid(): #Fonction qui dessine une grille sur le Canvas pour tester la position des textures
