@@ -1,23 +1,33 @@
-﻿# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
+
+# Projet d'ISN - (2018-2019) - Simulation d'un feu de forêt (Automates Cellulaires)
+# Réalisé par Viard Augustin, Vin Charles et Hubinet Benjamin
+
+##################################################################################################################################################
+
 from os import system
 
-def bootstrap():                                                                #Update les bibliothèques importantes
+def bootstrap():                                                                # Update les bibliothèques importantes
     system("python -m pip install -U pip")
     system("python -m pip install -U pillow")
-#bootstrap()
+# bootstrap()
 
 from tkinter import *
 from PIL import Image, ImageTk,Image
 from math import ceil
+import time
 import tkinter.messagebox
 import tkinter.filedialog
-import time
 
-import AlgoCSV as AC  #ALGOCSV permet de générer un csv en fonction du nombre de cellules choisies par l'utilisateur
-import varCommunes as VC  #varCommunes contient une classe qui rassemble toutes les variables utiles aux différents fichiers
-import algorithmeForet as algoForet  #Fichier qui contient l'algorithme
+import AlgoCSV as AC  # ALGOCSV permet de générer un csv en fonction du nombre de cellules choisies par l'utilisateur
+import varCommunes as VC  # varCommunes contient une classe qui rassemble toutes les variables utiles aux différents fichiers
+import algorithmeForet as algoForet  # Fichier qui contient l'algorithme
 import csv
 import classDialectCsv
+
+##################################################################################################################################################
+
+ # Chronomètre, permettant d'obtenir des stats en fin de simulation
 
 def lancer_chrono():
     global depart,flag
@@ -31,15 +41,17 @@ def stoper_chrono():
 
 def top_horloge():
     global depart,flag
-    y=time.time()-depart
+    y = time.time()-depart
     minutes = time.localtime(y)[4]
     secondes = time.localtime(y)[5]
-    if flag :
+    if(flag):
         message.configure(text = "%i min %i sec " %(minutes,secondes))
     Fenetre.after(1000,top_horloge)
 
+ # Fin des Fonctions dédiées au chrono
+
 def Clic(event):
-    vg.setListeForet()                          #On crée la listeForet à partir du CSV
+    vg.setListeForet()                          # On crée la listeForet à partir du CSV
     listeForet = list(vg.getListeForet())
     X = event.x
     Y = event.y
@@ -76,15 +88,14 @@ def cent():
     vg.setNbCell(100)
     refreshTxPath()
 
-def refreshTxPath():                            #Reactualise l'emplacement des Textures après un changement de taille
+def refreshTxPath():                            # Réactualise l'emplacement des Textures après un changement de taille
     global grass, tree, water, burningTree, tailleImg
     tailleImg = vg.getLengthCell()
     grass = ImageTk.PhotoImage(Image.open("textures/"+str(tailleImg)+"/grass.png"))
     tree = ImageTk.PhotoImage(Image.open("textures/"+str(tailleImg)+"/tree.png"))
     water = ImageTk.PhotoImage(Image.open("textures/"+str(tailleImg)+"/water.png"))
     burningTree = ImageTk.PhotoImage(Image.open("textures/"+str(tailleImg)+"/burning_tree.png"))
-
-
+    
 # Déroulement de l'algorithme :
 
 def sim_auto():
@@ -100,12 +111,14 @@ def sim_auto():
 
     cellEnFeu = list(vg.getCellEnFeu())
     vg.changeCellToCheck(list(cellEnFeu))
+    vg.augmentOldCellToCheck(list(cellEnFeu))
 
     if(len(cellEnFeu) > 0):
-        updateMap(cellEnFeu) #On affiche les nouveaux arbres à brûler si  il y en a
+        updateMap(cellEnFeu)                     # On affiche les nouveaux arbres à brûler si  il y en a
 
-    vg.emptyCellEnFeu()
     vg.augmentLoopCount()
+    vg.emptyCellEnFeu()
+    vg.emptyOldCellToCheck()
     canvas.after(500, sim_auto)
     #lancer_chrono()
 
@@ -122,14 +135,19 @@ def pasapas():
 
     cellEnFeu = list(vg.getCellEnFeu())
     vg.changeCellToCheck(list(cellEnFeu))
+    vg.augmentOldCellToCheck(list(cellEnFeu))
 
     if(len(cellEnFeu) > 0):
-        updateMap(cellEnFeu) #On affiche les nouveaux arbres à brûler si  il y en a
+        updateMap(cellEnFeu)                    # On affiche les nouveaux arbres à brûler si  il y en a
 
+    vg.augmentLoopCount()
     vg.emptyCellEnFeu()
+    vg.emptyOldCellToCheck()
+    vg.emptyCellEnFeu()
+    
 # Fin des fonctions concernant l'algorithme
 
-def drawGrid(): #Fonction qui dessine une grille sur le Canvas pour tester la position des textures
+def drawGrid():     # Fonction qui dessine une grille sur le Canvas pour tester la position des textures
     for i in range(0, 800, 800//vg.getNbCellules()):
         canvas.create_line(0, i, 800, i)
         canvas.create_line(i, 0, i, 800)
@@ -138,19 +156,18 @@ def updateMap(cellEnFeu):
     for i in range(0, len(cellEnFeu), 2):
         canvas.itemconfigure(str(cellEnFeu[i])+","+str(cellEnFeu[i+1]), image=burningTree)
 
-
 def createMap(event):
     algocvs.createCsv()
     cordY = 0
     gridY = 0
     with open("csv.csv", "r", newline='') as f:
-        canvas.delete("all")                                #Reset du canvas précédent
+        canvas.delete("all")                                # Reset du canvas précédent
         reader = csv.reader(f, classDialectCsv.Dialect())
-        for row in reader:                                  #On regarde d'abord les lignes
-            cordX = 0                                       #On reset X à chaque nouvelle ligne
+        for row in reader:                                  # On regarde d'abord les lignes
+            cordX = 0                                       # On reset X à chaque nouvelle ligne
             gridX = 0
-            for i in row:                                   #Ici c'est la boucle des collones || On met la valeur de la case dans i
-                i = int(i)                                  #Mon reader renvoie un i sous forme de String donc je le converti
+            for i in row:                                   # Ici c'est la boucle des collones || On met la valeur de la case dans i
+                i = int(i)                                  # Mon reader renvoie un i sous forme de String donc je le converti
                 #On test le i, 0=grass, 1=tree
                 if i == 0:
                     canvas.create_image(cordX, cordY, anchor=tkinter.NW, image=grass, tag=str(gridX)+","+str(gridY))
@@ -158,15 +175,14 @@ def createMap(event):
                     canvas.create_image(cordX, cordY, anchor=tkinter.NW, image=tree, tag=str(gridX)+","+str(gridY))
                 else:
                     canvas.create_image(cordX, cordY, anchor=tkinter.NW, image=water, tag=str(gridX)+","+str(gridY))
-                cordX = cordX+tailleImg                     #On augmente les cords pour afficher l'image au bon endroit après
+                cordX = cordX+tailleImg                     # On augmente les cords pour afficher l'image au bon endroit après
                 gridX+=1
             cordY = cordY+tailleImg
             gridY+=1
+            
+##################################################################################################################################################
 
-
-
-
-vg = VC.varGlobales() #vg est une instance de varGlobales
+vg = VC.varGlobales() # vg est une instance de varGlobales
 vg.setLargeur(800)
 vg.setHauteur(800)
 vg.setNbCell(50)
@@ -204,7 +220,7 @@ Fenetre.config(menu = menubar)
 canvas.place(relx = 0.5, rely = 0.5, anchor = CENTER)
 gifdict = {}
 
-#Definition des textures en dehors des fonctions:
+# Définition des textures en dehors des fonctions:
 tailleImg = vg.getLengthCell()
 grass = ImageTk.PhotoImage(Image.open("textures/"+str(tailleImg)+"/grass.png"))
 tree = ImageTk.PhotoImage(Image.open("textures/"+str(tailleImg)+"/tree.png"))
@@ -212,4 +228,3 @@ water = ImageTk.PhotoImage(Image.open("textures/"+str(tailleImg)+"/water.png"))
 burningTree = ImageTk.PhotoImage(Image.open("textures/"+str(tailleImg)+"/burning_tree.png"))
 
 Fenetre.mainloop()
-
