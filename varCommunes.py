@@ -1,7 +1,12 @@
 # -*- coding: utf-8 -*-
 
+###########################################################################################################################################
+
 import csv
 import classDialectCsv
+
+
+###########################################################################################################################################
 
 class varGlobales():  # Classe stockant quelques 'variables'/constantes pour eviter les conflits de valeurs entre les fichiers
                         # On évite ainsi les conflits de valeurs entre les fichiers et les variables de type global
@@ -16,6 +21,8 @@ class varGlobales():  # Classe stockant quelques 'variables'/constantes pour evi
         self.listeForet = []
         self.listeCellulesEnFeu = []
         self.listeCellToCheck = []
+        self.listeOldCellToCheck = []
+
 
     # Fonctions dites "Accesseurs", elles retournent les valeurs des differents attributs de la classe
 
@@ -47,6 +54,11 @@ class varGlobales():  # Classe stockant quelques 'variables'/constantes pour evi
     def getCellToCheck(self):
         return list(self.listeCellToCheck)
 
+    def getOldCellToCheck(self):
+        return list(self.listeOldCellToCheck)
+
+###########################################################################################################################################
+
     # Fonctions dites "Mutateurs", elles permettent de modifier les valeurs des differents attributs de la classe
 
     def setLargeur(self, largeur):
@@ -70,9 +82,11 @@ class varGlobales():  # Classe stockant quelques 'variables'/constantes pour evi
         self.loopCount += 1
 
 
-
     def setNewListeForet(self, listeForet):
     	self.listeForet = list(listeForet)
+
+    def setOldCellToCheck(self, listeOldCell):
+        self.listeOldCellToCheck = list(listeOldCell) 
 
     def changeCellEnFeu(self, listeCellEnFeu):
         self.listeCellulesEnFeu = list(listeCellEnFeu)
@@ -88,8 +102,14 @@ class varGlobales():  # Classe stockant quelques 'variables'/constantes pour evi
         self.listeCellToCheck.append(x)
         self.listeCellToCheck.append(y)
 
+    def augmentOldCellToCheck(self, listOfCell):
+        self.listeOldCellToCheck += list(listOfCell)
+
     def returnCellToCheck(self, index):
         return self.listeCellToCheck[index]
 
     def emptyCellEnFeu(self):
         self.listeCellulesEnFeu.clear()
+
+    def emptyOldCellToCheck(self):
+        self.listeOldCellToCheck.clear()
