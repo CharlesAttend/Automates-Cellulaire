@@ -1,8 +1,14 @@
 # -*- coding: utf-8 -*-
+
+
+#####################################################################################################
+
 import csv
 from random import random, randint
 import classDialectCsv
 import copy
+
+#####################################################################################################
 
 class algoCSV():
     def __init__(self, csvName1, nbCellule1):
