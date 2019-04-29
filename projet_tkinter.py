@@ -7,7 +7,7 @@
 
 from os import system
 
-def bootstrap():                                                                # Update les bibliothèques importantes
+def bootstrap():                                # Update les bibliothèques importantes
     system("python -m pip install -U pip")
     system("python -m pip install -U pillow")
 # bootstrap()
