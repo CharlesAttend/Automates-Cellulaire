@@ -50,6 +50,9 @@ def top_horloge():
 
  # Fin des Fonctions dédiées au chrono
 
+def stats():
+    vg.getBurnedTrees
+
 def Clic(event):
     vg.setListeForet()                          # On crée la listeForet à partir du CSV
     listeForet = list(vg.getListeForet())
@@ -99,7 +102,7 @@ def refreshTxPath():                            # Réactualise l'emplacement des
     burnedTree = ImageTk.PhotoImage(Image.open("textures/"+str(tailleImg)+"/burned_tree.png"))
     burningGrass = ImageTk.PhotoImage(Image.open("textures/"+str(tailleImg)+"/burning_tree.png"))
     burnedGrass = ImageTk.PhotoImage(Image.open("textures/"+str(tailleImg)+"/burned_grass.png"))
-    
+
 # Déroulement de l'algorithme :
 
 def sim_auto():
@@ -150,7 +153,7 @@ def updateProMap(cellEnFeu):
 def createProMap():
     pass
 
-def updateCoolMap(cellEnFeu):   
+def updateCoolMap(cellEnFeu):
     global burnedCell
     for i in range(0, len(cellEnFeu), 2):
         canvas.itemconfigure(str(cellEnFeu[i])+","+str(cellEnFeu[i+1]), image=burningTree)
@@ -198,7 +201,7 @@ vg.setNbCell(50)
 
 algocvs = AC.algoCSV(vg.getNomCsv(), vg.getNbCellules())
 
-vg.setListeForet()   
+vg.setListeForet()
 
 Fenetre = Tk()
 Fenetre.title("Fenetre de simulation")
