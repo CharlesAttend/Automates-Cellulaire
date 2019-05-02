@@ -51,7 +51,6 @@ def top_horloge():
  # Fin des Fonctions dédiées au chrono
 
 def stats():
-    vg.getBurnedTrees()
     pourcent = (100*vg.getBurnedTrees())//(vg.getTTtree())
     resultat.configure(text = str(pourcent) + "%")
 
@@ -64,11 +63,11 @@ def Clic(event):
     Y = ceil(Y/vg.getLengthCell())-1
     print("Coords:  ", X, ", ", Y)
 
-    if(listeForet[Y][X] != '1'): return False   # On test si la cellule sur laquelle on a cliqué est un arbre, si oui on le met en feu sinon, il ne se passe rien
+    if(listeForet[Y][X] != "1"): return False   # On test si la cellule sur laquelle on a cliqué est un arbre, si oui on le met en feu sinon, il ne se passe rien
 
     vg.augmentCellToCheck(X, Y)
     vg.augmentCellEnFeu(X, Y)
-    listeForet[Y][X] = '3'
+    listeForet[Y][X] = "3"
     vg.setNewListeForet(listeForet)
     updateCoolMap(vg.getCellEnFeu(), [])
     vg.augmentBurnedCell(vg.getCellEnFeu())
