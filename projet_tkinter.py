@@ -163,7 +163,6 @@ def updateCoolMap(cellEnFeu, burnedCell):
     for i in range(0, len(burnedCell), 2):
         canvas.itemconfigure(str(burnedCell[i])+","+str(burnedCell[i+1]), image=burnedTree)
 
-
 def createCoolMap(event):
     algocvs.createCsv()
     cordY = 0

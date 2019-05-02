@@ -13,7 +13,7 @@ class varGlobales():  # Classe stockant quelques 'variables'/constantes pour evi
     def __init__(self):  # Constructeur permettant de definir les differents attributs de la classe
         self.hauteurFenetre = 0
         self.largeurFenetre = 0
-        self.nbCellules = 0  # Nombre de cellules par lignes
+        self.nbCellules = 0  # Nombre de cellules par lignes<<<<<<< HEAD
         self.burnedTrees = 0 # Nombre d'arbre brûlés
         self.TTtree = 0      # Nombre d'arbres aux débuts de la simulation
 
@@ -28,6 +28,8 @@ class varGlobales():  # Classe stockant quelques 'variables'/constantes pour evi
 
 
     # Fonctions dites "Accesseurs", elles retournent les valeurs des differents attributs de la classe
+    def getTTtree(self):
+        return self.TTtree
 
     def getTTtree(self):
         return self.TTtree
