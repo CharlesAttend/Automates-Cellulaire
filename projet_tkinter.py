@@ -52,8 +52,8 @@ def top_horloge():
 
 def stats():
     vg.getBurnedTrees()
-    pourcent = (100*vg.getTTtree())//(vg.getBurnedTrees())
-    resultat.configure(text = pourcent)
+    pourcent = (100*vg.getBurnedTrees())//(vg.getTTtree())
+    resultat.configure(text = str(pourcent) + "%")
 
 def Clic(event):
     vg.setListeForet()                          # On crée la listeForet à partir du CSV
@@ -165,6 +165,7 @@ def updateCoolMap(cellEnFeu, burnedCell):
         canvas.itemconfigure(str(cellEnFeu[i])+","+str(cellEnFeu[i+1]), image=burningTree)
     for i in range(0, len(burnedCell), 2):
         canvas.itemconfigure(str(burnedCell[i])+","+str(burnedCell[i+1]), image=burnedTree)
+    stats()
 
 def createCoolMap(event):
     algocvs.createCsv()
@@ -220,7 +221,7 @@ dimensions.add_command(label = "100x100", command = cent)
 menubar.add_cascade(label = "Fichier", menu = menufichier)
 menubar.add_cascade(label = "Dimensions", menu = dimensions)
 
-resultat = Label(Fenetre, text = " ")
+resultat = Label(Fenetre, text = "")
 auto = Button(Fenetre, text = "Simulation Automatique", bg = "green", command = sim_auto)
 manuel = Button(Fenetre, text = "Simulation Pas à Pas", bg = "blue", command = pasapas)
 auto.grid(row = 0, column = 0, sticky = "n")
