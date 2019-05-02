@@ -14,3 +14,5 @@ __pycache__/algorithmeForet.cpython-37.pyc
 __pycache__/classDialectCsv.cpython-37.pyc
 __pycache__/varCommunes.cpython-37.pyc
 csv.csv
+*.pyc
+*.csv
