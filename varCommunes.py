@@ -13,18 +13,26 @@ class varGlobales():  # Classe stockant quelques 'variables'/constantes pour evi
     def __init__(self):  # Constructeur permettant de definir les differents attributs de la classe
         self.hauteurFenetre = 0
         self.largeurFenetre = 0
-        self.nbCellules = 0  # Nombre de cellules par lignes
-        self.loopCount = 0
+        self.nbCellules = 0  # Nombre de cellules par lignes<<<<<<< HEAD
+        self.burnedTrees = 0 # Nombre d'arbre brûlés
+        self.TTtree = 0      # Nombre d'arbres aux débuts de la simulation
 
         self.nomCsv  = 'csv.csv'  # Nom du csv permettant la generation du csv
 
         self.listeForet = []
         self.listeCellulesEnFeu = []
         self.listeCellToCheck = []
-        self.listeOldCellToCheck = []
+        self.listeBurnedCell = []
 
+###########################################################################################################################################
 
     # Fonctions dites "Accesseurs", elles retournent les valeurs des differents attributs de la classe
+
+    def getTTtree(self):
+        return self.TTtree
+
+    def getTTtree(self):
+        return self.TTtree
 
     def getHauteur(self):
         return self.hauteurFenetre
@@ -36,13 +44,13 @@ class varGlobales():  # Classe stockant quelques 'variables'/constantes pour evi
         return self.nbCellules
 
     def getLengthCell(self):
-    	return self.largeurFenetre//self.nbCellules
+        return self.largeurFenetre//self.nbCellules
 
     def getNomCsv(self):
         return self.nomCsv
 
-    def getLoopCount(self):
-        return self.loopCount
+    def getBurnedTrees(self):
+        return self.burnedTrees
 
 
     def getListeForet(self):
@@ -54,13 +62,16 @@ class varGlobales():  # Classe stockant quelques 'variables'/constantes pour evi
     def getCellToCheck(self):
         return list(self.listeCellToCheck)
 
-    def getOldCellToCheck(self):
-        return list(self.listeOldCellToCheck)
+    def getBurnedCell(self):
+        return list(self.listeBurnedCell)
 
 ###########################################################################################################################################
 
     # Fonctions dites "Mutateurs", elles permettent de modifier les valeurs des differents attributs de la classe
 
+    def setTTtree(self, tree):
+        self.TTtree = tree
+        
     def setLargeur(self, largeur):
         self.largeurFenetre = largeur
 
@@ -78,15 +89,15 @@ class varGlobales():  # Classe stockant quelques 'variables'/constantes pour evi
                 doubleList.append(row)
             self.listeForet = list(doubleList)
 
-    def augmentLoopCount(self):
-        self.loopCount += 1
+    def augmentBurnedTrees(self, burnedCell):
+        self.burnedTrees += burnedCell
 
 
     def setNewListeForet(self, listeForet):
-    	self.listeForet = list(listeForet)
+        self.listeForet = list(listeForet)
 
-    def setOldCellToCheck(self, listeOldCell):
-        self.listeOldCellToCheck = list(listeOldCell) 
+    def setBurnedCell(self, listeOldCell):
+        self.listeBurnedCell = list(listeOldCell)
 
     def changeCellEnFeu(self, listeCellEnFeu):
         self.listeCellulesEnFeu = list(listeCellEnFeu)
@@ -102,8 +113,8 @@ class varGlobales():  # Classe stockant quelques 'variables'/constantes pour evi
         self.listeCellToCheck.append(x)
         self.listeCellToCheck.append(y)
 
-    def augmentOldCellToCheck(self, listOfCell):
-        self.listeOldCellToCheck += list(listOfCell)
+    def augmentBurnedCell(self, listOfCell):
+        self.listeBurnedCell += list(listOfCell)
 
     def returnCellToCheck(self, index):
         return self.listeCellToCheck[index]
@@ -111,5 +122,5 @@ class varGlobales():  # Classe stockant quelques 'variables'/constantes pour evi
     def emptyCellEnFeu(self):
         self.listeCellulesEnFeu.clear()
 
-    def emptyOldCellToCheck(self):
-        self.listeOldCellToCheck.clear()
+    def emptyBurnedCell(self):
+        self.listeBurnedCell.clear()
