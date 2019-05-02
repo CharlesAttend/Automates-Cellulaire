@@ -46,9 +46,12 @@ def top_horloge():
     secondes = time.localtime(y)[5]
     if(flag):
         message.configure(text = "%i min %i sec " %(minutes,secondes))
-    Fenetre.after(1000,top_horloge)
+    Fenetre.after(250,top_horloge)
 
  # Fin des Fonctions dédiées au chrono
+
+def stats():
+    vg.getBurnedTrees
 
 def Clic(event):
     vg.setListeForet()                          # On crée la listeForet à partir du CSV
@@ -57,11 +60,11 @@ def Clic(event):
     Y = event.y
     X = ceil(X/vg.getLengthCell())-1
     Y = ceil(Y/vg.getLengthCell())-1
+    print("Coords:  ", X, ", ", Y)
 
     if(listeForet[Y][X] != '1'): return False   # On test si la cellule sur laquelle on a cliqué est un arbre, si oui on le met en feu sinon, il ne se passe rien
 
     vg.augmentCellToCheck(X, Y)
-    print("Coords:  ", X, ", ", Y)
     vg.augmentCellEnFeu(X, Y)
     listeForet[Y][X] = '3'
     vg.setNewListeForet(listeForet)
@@ -99,10 +102,11 @@ def refreshTxPath():                            # Réactualise l'emplacement des
     burnedTree = ImageTk.PhotoImage(Image.open("textures/"+str(tailleImg)+"/burned_tree.png"))
     burningGrass = ImageTk.PhotoImage(Image.open("textures/"+str(tailleImg)+"/burning_tree.png"))
     burnedGrass = ImageTk.PhotoImage(Image.open("textures/"+str(tailleImg)+"/burned_grass.png"))
-    
+
 # Déroulement de l'algorithme :
 
 def sim_auto():
+    updateMap([], vg.getBurnedCell())
     for i in range(0, len(vg.getCellToCheck()), 2):
         tmpCellEnFeu, tmpListeForet = algoForet.propagationFeu(vg.getNbCellules(), vg.returnCellToCheck(i), vg.returnCellToCheck(i+1), vg.getListeForet()) #On test d'abord si le feu peut se propager
         vg.setNewListeForet(tmpListeForet)
@@ -114,14 +118,16 @@ def sim_auto():
     vg.changeCellToCheck(list(cellEnFeu))
 
     if(len(cellEnFeu) > 0):
-        updateCoolMap(cellEnFeu)                     # On affiche les nouveaux arbres à brûler si  il y en a
+        updateMap(cellEnFeu, vg.getBurnedCell())                     # On affiche les nouveaux arbres à brûler si  il y en a
 
+    vg.augmentBurnedCell(list(cellEnFeu))
     vg.augmentBurnedTrees(len(cellEnFeu)//2)
     vg.emptyCellEnFeu()
     canvas.after(500, sim_auto)
     #lancer_chrono()
 
 def pasapas():
+    updateMap([], vg.getBurnedCell())
     for i in range(0, len(vg.getCellToCheck()), 2):
         tmpCellEnFeu, tmpListeForet = algoForet.propagationFeu(vg.getNbCellules(), vg.returnCellToCheck(i), vg.returnCellToCheck(i+1), vg.getListeForet()) #On test d'abord si le feu peut se propager
         vg.setNewListeForet(tmpListeForet)
@@ -133,8 +139,9 @@ def pasapas():
     vg.changeCellToCheck(list(cellEnFeu))
 
     if(len(cellEnFeu) > 0):
-        updateCoolMap(cellEnFeu)                    # On affiche les nouveaux arbres à brûler si  il y en a
+        updateMap(cellEnFeu, vg.getBurnedCell())                    # On affiche les nouveaux arbres à brûler si  il y en a
 
+    vg.augmentBurnedCell(list(cellEnFeu))
     vg.augmentBurnedTrees(len(cellEnFeu)//2)
     vg.emptyCellEnFeu()
 
@@ -145,23 +152,23 @@ def drawGrid():                                     # Fonction qui dessine une g
         canvas.create_line(0, i, 800, i)
         canvas.create_line(i, 0, i, 800)
 
-def updateCoolMap(cellEnFeu):   
-    global burnedCell
+def updateProMap(cellEnFeu):
+    pass
+def createProMap():
+    pass
+
+def updateCoolMap(cellEnFeu, burnedCell):
     for i in range(0, len(cellEnFeu), 2):
         canvas.itemconfigure(str(cellEnFeu[i])+","+str(cellEnFeu[i+1]), image=burningTree)
     for i in range(0, len(burnedCell), 2):
         canvas.itemconfigure(str(burnedCell[i])+","+str(burnedCell[i+1]), image=burnedTree)
-    burnedCell = list(cellEnFeu)
-
-def updateBurning(burnedCell):
-    for i in range(0, len(burnedCell), 2):
-        canvas.itemconfigure(str(burnedCell[i])+","+str(burnedCell[i+1]), image=burnedTree)
 
 
-def createMap(event):
+def createCoolMap(event):
     algocvs.createCsv()
     cordY = 0
     gridY = 0
+    totalTree = 0
     with open("csv.csv", "r", newline='') as f:
         canvas.delete("all")                                # Reset du canvas précédent
         reader = csv.reader(f, classDialectCsv.Dialect())
@@ -171,16 +178,18 @@ def createMap(event):
             for i in row:                                   # Ici c'est la boucle des collones || On met la valeur de la case dans i
                 i = int(i)                                  # Mon reader renvoie un i sous forme de String donc je le converti
                 #On test le i, 0=grass, 1=tree
-                if i == 0:
-                    canvas.create_image(cordX, cordY, anchor=tkinter.NW, image=grass, tag=str(gridX)+","+str(gridY))
-                elif i == 1:
+                if i == 1:
                     canvas.create_image(cordX, cordY, anchor=tkinter.NW, image=tree, tag=str(gridX)+","+str(gridY))
+                    totalTree += 1
+                elif i == 0:
+                    canvas.create_image(cordX, cordY, anchor=tkinter.NW, image=grass, tag=str(gridX)+","+str(gridY))
                 else:
                     canvas.create_image(cordX, cordY, anchor=tkinter.NW, image=water, tag=str(gridX)+","+str(gridY))
                 cordX = cordX+tailleImg                     # On augmente les cords pour afficher l'image au bon endroit après
                 gridX+=1
             cordY = cordY+tailleImg
             gridY+=1
+            vg.setTTtree(totalTree)
 
 ##################################################################################################################################################
 
@@ -191,7 +200,7 @@ vg.setNbCell(50)
 
 algocvs = AC.algoCSV(vg.getNomCsv(), vg.getNbCellules())
 
-vg.setListeForet()   
+vg.setListeForet()
 
 Fenetre = Tk()
 Fenetre.title("Fenetre de simulation")
@@ -216,7 +225,7 @@ manuel.grid(row = 1, column = 0, sticky = "n")
 
 canvas.bind("<Button-1>", Clic)
 #canvas.bind("<Button-3>", drawGrid)
-canvas.bind("<Button-3>", createMap)
+canvas.bind("<Button-3>", createCoolMap)
 # Affichage du menu
 Fenetre.config(menu = menubar)
 
@@ -233,6 +242,5 @@ burningTree = ImageTk.PhotoImage(Image.open("textures/"+str(tailleImg)+"/burning
 burnedTree = ImageTk.PhotoImage(Image.open("textures/"+str(tailleImg)+"/burned_tree.png"))
 burningGrass = ImageTk.PhotoImage(Image.open("textures/"+str(tailleImg)+"/burning_tree.png"))
 burnedGrass = ImageTk.PhotoImage(Image.open("textures/"+str(tailleImg)+"/burned_grass.png"))
-burnedCell = []
 
 Fenetre.mainloop()
