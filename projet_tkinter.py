@@ -66,6 +66,7 @@ def Clic(event):
     listeForet[Y][X] = '3'
     vg.setNewListeForet(listeForet)
     updateMap(vg.getCellEnFeu())
+    vg.augmentBurnedTrees(1)
     vg.emptyCellEnFeu()
 
 def enregistrer():                              # Fonction permettant de prendre une capture d'écran de la simulation, ainsi que de l'enregistrer
@@ -95,7 +96,8 @@ def refreshTxPath():                            # Réactualise l'emplacement des
     tree = ImageTk.PhotoImage(Image.open("textures/"+str(tailleImg)+"/tree.png"))
     water = ImageTk.PhotoImage(Image.open("textures/"+str(tailleImg)+"/water.png"))
     burningTree = ImageTk.PhotoImage(Image.open("textures/"+str(tailleImg)+"/burning_tree.png"))
-    
+    burnedTree = ImageTk.PhotoImage(Image.open("textures/"+str(tailleImg)+"/burned_tree.png"))
+
 # Déroulement de l'algorithme :
 
 def sim_auto():
@@ -111,14 +113,12 @@ def sim_auto():
 
     cellEnFeu = list(vg.getCellEnFeu())
     vg.changeCellToCheck(list(cellEnFeu))
-    vg.augmentOldCellToCheck(list(cellEnFeu))
 
     if(len(cellEnFeu) > 0):
         updateMap(cellEnFeu)                     # On affiche les nouveaux arbres à brûler si  il y en a
 
-    vg.augmentLoopCount()
+    vg.augmentBurnedTrees(len(cellEnFeu))
     vg.emptyCellEnFeu()
-    vg.emptyOldCellToCheck()
     canvas.after(500, sim_auto)
     #lancer_chrono()
 
@@ -135,16 +135,13 @@ def pasapas():
 
     cellEnFeu = list(vg.getCellEnFeu())
     vg.changeCellToCheck(list(cellEnFeu))
-    vg.augmentOldCellToCheck(list(cellEnFeu))
 
     if(len(cellEnFeu) > 0):
         updateMap(cellEnFeu)                    # On affiche les nouveaux arbres à brûler si  il y en a
 
-    vg.augmentLoopCount()
+    vg.augmentBurnedTrees(len(cellEnFeu))
     vg.emptyCellEnFeu()
-    vg.emptyOldCellToCheck()
-    vg.emptyCellEnFeu()
-    
+
 # Fin des fonctions concernant l'algorithme
 
 def drawGrid():     # Fonction qui dessine une grille sur le Canvas pour tester la position des textures
@@ -152,9 +149,14 @@ def drawGrid():     # Fonction qui dessine une grille sur le Canvas pour tester 
         canvas.create_line(0, i, 800, i)
         canvas.create_line(i, 0, i, 800)
 
-def updateMap(cellEnFeu): 
+def updateMap(cellEnFeu):
     for i in range(0, len(cellEnFeu), 2):
         canvas.itemconfigure(str(cellEnFeu[i])+","+str(cellEnFeu[i+1]), image=burningTree)
+
+def updateBurning(burnedCell):
+    for i in range(0, len(burnedCell), 2):
+        canvas.itemconfigure(str(burnedCell[i])+","+str(burnedCell[i+1]), image=burnedTree)
+
 
 def createMap(event):
     algocvs.createCsv()
@@ -179,7 +181,7 @@ def createMap(event):
                 gridX+=1
             cordY = cordY+tailleImg
             gridY+=1
-            
+
 ##################################################################################################################################################
 
 vg = VC.varGlobales() # vg est une instance de varGlobales
@@ -226,5 +228,6 @@ grass = ImageTk.PhotoImage(Image.open("textures/"+str(tailleImg)+"/grass.png"))
 tree = ImageTk.PhotoImage(Image.open("textures/"+str(tailleImg)+"/tree.png"))
 water = ImageTk.PhotoImage(Image.open("textures/"+str(tailleImg)+"/water.png"))
 burningTree = ImageTk.PhotoImage(Image.open("textures/"+str(tailleImg)+"/burning_tree.png"))
+burnedTree = ImageTk.PhotoImage(Image.open("textures/"+str(tailleImg)+"/burned_tree.png"))
 
 Fenetre.mainloop()
