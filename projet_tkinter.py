@@ -46,7 +46,7 @@ def top_horloge():
     secondes = time.localtime(y)[5]
     if(flag):
         message.configure(text = "%i min %i sec " %(minutes,secondes))
-    Fenetre.after(1000,top_horloge)
+    Fenetre.after(250,top_horloge)
 
  # Fin des Fonctions dédiées au chrono
 
@@ -148,6 +148,11 @@ def drawGrid():                                     # Fonction qui dessine une g
         canvas.create_line(0, i, 800, i)
         canvas.create_line(i, 0, i, 800)
 
+def updateProMap(cellEnFeu):
+    pass
+def createProMap():
+    pass
+
 def updateCoolMap(cellEnFeu):
     global burnedCell
     for i in range(0, len(cellEnFeu), 2):
@@ -160,11 +165,11 @@ def updateBurning(burnedCell):
     for i in range(0, len(burnedCell), 2):
         canvas.itemconfigure(str(burnedCell[i])+","+str(burnedCell[i+1]), image=burnedTree)
 
-
-def createMap(event):
+def createCoolMap(event):
     algocvs.createCsv()
     cordY = 0
     gridY = 0
+    totalTree = 0
     with open("csv.csv", "r", newline='') as f:
         canvas.delete("all")                                # Reset du canvas précédent
         reader = csv.reader(f, classDialectCsv.Dialect())
@@ -174,16 +179,18 @@ def createMap(event):
             for i in row:                                   # Ici c'est la boucle des collones || On met la valeur de la case dans i
                 i = int(i)                                  # Mon reader renvoie un i sous forme de String donc je le converti
                 #On test le i, 0=grass, 1=tree
-                if i == 0:
-                    canvas.create_image(cordX, cordY, anchor=tkinter.NW, image=grass, tag=str(gridX)+","+str(gridY))
-                elif i == 1:
+                if i == 1:
                     canvas.create_image(cordX, cordY, anchor=tkinter.NW, image=tree, tag=str(gridX)+","+str(gridY))
+                    totalTree += 1
+                elif i == 0:
+                    canvas.create_image(cordX, cordY, anchor=tkinter.NW, image=grass, tag=str(gridX)+","+str(gridY))
                 else:
                     canvas.create_image(cordX, cordY, anchor=tkinter.NW, image=water, tag=str(gridX)+","+str(gridY))
                 cordX = cordX+tailleImg                     # On augmente les cords pour afficher l'image au bon endroit après
                 gridX+=1
             cordY = cordY+tailleImg
             gridY+=1
+            vg.setTTtree(totalTree)
 
 ##################################################################################################################################################
 
@@ -219,7 +226,7 @@ manuel.grid(row = 1, column = 0, sticky = "n")
 
 canvas.bind("<Button-1>", Clic)
 #canvas.bind("<Button-3>", drawGrid)
-canvas.bind("<Button-3>", createMap)
+canvas.bind("<Button-3>", createCoolMap)
 # Affichage du menu
 Fenetre.config(menu = menubar)
 
