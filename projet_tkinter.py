@@ -226,7 +226,7 @@ auto = Button(Fenetre, text = "Simulation Automatique", bg = "green", command = 
 manuel = Button(Fenetre, text = "Simulation Pas à Pas", bg = "blue", command = pasapas)
 auto.grid(row = 0, column = 0, sticky = "n")
 manuel.grid(row = 1, column = 0, sticky = "n")
-resultat.grid(row = 0, column = 5, sticky = "n")
+resultat.grid(row = 0, column = 2, sticky = "n")
 
 canvas.bind("<Button-1>", Clic)
 #canvas.bind("<Button-3>", drawGrid)
