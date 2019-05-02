@@ -15,6 +15,7 @@ class varGlobales():  # Classe stockant quelques 'variables'/constantes pour evi
         self.largeurFenetre = 0
         self.nbCellules = 0  # Nombre de cellules par lignes
         self.burnedTrees = 0
+        self.TTtree = 0
 
         self.nomCsv  = 'csv.csv'  # Nom du csv permettant la generation du csv
 
@@ -25,7 +26,8 @@ class varGlobales():  # Classe stockant quelques 'variables'/constantes pour evi
 
 
     # Fonctions dites "Accesseurs", elles retournent les valeurs des differents attributs de la classe
-
+    def getTTtree(self):
+        return self.TTtree
     def getHauteur(self):
         return self.hauteurFenetre
 
