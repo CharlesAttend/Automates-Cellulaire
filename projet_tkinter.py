@@ -66,6 +66,7 @@ def Clic(event):
     listeForet[Y][X] = '3'
     vg.setNewListeForet(listeForet)
     updateCoolMap(vg.getCellEnFeu())
+    vg.augmentBurnedTrees(1)
     vg.emptyCellEnFeu()
 
 def enregistrer():                              # Fonction permettant de prendre une capture d'écran de la simulation, ainsi que de l'enregistrer
@@ -102,26 +103,21 @@ def refreshTxPath():                            # Réactualise l'emplacement des
 # Déroulement de l'algorithme :
 
 def sim_auto():
-
     for i in range(0, len(vg.getCellToCheck()), 2):
-
         tmpCellEnFeu, tmpListeForet = algoForet.propagationFeu(vg.getNbCellules(), vg.returnCellToCheck(i), vg.returnCellToCheck(i+1), vg.getListeForet()) #On test d'abord si le feu peut se propager
         vg.setNewListeForet(tmpListeForet)
 
         for j in range(0, len(tmpCellEnFeu), 2):
             vg.augmentCellEnFeu(tmpCellEnFeu[j], tmpCellEnFeu[j+1])
 
-
     cellEnFeu = list(vg.getCellEnFeu())
     vg.changeCellToCheck(list(cellEnFeu))
-    vg.augmentOldCellToCheck(list(cellEnFeu))
 
     if(len(cellEnFeu) > 0):
         updateCoolMap(cellEnFeu)                     # On affiche les nouveaux arbres à brûler si  il y en a
 
-    vg.augmentLoopCount()
+    vg.augmentBurnedTrees(len(cellEnFeu)//2)
     vg.emptyCellEnFeu()
-    vg.emptyOldCellToCheck()
     canvas.after(500, sim_auto)
     #lancer_chrono()
 
@@ -135,16 +131,13 @@ def pasapas():
 
     cellEnFeu = list(vg.getCellEnFeu())
     vg.changeCellToCheck(list(cellEnFeu))
-    vg.augmentOldCellToCheck(list(cellEnFeu))
 
     if(len(cellEnFeu) > 0):
         updateCoolMap(cellEnFeu)                    # On affiche les nouveaux arbres à brûler si  il y en a
 
-    vg.augmentLoopCount()
+    vg.augmentBurnedTrees(len(cellEnFeu)//2)
     vg.emptyCellEnFeu()
-    vg.emptyOldCellToCheck()
-    vg.emptyCellEnFeu()
-    
+
 # Fin des fonctions concernant l'algorithme
 
 def drawGrid():                                     # Fonction qui dessine une grille sur le Canvas pour tester la position des textures
@@ -159,6 +152,11 @@ def updateCoolMap(cellEnFeu):
     for i in range(0, len(burnedCell), 2):
         canvas.itemconfigure(str(burnedCell[i])+","+str(burnedCell[i+1]), image=burnedTree)
     burnedCell = list(cellEnFeu)
+
+def updateBurning(burnedCell):
+    for i in range(0, len(burnedCell), 2):
+        canvas.itemconfigure(str(burnedCell[i])+","+str(burnedCell[i+1]), image=burnedTree)
+
 
 def createMap(event):
     algocvs.createCsv()
@@ -183,7 +181,7 @@ def createMap(event):
                 gridX+=1
             cordY = cordY+tailleImg
             gridY+=1
-            
+
 ##################################################################################################################################################
 
 vg = VC.varGlobales() # vg est une instance de varGlobales
