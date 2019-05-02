@@ -61,11 +61,11 @@ def Clic(event):
     Y = event.y
     X = ceil(X/vg.getLengthCell())-1
     Y = ceil(Y/vg.getLengthCell())-1
+    print("Coords:  ", X, ", ", Y)
 
     if(listeForet[Y][X] != '1'): return False   # On test si la cellule sur laquelle on a cliqué est un arbre, si oui on le met en feu sinon, il ne se passe rien
 
     vg.augmentCellToCheck(X, Y)
-    print("Coords:  ", X, ", ", Y)
     vg.augmentCellEnFeu(X, Y)
     listeForet[Y][X] = '3'
     vg.setNewListeForet(listeForet)
@@ -107,6 +107,7 @@ def refreshTxPath():                            # Réactualise l'emplacement des
 # Déroulement de l'algorithme :
 
 def sim_auto():
+    updateMap([], vg.getBurnedCell())
     for i in range(0, len(vg.getCellToCheck()), 2):
         tmpCellEnFeu, tmpListeForet = algoForet.propagationFeu(vg.getNbCellules(), vg.returnCellToCheck(i), vg.returnCellToCheck(i+1), vg.getListeForet()) #On test d'abord si le feu peut se propager
         vg.setNewListeForet(tmpListeForet)
@@ -118,14 +119,16 @@ def sim_auto():
     vg.changeCellToCheck(list(cellEnFeu))
 
     if(len(cellEnFeu) > 0):
-        updateCoolMap(cellEnFeu)                     # On affiche les nouveaux arbres à brûler si  il y en a
+        updateMap(cellEnFeu, vg.getBurnedCell())                     # On affiche les nouveaux arbres à brûler si  il y en a
 
+    vg.augmentBurnedCell(list(cellEnFeu))
     vg.augmentBurnedTrees(len(cellEnFeu)//2)
     vg.emptyCellEnFeu()
     canvas.after(500, sim_auto)
     #lancer_chrono()
 
 def pasapas():
+    updateMap([], vg.getBurnedCell())
     for i in range(0, len(vg.getCellToCheck()), 2):
         tmpCellEnFeu, tmpListeForet = algoForet.propagationFeu(vg.getNbCellules(), vg.returnCellToCheck(i), vg.returnCellToCheck(i+1), vg.getListeForet()) #On test d'abord si le feu peut se propager
         vg.setNewListeForet(tmpListeForet)
@@ -137,8 +140,9 @@ def pasapas():
     vg.changeCellToCheck(list(cellEnFeu))
 
     if(len(cellEnFeu) > 0):
-        updateCoolMap(cellEnFeu)                    # On affiche les nouveaux arbres à brûler si  il y en a
+        updateMap(cellEnFeu, vg.getBurnedCell())                    # On affiche les nouveaux arbres à brûler si  il y en a
 
+    vg.augmentBurnedCell(list(cellEnFeu))
     vg.augmentBurnedTrees(len(cellEnFeu)//2)
     vg.emptyCellEnFeu()
 
@@ -154,15 +158,9 @@ def updateProMap(cellEnFeu):
 def createProMap():
     pass
 
-def updateCoolMap(cellEnFeu):
-    global burnedCell
+def updateCoolMap(cellEnFeu, burnedCell):
     for i in range(0, len(cellEnFeu), 2):
         canvas.itemconfigure(str(cellEnFeu[i])+","+str(cellEnFeu[i+1]), image=burningTree)
-    for i in range(0, len(burnedCell), 2):
-        canvas.itemconfigure(str(burnedCell[i])+","+str(burnedCell[i+1]), image=burnedTree)
-    burnedCell = list(cellEnFeu)
-
-def updateBurning(burnedCell):
     for i in range(0, len(burnedCell), 2):
         canvas.itemconfigure(str(burnedCell[i])+","+str(burnedCell[i+1]), image=burnedTree)
 
@@ -246,6 +244,5 @@ burningTree = ImageTk.PhotoImage(Image.open("textures/"+str(tailleImg)+"/burning
 burnedTree = ImageTk.PhotoImage(Image.open("textures/"+str(tailleImg)+"/burned_tree.png"))
 burningGrass = ImageTk.PhotoImage(Image.open("textures/"+str(tailleImg)+"/burning_tree.png"))
 burnedGrass = ImageTk.PhotoImage(Image.open("textures/"+str(tailleImg)+"/burned_grass.png"))
-burnedCell = []
 
 Fenetre.mainloop()
