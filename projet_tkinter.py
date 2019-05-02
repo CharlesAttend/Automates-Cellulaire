@@ -51,6 +51,7 @@ def top_horloge():
  # Fin des Fonctions dédiées au chrono
 
 def stats():
+    vg.getBurnedTrees()
     pourcent = (100*vg.getTTtree())//(vg.getBurnedTrees())
     resultat.configure(text = pourcent)
 
@@ -69,7 +70,8 @@ def Clic(event):
     vg.augmentCellEnFeu(X, Y)
     listeForet[Y][X] = '3'
     vg.setNewListeForet(listeForet)
-    updateCoolMap(vg.getCellEnFeu())
+    updateCoolMap(vg.getCellEnFeu(), [])
+    vg.augmentBurnedCell(vg.getCellEnFeu())
     vg.augmentBurnedTrees(1)
     vg.emptyCellEnFeu()
 
@@ -107,7 +109,7 @@ def refreshTxPath():                            # Réactualise l'emplacement des
 # Déroulement de l'algorithme :
 
 def sim_auto():
-    updateMap([], vg.getBurnedCell())
+    updateCoolMap([], vg.getBurnedCell())
     for i in range(0, len(vg.getCellToCheck()), 2):
         tmpCellEnFeu, tmpListeForet = algoForet.propagationFeu(vg.getNbCellules(), vg.returnCellToCheck(i), vg.returnCellToCheck(i+1), vg.getListeForet()) #On test d'abord si le feu peut se propager
         vg.setNewListeForet(tmpListeForet)
@@ -119,7 +121,7 @@ def sim_auto():
     vg.changeCellToCheck(list(cellEnFeu))
 
     if(len(cellEnFeu) > 0):
-        updateMap(cellEnFeu, vg.getBurnedCell())                     # On affiche les nouveaux arbres à brûler si  il y en a
+        updateCoolMap(cellEnFeu, vg.getBurnedCell())                     # On affiche les nouveaux arbres à brûler si  il y en a
 
     vg.augmentBurnedCell(list(cellEnFeu))
     vg.augmentBurnedTrees(len(cellEnFeu)//2)
@@ -128,7 +130,7 @@ def sim_auto():
     #lancer_chrono()
 
 def pasapas():
-    updateMap([], vg.getBurnedCell())
+    updateCoolMap([], vg.getBurnedCell())
     for i in range(0, len(vg.getCellToCheck()), 2):
         tmpCellEnFeu, tmpListeForet = algoForet.propagationFeu(vg.getNbCellules(), vg.returnCellToCheck(i), vg.returnCellToCheck(i+1), vg.getListeForet()) #On test d'abord si le feu peut se propager
         vg.setNewListeForet(tmpListeForet)
@@ -140,7 +142,7 @@ def pasapas():
     vg.changeCellToCheck(list(cellEnFeu))
 
     if(len(cellEnFeu) > 0):
-        updateMap(cellEnFeu, vg.getBurnedCell())                    # On affiche les nouveaux arbres à brûler si  il y en a
+        updateCoolMap(cellEnFeu, vg.getBurnedCell())                    # On affiche les nouveaux arbres à brûler si  il y en a
 
     vg.augmentBurnedCell(list(cellEnFeu))
     vg.augmentBurnedTrees(len(cellEnFeu)//2)

@@ -26,8 +26,13 @@ class varGlobales():  # Classe stockant quelques 'variables'/constantes pour evi
 
 ###########################################################################################################################################
 
-
     # Fonctions dites "Accesseurs", elles retournent les valeurs des differents attributs de la classe
+    def getTTtree(self):
+        return self.TTtree
+
+    def getTTtree(self):
+        return self.TTtree
+
     def getTTtree(self):
         return self.TTtree
 
