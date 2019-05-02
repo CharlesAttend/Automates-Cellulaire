@@ -51,7 +51,9 @@ def top_horloge():
  # Fin des Fonctions dédiées au chrono
 
 def stats():
-    vg.getBurnedTrees
+    vg.getBurnedTrees()
+    pourcent = (100*vg.getTTtree())//(vg.getBurnedTrees())
+    resultat.configure(text = pourcent)
 
 def Clic(event):
     vg.setListeForet()                          # On crée la listeForet à partir du CSV
@@ -218,10 +220,12 @@ dimensions.add_command(label = "100x100", command = cent)
 menubar.add_cascade(label = "Fichier", menu = menufichier)
 menubar.add_cascade(label = "Dimensions", menu = dimensions)
 
+resultat = Label(Fenetre, text = " ")
 auto = Button(Fenetre, text = "Simulation Automatique", bg = "green", command = sim_auto)
 manuel = Button(Fenetre, text = "Simulation Pas à Pas", bg = "blue", command = pasapas)
 auto.grid(row = 0, column = 0, sticky = "n")
 manuel.grid(row = 1, column = 0, sticky = "n")
+resultat.grid(row = 0, column = 5, sticky = "n")
 
 canvas.bind("<Button-1>", Clic)
 #canvas.bind("<Button-3>", drawGrid)
