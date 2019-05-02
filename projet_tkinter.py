@@ -101,15 +101,12 @@ def refreshTxPath():                            # Réactualise l'emplacement des
 # Déroulement de l'algorithme :
 
 def sim_auto():
-
     for i in range(0, len(vg.getCellToCheck()), 2):
-
         tmpCellEnFeu, tmpListeForet = algoForet.propagationFeu(vg.getNbCellules(), vg.returnCellToCheck(i), vg.returnCellToCheck(i+1), vg.getListeForet()) #On test d'abord si le feu peut se propager
         vg.setNewListeForet(tmpListeForet)
 
         for j in range(0, len(tmpCellEnFeu), 2):
             vg.augmentCellEnFeu(tmpCellEnFeu[j], tmpCellEnFeu[j+1])
-
 
     cellEnFeu = list(vg.getCellEnFeu())
     vg.changeCellToCheck(list(cellEnFeu))
@@ -117,7 +114,7 @@ def sim_auto():
     if(len(cellEnFeu) > 0):
         updateMap(cellEnFeu)                     # On affiche les nouveaux arbres à brûler si  il y en a
 
-    vg.augmentBurnedTrees(len(cellEnFeu))
+    vg.augmentBurnedTrees(len(cellEnFeu)//2)
     vg.emptyCellEnFeu()
     canvas.after(500, sim_auto)
     #lancer_chrono()
@@ -137,7 +134,7 @@ def pasapas():
     if(len(cellEnFeu) > 0):
         updateMap(cellEnFeu)                    # On affiche les nouveaux arbres à brûler si  il y en a
 
-    vg.augmentBurnedTrees(len(cellEnFeu))
+    vg.augmentBurnedTrees(len(cellEnFeu)//2)
     vg.emptyCellEnFeu()
 
 # Fin des fonctions concernant l'algorithme
