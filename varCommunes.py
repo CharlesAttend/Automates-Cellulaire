@@ -28,6 +28,7 @@ class varGlobales():  # Classe stockant quelques 'variables'/constantes pour evi
     # Fonctions dites "Accesseurs", elles retournent les valeurs des differents attributs de la classe
     def getTTtree(self):
         return self.TTtree
+
     def getHauteur(self):
         return self.hauteurFenetre
 
@@ -63,6 +64,9 @@ class varGlobales():  # Classe stockant quelques 'variables'/constantes pour evi
 
     # Fonctions dites "Mutateurs", elles permettent de modifier les valeurs des differents attributs de la classe
 
+    def setTTtree(self, tree):
+        self.TTtree = tree
+        
     def setLargeur(self, largeur):
         self.largeurFenetre = largeur
 
