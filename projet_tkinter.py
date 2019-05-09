@@ -76,7 +76,7 @@ def Clic(event):
 
 def enregistrer():                              # Fonction permettant de prendre une capture d'écran de la simulation, ainsi que de l'enregistrer
     x = canvas.winfo_rootx()
-    y = canvas.winfo_rooty()                    #PRENDRE LES STATS AVEC ?
+    y = canvas.winfo_rooty()
     w = canvas.winfo_width()
     h = canvas.winfo_height()
     image = Image.grab((x+2, y+2, x+w-2, y+h-2))
@@ -105,6 +105,10 @@ def refreshTxPath():                            # Réactualise l'emplacement des
     burningGrass = ImageTk.PhotoImage(Image.open("textures/"+str(tailleImg)+"/burning_tree.png"))
     burnedGrass = ImageTk.PhotoImage(Image.open("textures/"+str(tailleImg)+"/burned_grass.png"))
 
+def reset():                                    # Fonction qui reset le programme
+    canvas.delete("all")
+    vg = VC.varGlobales(800, 800, 50)
+
 # Déroulement de l'algorithme :
 
 def sim_auto():
@@ -120,7 +124,7 @@ def sim_auto():
     vg.changeCellToCheck(list(cellEnFeu))
 
     if(len(cellEnFeu) > 0):
-        updateCoolMap(cellEnFeu, vg.getBurnedCell())                     # On affiche les nouveaux arbres à brûler si  il y en a
+        updateCoolMap(cellEnFeu, vg.getBurnedCell())    # On affiche les nouveaux arbres à brûler si  il y en a
 
     vg.setBurnedCell(list(cellEnFeu))
     vg.augmentBurnedTrees(len(cellEnFeu)//2)
@@ -190,10 +194,7 @@ def createCoolMap(event):
 
 ##################################################################################################################################################
 
-vg = VC.varGlobales() # vg est une instance de varGlobales
-vg.setLargeur(800)
-vg.setHauteur(800)
-vg.setNbCell(50)
+vg = VC.varGlobales(800, 800, 50) # vg est une instance de varGlobales
 
 algocvs = AC.algoCSV(vg.getNomCsv(), vg.getNbCellules())
 
@@ -218,8 +219,11 @@ menubar.add_cascade(label = "Dimensions", menu = dimensions)
 resultat = Label(Fenetre, text = "")
 auto = Button(Fenetre, text = "Simulation Automatique", bg = "green", command = sim_auto)
 manuel = Button(Fenetre, text = "Simulation Pas à Pas", bg = "blue", command = pasapas)
+reset = Button(Fenetre, text = "Reset", bg = "red", command = reset)
+
 auto.grid(row = 0, column = 0, sticky = "n")
 manuel.grid(row = 1, column = 0, sticky = "n")
+reset.grid(row = 2, column = 0, sticky = "n")
 resultat.grid(row = 0, column = 2, sticky = "n")
 
 canvas.bind("<Button-1>", Clic)
