@@ -149,11 +149,6 @@ def pasapas():
 
 # Fin des fonctions concernant l'algorithme
 
-def drawGrid():                                     # Fonction qui dessine une grille sur le Canvas pour tester la position des textures
-    for i in range(0, 800, 800//vg.getNbCellules()):
-        canvas.create_line(0, i, 800, i)
-        canvas.create_line(i, 0, i, 800)
-
 def updateProMap(cellEnFeu):
     pass
 def createProMap():
