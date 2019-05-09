@@ -105,10 +105,6 @@ def refreshTxPath():                            # Réactualise l'emplacement des
     burningGrass = ImageTk.PhotoImage(Image.open("textures/"+str(tailleImg)+"/burning_tree.png"))
     burnedGrass = ImageTk.PhotoImage(Image.open("textures/"+str(tailleImg)+"/burned_grass.png"))
 
-def reset():                                    # Fonction qui reset le programme
-    canvas.delete("all")
-    vg = VC.varGlobales(800, 800, 50)
-
 # Déroulement de l'algorithme :
 
 def sim_auto():
