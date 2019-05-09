@@ -10,11 +10,11 @@ import classDialectCsv
 
 class varGlobales():  # Classe stockant quelques 'variables'/constantes pour eviter les conflits de valeurs entre les fichiers
                         # On évite ainsi les conflits de valeurs entre les fichiers et les variables de type global
-    def __init__(self):  # Constructeur permettant de definir les differents attributs de la classe
-        self.hauteurFenetre = 0
-        self.largeurFenetre = 0
-        self.nbCellules = 0  # Nombre de cellules par lignes<<<<<<< HEAD
-        self.burnedTrees = 1 # Nombre d'arbre brûlés
+    def __init__(self, largeur, hauteur, nbCell):  # Constructeur permettant de definir les differents attributs de la classe
+        self.hauteurFenetre = hauteur
+        self.largeurFenetre = largeur
+        self.nbCellules = nbCell  # Nombre de cellules par lignes<<<<<<< HEAD
+        self.burnedTrees = 0 # Nombre d'arbre brûlés
         self.TTtree = 0      # Nombre d'arbres aux débuts de la simulation
 
         self.nomCsv  = 'csv.csv'  # Nom du csv permettant la generation du csv
@@ -27,15 +27,6 @@ class varGlobales():  # Classe stockant quelques 'variables'/constantes pour evi
 ###########################################################################################################################################
 
     # Fonctions dites "Accesseurs", elles retournent les valeurs des differents attributs de la classe
-    def getTTtree(self):
-        return self.TTtree
-
-    def getTTtree(self):
-        return self.TTtree
-
-    def getTTtree(self):
-        return self.TTtree
-
     def getTTtree(self):
         return self.TTtree
 
@@ -124,8 +115,7 @@ class varGlobales():  # Classe stockant quelques 'variables'/constantes pour evi
     def returnCellToCheck(self, index):
         return self.listeCellToCheck[index]
 
+###########################################################################################################################################
+
     def emptyCellEnFeu(self):
         self.listeCellulesEnFeu.clear()
-
-    def emptyBurnedCell(self):
-        self.listeBurnedCell.clear()

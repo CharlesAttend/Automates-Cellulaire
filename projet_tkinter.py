@@ -26,6 +26,9 @@ import csv
 import classDialectCsv
 
 ##################################################################################################################################################
+def buttonPlusSimu():
+    lancer_chrono()
+    sim_auto()
 
  # Chronomètre, permettant d'obtenir des stats en fin de simulation
 
@@ -46,14 +49,13 @@ def top_horloge():
     secondes = time.localtime(y)[5]
     if(flag):
         message.configure(text = "%i min %i sec " %(minutes,secondes))
-    Fenetre.after(250,top_horloge)
-
+    Fenetre.after(250, top_horloge)
  # Fin des Fonctions dédiées au chrono
 
 def stats():
-    vg.getBurnedTrees()
     pourcent = (100*vg.getBurnedTrees())//(vg.getTTtree())
     resultat.configure(text = str(pourcent) + "%")
+    surfaceBrulee.configure(text = str((vg.getBurnedTrees()*4)/10000) + " ha") #On considère que la surface d'un arbre est de 4m²
 
 def Clic(event):
     vg.setListeForet()                          # On crée la listeForet à partir du CSV
@@ -64,11 +66,12 @@ def Clic(event):
     Y = ceil(Y/vg.getLengthCell())-1
     print("Coords:  ", X, ", ", Y)
 
-    if(listeForet[Y][X] != '1'): return False   # On test si la cellule sur laquelle on a cliqué est un arbre, si oui on le met en feu sinon, il ne se passe rien
+    if(listeForet[Y][X] != "1"): return False   # On test si la cellule sur laquelle on a cliqué est un arbre, si oui on le met en feu sinon, il ne se passe rien
 
     vg.augmentCellToCheck(X, Y)
     vg.augmentCellEnFeu(X, Y)
-    listeForet[Y][X] = '3'
+    listeForet[Y][X] = "3"
+
     vg.setNewListeForet(listeForet)
     updateCoolMap(vg.getCellEnFeu(), [])
     vg.augmentBurnedCell(vg.getCellEnFeu())
@@ -77,7 +80,7 @@ def Clic(event):
 
 def enregistrer():                              # Fonction permettant de prendre une capture d'écran de la simulation, ainsi que de l'enregistrer
     x = canvas.winfo_rootx()
-    y = canvas.winfo_rooty()                    #PRENDRE LES STATS AVEC ?
+    y = canvas.winfo_rooty()
     w = canvas.winfo_width()
     h = canvas.winfo_height()
     image = Image.grab((x+2, y+2, x+w-2, y+h-2))
@@ -91,11 +94,7 @@ def cinquante():
     vg.setNbCell(50)
     refreshTxPath()
 
-def cent():
-    vg.setNbCell(100)
-    refreshTxPath()
-
-def refreshTxPath():                            # Réactualise l'emplacement des Textures après un changement de taille
+def refreshTxPath():                                   # Réactualise l'emplacement des Textures après un changement de taille
     global grass, tree, water, burningTree, burningGrass, burnedTree, burnedGrass, tailleImg
     tailleImg = vg.getLengthCell()
     grass = ImageTk.PhotoImage(Image.open("textures/"+str(tailleImg)+"/grass.png"))
@@ -122,12 +121,13 @@ def sim_auto():
 
     if(len(cellEnFeu) > 0):
         updateCoolMap(cellEnFeu, vg.getBurnedCell())                     # On affiche les nouveaux arbres à brûler si  il y en a
+    else:
+        stoper_chrono()
 
-    vg.augmentBurnedCell(list(cellEnFeu))
+    vg.setBurnedCell(list(cellEnFeu))
     vg.augmentBurnedTrees(len(cellEnFeu)//2)
     vg.emptyCellEnFeu()
-    canvas.after(500, sim_auto)
-    #lancer_chrono()
+    canvas.after(100, sim_auto)
 
 def pasapas():
     updateCoolMap([], vg.getBurnedCell())
@@ -144,16 +144,11 @@ def pasapas():
     if(len(cellEnFeu) > 0):
         updateCoolMap(cellEnFeu, vg.getBurnedCell())                    # On affiche les nouveaux arbres à brûler si  il y en a
 
-    vg.augmentBurnedCell(list(cellEnFeu))
+    vg.setBurnedCell(list(cellEnFeu))
     vg.augmentBurnedTrees(len(cellEnFeu)//2)
     vg.emptyCellEnFeu()
 
 # Fin des fonctions concernant l'algorithme
-
-def drawGrid():                                     # Fonction qui dessine une grille sur le Canvas pour tester la position des textures
-    for i in range(0, 800, 800//vg.getNbCellules()):
-        canvas.create_line(0, i, 800, i)
-        canvas.create_line(i, 0, i, 800)
 
 def updateProMap(cellEnFeu):
     pass
@@ -168,7 +163,7 @@ def updateCoolMap(cellEnFeu, burnedCell):
     stats()
 
 def createCoolMap(event):
-    algocvs.createCsv()
+    algocsv.createCsv()
     cordY = 0
     gridY = 0
     totalTree = 0
@@ -196,12 +191,9 @@ def createCoolMap(event):
 
 ##################################################################################################################################################
 
-vg = VC.varGlobales() # vg est une instance de varGlobales
-vg.setLargeur(800)
-vg.setHauteur(800)
-vg.setNbCell(50)
+vg = VC.varGlobales(800, 800, 50) # vg est une instance de varGlobales
 
-algocvs = AC.algoCSV(vg.getNomCsv(), vg.getNbCellules())
+algocsv = AC.algoCSV(vg.getNomCsv(), vg.getNbCellules())
 
 vg.setListeForet()
 
@@ -217,20 +209,24 @@ menufichier.add_command(label = "Enregistrer l'image", command = enregistrer)
 menufichier.add_command(label = "Quitter", command = Fenetre.destroy)
 dimensions.add_command(label = "10x10", command = dix)
 dimensions.add_command(label = "50x50", command = cinquante)
-dimensions.add_command(label = "100x100", command = cent)
 menubar.add_cascade(label = "Fichier", menu = menufichier)
 menubar.add_cascade(label = "Dimensions", menu = dimensions)
 
 resultat = Label(Fenetre, text = "")
-auto = Button(Fenetre, text = "Simulation Automatique", bg = "green", command = sim_auto)
+surfaceBrulee = Label(Fenetre, text = "")
+message = Label(Fenetre, text="")
+auto = Button(Fenetre, text = "Simulation Automatique", bg = "green", command = buttonPlusSimu)
 manuel = Button(Fenetre, text = "Simulation Pas à Pas", bg = "blue", command = pasapas)
+
 auto.grid(row = 0, column = 0, sticky = "n")
 manuel.grid(row = 1, column = 0, sticky = "n")
 resultat.grid(row = 0, column = 2, sticky = "n")
+surfaceBrulee.grid(row = 0, column = 3, sticky = "n")
+message.grid(row = 1, column = 2, sticky = "n")
 
 canvas.bind("<Button-1>", Clic)
-#canvas.bind("<Button-3>", drawGrid)
 canvas.bind("<Button-3>", createCoolMap)
+
 # Affichage du menu
 Fenetre.config(menu = menubar)
 
@@ -247,5 +243,7 @@ burningTree = ImageTk.PhotoImage(Image.open("textures/"+str(tailleImg)+"/burning
 burnedTree = ImageTk.PhotoImage(Image.open("textures/"+str(tailleImg)+"/burned_tree.png"))
 burningGrass = ImageTk.PhotoImage(Image.open("textures/"+str(tailleImg)+"/burning_tree.png"))
 burnedGrass = ImageTk.PhotoImage(Image.open("textures/"+str(tailleImg)+"/burned_grass.png"))
+
+flag = 0
 
 Fenetre.mainloop()
