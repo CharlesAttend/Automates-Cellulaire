@@ -90,11 +90,7 @@ def cinquante():
     vg.setNbCell(50)
     refreshTxPath()
 
-def cent():
-    vg.setNbCell(100)
-    refreshTxPath()
-
-def refreshTxPath():                            # Réactualise l'emplacement des Textures après un changement de taille
+def refreshTxPath():                                   # Réactualise l'emplacement des Textures après un changement de taille
     global grass, tree, water, burningTree, burningGrass, burnedTree, burnedGrass, tailleImg
     tailleImg = vg.getLengthCell()
     grass = ImageTk.PhotoImage(Image.open("textures/"+str(tailleImg)+"/grass.png"))
@@ -208,18 +204,15 @@ menufichier.add_command(label = "Enregistrer l'image", command = enregistrer)
 menufichier.add_command(label = "Quitter", command = Fenetre.destroy)
 dimensions.add_command(label = "10x10", command = dix)
 dimensions.add_command(label = "50x50", command = cinquante)
-dimensions.add_command(label = "100x100", command = cent)
 menubar.add_cascade(label = "Fichier", menu = menufichier)
 menubar.add_cascade(label = "Dimensions", menu = dimensions)
 
 resultat = Label(Fenetre, text = "")
 auto = Button(Fenetre, text = "Simulation Automatique", bg = "green", command = sim_auto)
 manuel = Button(Fenetre, text = "Simulation Pas à Pas", bg = "blue", command = pasapas)
-reset = Button(Fenetre, text = "Reset", bg = "red", command = reset)
 
 auto.grid(row = 0, column = 0, sticky = "n")
 manuel.grid(row = 1, column = 0, sticky = "n")
-reset.grid(row = 2, column = 0, sticky = "n")
 resultat.grid(row = 0, column = 2, sticky = "n")
 
 canvas.bind("<Button-1>", Clic)
