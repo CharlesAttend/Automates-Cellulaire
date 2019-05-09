@@ -177,7 +177,7 @@ def createCoolMap(event):
                 i = int(i)                                  # Mon reader renvoie un i sous forme de String donc je le converti
                 #On test le i, 0=grass, 1=tree
                 if i == 1:
-                    canvas.create_image(cordX, cordY, anchor=tkinter.NW, image=tree, tag=str(gridX)+","+str(gridY))
+                    canvas.create_image(cordX, cordY, anchor=tkinter.NW, image=tree, tag=str(gridX)+","+str(gridY))     
                     totalTree += 1
                 elif i == 0:
                     canvas.create_image(cordX, cordY, anchor=tkinter.NW, image=grass, tag=str(gridX)+","+str(gridY))
@@ -222,6 +222,7 @@ auto.grid(row = 0, column = 0, sticky = "n")
 manuel.grid(row = 1, column = 0, sticky = "n")
 resultat.grid(row = 0, column = 2, sticky = "n")
 surfaceBrulee.grid(row = 0, column = 3, sticky = "n")
+
 message.grid(row = 1, column = 2, sticky = "n")
 
 canvas.bind("<Button-1>", Clic)
