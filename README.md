@@ -7,11 +7,11 @@ Par Augustin Viard, Charles Vin et Benjamin Hubinet
 
 ## Quelques captures d'écrans du projet :
 
-#### Propgation du feu sur une forêt de dimensions 50*50:
+#### Propgation du feu sur une forêt de dimensions 50/50:
 
 ![propagation_feu_50_50png](https://user-images.githubusercontent.com/38909289/57470182-87255400-7288-11e9-8f63-5006eddd7f4b.png)
 
-#### Propagation du feu sur un forêt de dimensions 10*10:
+#### Propagation du feu sur un forêt de dimensions 10/10:
 
 ![propagation_feu_10_10png](https://user-images.githubusercontent.com/38909289/57470199-91475280-7288-11e9-958b-cf5e7f21c309.png)
 
