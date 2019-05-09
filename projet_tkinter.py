@@ -122,7 +122,7 @@ def sim_auto():
     if(len(cellEnFeu) > 0):
         updateCoolMap(cellEnFeu, vg.getBurnedCell())                     # On affiche les nouveaux arbres à brûler si  il y en a
 
-    vg.augmentBurnedCell(list(cellEnFeu))
+    vg.setBurnedCell(list(cellEnFeu))
     vg.augmentBurnedTrees(len(cellEnFeu)//2)
     vg.emptyCellEnFeu()
     canvas.after(500, sim_auto)
@@ -143,7 +143,7 @@ def pasapas():
     if(len(cellEnFeu) > 0):
         updateCoolMap(cellEnFeu, vg.getBurnedCell())                    # On affiche les nouveaux arbres à brûler si  il y en a
 
-    vg.augmentBurnedCell(list(cellEnFeu))
+    vg.setBurnedCell(list(cellEnFeu))
     vg.augmentBurnedTrees(len(cellEnFeu)//2)
     vg.emptyCellEnFeu()
 
