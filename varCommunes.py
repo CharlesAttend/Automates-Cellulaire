@@ -129,3 +129,12 @@ class varGlobales():  # Classe stockant quelques 'variables'/constantes pour evi
 
     def emptyBurnedCell(self):
         self.listeBurnedCell.clear()
+
+    def emptyCellToCheck(self):
+        self.listeCellToCheck.clear()
+
+    def emptyListeForet(self):
+        self.listeForet.clear()
+
+    def emptyTTtrees(self):
+        self.TTtree = 0

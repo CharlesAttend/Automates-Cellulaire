@@ -125,7 +125,7 @@ def sim_auto():
     vg.setBurnedCell(list(cellEnFeu))
     vg.augmentBurnedTrees(len(cellEnFeu)//2)
     vg.emptyCellEnFeu()
-    canvas.after(500, sim_auto)
+    canvas.after(100, sim_auto)
     #lancer_chrono()
 
 def pasapas():
