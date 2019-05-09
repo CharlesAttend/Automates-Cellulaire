@@ -21,3 +21,5 @@ Par Augustin Viard, Charles Vin et Benjamin Hubinet
 Cela fait que la génération 50x50 représente en réalité une surface de 1 hectare, la génération 10x10 représente en réalité une surface de 1/4 d'hectare.
 
 -Lorsqu'une cellule de type arbre est en feu, l'algorithme va tester les 8 cellules adjacentes à celle-ci, si c'est un arbre et qu'une certaine probabilité est vérifiée (dans notre cas : 0.45, soit 45% de chance que le feu se propage), alors le feu se propage.
+
+-Toutes les textures utilisées ont été réalisées par Augustin.
