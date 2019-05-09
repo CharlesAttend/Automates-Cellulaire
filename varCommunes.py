@@ -30,15 +30,6 @@ class varGlobales():  # Classe stockant quelques 'variables'/constantes pour evi
     def getTTtree(self):
         return self.TTtree
 
-    def getTTtree(self):
-        return self.TTtree
-
-    def getTTtree(self):
-        return self.TTtree
-
-    def getTTtree(self):
-        return self.TTtree
-
     def getHauteur(self):
         return self.hauteurFenetre
 

@@ -26,6 +26,9 @@ import csv
 import classDialectCsv
 
 ##################################################################################################################################################
+def buttonPlusSimu():
+    lancer_chrono()
+    sim_auto()
 
  # Chronomètre, permettant d'obtenir des stats en fin de simulation
 
@@ -46,8 +49,7 @@ def top_horloge():
     secondes = time.localtime(y)[5]
     if(flag):
         message.configure(text = "%i min %i sec " %(minutes,secondes))
-    Fenetre.after(250,top_horloge)
-
+    Fenetre.after(250, top_horloge)
  # Fin des Fonctions dédiées au chrono
 
 def stats():
@@ -68,6 +70,7 @@ def Clic(event):
     vg.augmentCellToCheck(X, Y)
     vg.augmentCellEnFeu(X, Y)
     listeForet[Y][X] = "3"
+
     vg.setNewListeForet(listeForet)
     updateCoolMap(vg.getCellEnFeu(), [])
     vg.augmentBurnedCell(vg.getCellEnFeu())
@@ -121,12 +124,13 @@ def sim_auto():
 
     if(len(cellEnFeu) > 0):
         updateCoolMap(cellEnFeu, vg.getBurnedCell())                     # On affiche les nouveaux arbres à brûler si  il y en a
+    else:
+        stoper_chrono()
 
     vg.augmentBurnedCell(list(cellEnFeu))
     vg.augmentBurnedTrees(len(cellEnFeu)//2)
     vg.emptyCellEnFeu()
-    canvas.after(500, sim_auto)
-    #lancer_chrono()
+    canvas.after(100, sim_auto)
 
 def pasapas():
     updateCoolMap([], vg.getBurnedCell())
@@ -167,7 +171,7 @@ def updateCoolMap(cellEnFeu, burnedCell):
     stats()
 
 def createCoolMap(event):
-    algocvs.createCsv()
+    algocsv.createCsv()
     cordY = 0
     gridY = 0
     totalTree = 0
@@ -181,7 +185,7 @@ def createCoolMap(event):
                 i = int(i)                                  # Mon reader renvoie un i sous forme de String donc je le converti
                 #On test le i, 0=grass, 1=tree
                 if i == 1:
-                    canvas.create_image(cordX, cordY, anchor=tkinter.NW, image=tree, tag=str(gridX)+","+str(gridY))
+                    canvas.create_image(cordX, cordY, anchor=tkinter.NW, image=tree, tag=str(gridX)+","+str(gridY))     
                     totalTree += 1
                 elif i == 0:
                     canvas.create_image(cordX, cordY, anchor=tkinter.NW, image=grass, tag=str(gridX)+","+str(gridY))
@@ -200,7 +204,7 @@ vg.setLargeur(800)
 vg.setHauteur(800)
 vg.setNbCell(50)
 
-algocvs = AC.algoCSV(vg.getNomCsv(), vg.getNbCellules())
+algocsv = AC.algoCSV(vg.getNomCsv(), vg.getNbCellules())
 
 vg.setListeForet()
 
@@ -221,11 +225,14 @@ menubar.add_cascade(label = "Fichier", menu = menufichier)
 menubar.add_cascade(label = "Dimensions", menu = dimensions)
 
 resultat = Label(Fenetre, text = "")
-auto = Button(Fenetre, text = "Simulation Automatique", bg = "green", command = sim_auto)
+message = Label(Fenetre, text="")
+auto = Button(Fenetre, text = "Simulation Automatique", bg = "green", command = buttonPlusSimu)
 manuel = Button(Fenetre, text = "Simulation Pas à Pas", bg = "blue", command = pasapas)
+
 auto.grid(row = 0, column = 0, sticky = "n")
 manuel.grid(row = 1, column = 0, sticky = "n")
 resultat.grid(row = 0, column = 2, sticky = "n")
+message.grid(row = 1, column = 2, sticky = "n")
 
 canvas.bind("<Button-1>", Clic)
 #canvas.bind("<Button-3>", drawGrid)
@@ -246,5 +253,7 @@ burningTree = ImageTk.PhotoImage(Image.open("textures/"+str(tailleImg)+"/burning
 burnedTree = ImageTk.PhotoImage(Image.open("textures/"+str(tailleImg)+"/burned_tree.png"))
 burningGrass = ImageTk.PhotoImage(Image.open("textures/"+str(tailleImg)+"/burning_tree.png"))
 burnedGrass = ImageTk.PhotoImage(Image.open("textures/"+str(tailleImg)+"/burned_grass.png"))
+
+flag = 0
 
 Fenetre.mainloop()

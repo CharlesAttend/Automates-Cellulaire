@@ -15,20 +15,12 @@ class algoCSV():
         self.csvName = csvName1
         self.nbCellule = nbCellule1
 
-    def csvToList(self):
-        with open(self.csvName, "r", newline='') as f:
-            reader = csv.reader(f, classDialectCsv.Dialect())
-            doubleList = []
-            for row in reader:
-                doubleList.append(row)
-            return doubleList
-
     def createCsv(self):
         doubleListe = self.genList()
         with open(self.csvName, "w", newline='') as f:
             writer = csv.writer(f, classDialectCsv.Dialect())
             for i in range(self.nbCellule):
-                writer.writerow(doubleListe[i]) #[randint(0,2) for j in range(self.nbCellule)]
+                writer.writerow(doubleListe[i])
     
     def genList(self):
         doubleListe = []
@@ -36,11 +28,11 @@ class algoCSV():
             listX = []
             for j in range(self.nbCellule):
                 nb = random()
-                if nb < 0.75:
+                if nb < 0.75:                   #Abre 75%
                     listX.append(1)
-                elif nb < 0.97:
+                elif nb < 0.97:                 #Grass 22%
                     listX.append(0)
-                else:
+                else:                           #Eau 3%
                     listX.append(2)
             doubleListe.append(listX)
         return doubleListe
