@@ -79,7 +79,7 @@ def Clic(event):
 
 def enregistrer():                              # Fonction permettant de prendre une capture d'écran de la simulation, ainsi que de l'enregistrer
     x = canvas.winfo_rootx()
-    y = canvas.winfo_rooty()                    #PRENDRE LES STATS AVEC ?
+    y = canvas.winfo_rooty()
     w = canvas.winfo_width()
     h = canvas.winfo_height()
     image = Image.grab((x+2, y+2, x+w-2, y+h-2))
@@ -93,11 +93,7 @@ def cinquante():
     vg.setNbCell(50)
     refreshTxPath()
 
-def cent():
-    vg.setNbCell(100)
-    refreshTxPath()
-
-def refreshTxPath():                            # Réactualise l'emplacement des Textures après un changement de taille
+def refreshTxPath():                                   # Réactualise l'emplacement des Textures après un changement de taille
     global grass, tree, water, burningTree, burningGrass, burnedTree, burnedGrass, tailleImg
     tailleImg = vg.getLengthCell()
     grass = ImageTk.PhotoImage(Image.open("textures/"+str(tailleImg)+"/grass.png"))
@@ -127,7 +123,7 @@ def sim_auto():
     else:
         stoper_chrono()
 
-    vg.augmentBurnedCell(list(cellEnFeu))
+    vg.setBurnedCell(list(cellEnFeu))
     vg.augmentBurnedTrees(len(cellEnFeu)//2)
     vg.emptyCellEnFeu()
     canvas.after(100, sim_auto)
@@ -147,16 +143,11 @@ def pasapas():
     if(len(cellEnFeu) > 0):
         updateCoolMap(cellEnFeu, vg.getBurnedCell())                    # On affiche les nouveaux arbres à brûler si  il y en a
 
-    vg.augmentBurnedCell(list(cellEnFeu))
+    vg.setBurnedCell(list(cellEnFeu))
     vg.augmentBurnedTrees(len(cellEnFeu)//2)
     vg.emptyCellEnFeu()
 
 # Fin des fonctions concernant l'algorithme
-
-def drawGrid():                                     # Fonction qui dessine une grille sur le Canvas pour tester la position des textures
-    for i in range(0, 800, 800//vg.getNbCellules()):
-        canvas.create_line(0, i, 800, i)
-        canvas.create_line(i, 0, i, 800)
 
 def updateProMap(cellEnFeu):
     pass
@@ -199,10 +190,7 @@ def createCoolMap(event):
 
 ##################################################################################################################################################
 
-vg = VC.varGlobales() # vg est une instance de varGlobales
-vg.setLargeur(800)
-vg.setHauteur(800)
-vg.setNbCell(50)
+vg = VC.varGlobales(800, 800, 50) # vg est une instance de varGlobales
 
 algocsv = AC.algoCSV(vg.getNomCsv(), vg.getNbCellules())
 
@@ -220,7 +208,6 @@ menufichier.add_command(label = "Enregistrer l'image", command = enregistrer)
 menufichier.add_command(label = "Quitter", command = Fenetre.destroy)
 dimensions.add_command(label = "10x10", command = dix)
 dimensions.add_command(label = "50x50", command = cinquante)
-dimensions.add_command(label = "100x100", command = cent)
 menubar.add_cascade(label = "Fichier", menu = menufichier)
 menubar.add_cascade(label = "Dimensions", menu = dimensions)
 
@@ -235,8 +222,8 @@ resultat.grid(row = 0, column = 2, sticky = "n")
 message.grid(row = 1, column = 2, sticky = "n")
 
 canvas.bind("<Button-1>", Clic)
-#canvas.bind("<Button-3>", drawGrid)
 canvas.bind("<Button-3>", createCoolMap)
+
 # Affichage du menu
 Fenetre.config(menu = menubar)
 
