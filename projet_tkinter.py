@@ -223,8 +223,8 @@ manuel.grid(row = 1, column = 0, sticky = "n")
 resultat.grid(row = 0, column = 2, sticky = "n")
 
 canvas.bind("<Button-1>", Clic)
-#canvas.bind("<Button-3>", drawGrid)
 canvas.bind("<Button-3>", createCoolMap)
+
 # Affichage du menu
 Fenetre.config(menu = menubar)
 
