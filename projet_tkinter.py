@@ -13,7 +13,7 @@ def bootstrap():                                # Update les bibliothèques impo
 # bootstrap()
 
 from tkinter import *
-from PIL import Image, ImageTk,Image
+from PIL import Image, ImageTk, ImageGrab
 from math import ceil
 import time
 import tkinter.messagebox
@@ -80,12 +80,12 @@ def Clic(event):
     vg.emptyCellEnFeu()
 
 def enregistrer():                              # Fonction permettant de prendre une capture d'écran de la simulation, ainsi que de l'enregistrer
-    x = canvas.winfo_rootx()
-    y = canvas.winfo_rooty()
-    w = canvas.winfo_width()
-    h = canvas.winfo_height()
-    image = Image.grab((x+2, y+2, x+w-2, y+h-2))
-    image.save("resulat_simulation.png")
+    x=canvas.winfo_rootx()
+    y=canvas.winfo_rooty()
+    w=canvas.winfo_width()
+    h=canvas.winfo_height()
+    image=ImageGrab.grab((x-175,y-50,x+w,y+h))
+    image.save("Résulat_Simulation.png")
 
 def dix():
     vg.setNbCell(10)
@@ -201,7 +201,7 @@ vg.setListeForet()
 Fenetre = Tk()
 Fenetre.title("Fenetre de simulation")
 Fenetre.geometry('1000x1000')
-canvas = Canvas(Fenetre, width = vg.getLargeur(), height = vg.getHauteur(), background='grey')
+canvas = Canvas(Fenetre, width = vg.getLargeur(), height = vg.getHauteur(), background ='white')
 menubar = Menu(Fenetre)
 
 menufichier = Menu(menubar, tearoff = 0)
