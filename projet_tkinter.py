@@ -109,45 +109,45 @@ def refreshTxPath():                                   # Réactualise l'emplacem
 # Déroulement de l'algorithme :
 
 def sim_auto():
-    updateCoolMap([], vg.getBurnedCell())
+    updateCoolMap([], vg.getBurnedCell())                               # La cellule mise en feu au départ se transforme en cellule d'abre en cendre
     for i in range(0, len(vg.getCellToCheck()), 2):
         tmpCellEnFeu, tmpListeForet = algoForet.propagationFeu(vg.getNbCellules(), vg.returnCellToCheck(i), vg.returnCellToCheck(i+1), vg.getListeForet()) #On test d'abord si le feu peut se propager
-        vg.setNewListeForet(tmpListeForet)
+        vg.setNewListeForet(tmpListeForet)                              # On modifie la liste contenant la génération de forêt, car si des arbres ont brûlés, la génération a été modifiéé
 
         for j in range(0, len(tmpCellEnFeu), 2):
-            vg.augmentCellEnFeu(tmpCellEnFeu[j], tmpCellEnFeu[j+1])
+            vg.augmentCellEnFeu(tmpCellEnFeu[j], tmpCellEnFeu[j+1])     # On ajoute les coordonnées des nouveaux arbres à brûler si il y en a
 
     cellEnFeu = list(vg.getCellEnFeu())
-    vg.changeCellToCheck(list(cellEnFeu))
+    vg.changeCellToCheck(list(cellEnFeu))                               # On affecte la liste des cellules en feu à la liste des cellules sur lesquelles on va tester la propagation du feu au tour prochain
 
     if(len(cellEnFeu) > 0):
-        updateCoolMap(cellEnFeu, vg.getBurnedCell())                     # On affiche les nouveaux arbres à brûler si  il y en a
+        updateCoolMap(cellEnFeu, vg.getBurnedCell())                    # On affiche les nouveaux arbres à brûler si  il y en a
     else:
         stoper_chrono()
 
-    vg.setBurnedCell(list(cellEnFeu))
-    vg.augmentBurnedTrees(len(cellEnFeu)//2)
-    vg.emptyCellEnFeu()
+    vg.setBurnedCell(list(cellEnFeu))                                   # On ajoute les cellules en feu à la liste des cellules à mettre en cendre à la prochaine génération
+    vg.augmentBurnedTrees(len(cellEnFeu)//2)                            # On ajoute le nombre d'arbre brûlés durant cette génération au compteur d'abres brûlés
+    vg.emptyCellEnFeu()                                                 # Comme toutes les cellules ont étés brûlées, on vide la liste des cellules à brûler
     canvas.after(100, sim_auto)
 
 def pasapas():
-    updateCoolMap([], vg.getBurnedCell())
+    updateCoolMap([], vg.getBurnedCell())                               # La cellule mise en feu au départ se transforme en cellule d'abre en cendre
     for i in range(0, len(vg.getCellToCheck()), 2):
         tmpCellEnFeu, tmpListeForet = algoForet.propagationFeu(vg.getNbCellules(), vg.returnCellToCheck(i), vg.returnCellToCheck(i+1), vg.getListeForet()) #On test d'abord si le feu peut se propager
-        vg.setNewListeForet(tmpListeForet)
+        vg.setNewListeForet(tmpListeForet)                              # On modifie la liste contenant la génération de forêt, car si des arbres ont brûlés, la génération a été modifiéé
 
         for j in range(0, len(tmpCellEnFeu), 2):
-            vg.augmentCellEnFeu(tmpCellEnFeu[j], tmpCellEnFeu[j+1])
+            vg.augmentCellEnFeu(tmpCellEnFeu[j], tmpCellEnFeu[j+1])     # On ajoute les coordonnées des nouveaux arbres à brûler si il y en a
 
     cellEnFeu = list(vg.getCellEnFeu())
-    vg.changeCellToCheck(list(cellEnFeu))
+    vg.changeCellToCheck(list(cellEnFeu))                               # On affecte la liste des cellules en feu à la liste des cellules sur lesquelles on va tester la propagation du feu au tour prochain
 
     if(len(cellEnFeu) > 0):
         updateCoolMap(cellEnFeu, vg.getBurnedCell())                    # On affiche les nouveaux arbres à brûler si  il y en a
 
-    vg.setBurnedCell(list(cellEnFeu))
-    vg.augmentBurnedTrees(len(cellEnFeu)//2)
-    vg.emptyCellEnFeu()
+    vg.setBurnedCell(list(cellEnFeu))                                   # On ajoute les cellules en feu à la liste des cellules à mettre en cendre à la prochaine génération
+    vg.augmentBurnedTrees(len(cellEnFeu)//2)                            # On ajoute le nombre d'arbre brûlés durant cette génération au compteur d'abres brûlés
+    vg.emptyCellEnFeu()                                                 # Comme toutes les cellules ont étés brûlées, on vide la liste des cellules à brûler
 
 # Fin des fonctions concernant l'algorithme
 

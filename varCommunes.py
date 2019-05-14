@@ -13,16 +13,16 @@ class varGlobales():  # Classe stockant quelques 'variables'/constantes pour evi
     def __init__(self, largeur, hauteur, nbCell):  # Constructeur permettant de definir les differents attributs de la classe
         self.hauteurFenetre = hauteur
         self.largeurFenetre = largeur
-        self.nbCellules = nbCell  # Nombre de cellules par lignes<<<<<<< HEAD
-        self.burnedTrees = 0 # Nombre d'arbre brûlés
-        self.TTtree = 0      # Nombre d'arbres aux débuts de la simulation
+        self.nbCellules = nbCell        # Nombre de cellules par lignes<<<<<<< HEAD
+        self.burnedTrees = 0            # Nombre d'arbre brûlés
+        self.TTtree = 0                 # Nombre d'arbres aux débuts de la simulation
 
-        self.nomCsv  = 'csv.csv'  # Nom du csv permettant la generation du csv
+        self.nomCsv  = 'csv.csv'        # Nom du csv permettant la generation du csv
 
-        self.listeForet = []
-        self.listeCellulesEnFeu = []
-        self.listeCellToCheck = []
-        self.listeBurnedCell = []
+        self.listeForet = []            # Liste contenant la génération de forêt
+        self.listeCellulesEnFeu = []    # Liste contenant les coordonnées des cellules à "mettre en feu"
+        self.listeCellToCheck = []      # Liste contenant les coordonnées des cellules sur lesquelles on va tester la propagation du feu
+        self.listeBurnedCell = []       # Liste contenant les coordonnées des cellules à "transformer en cendres"    
 
 ###########################################################################################################################################
 

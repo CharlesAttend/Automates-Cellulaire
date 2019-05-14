@@ -2,7 +2,7 @@
 
 ################################################################################################################################################################
 
-from random import randint
+from random import randint                     # Import de la fonction randint du module Random pour ajouter de la probabilité à la propagation du feu
 
 ################################################################################################################################################################
 
@@ -11,9 +11,9 @@ def propagationFeu(nbCellLignes, x, y, foret): # Algorithme gérant la propagati
     clicX, clicY = x, y # On récupère les coordonnées de la cellule par rapport à la double-liste forêt
     listeForet = list(foret)
     listeCellEnFeu = []   # Liste retournée par la fonction, elle contient les coordonnées dans la double-liste forêt des cellules où le feu va se propager
-    xMin, xMax, yMin, yMax = 0, 0, 0, 0
+    xMin, xMax, yMin, yMax = 0, 0, 0, 0 # Coordonnées des cellules sur lesquelles on va tester si le feu se propage de (xMin à xMax; yMin à yMax)
 
-    if(clicX == 0):
+    if(clicX == 0):         # On test la position de la cellule en feu sur la grille (cellule sur laquelle l'utilisateur a cliqué)
         xMin = clicX
         xMax = clicX+1
 
@@ -35,7 +35,7 @@ def propagationFeu(nbCellLignes, x, y, foret): # Algorithme gérant la propagati
 
     else:
         yMin = clicY-1
-        yMax = clicY+1
+        yMax = clicY+1      # Fin du test de la position de la cellule en feu sur la grille
 
     for j in range(yMin, yMax+1):
         for i in range(xMin, xMax+1):
@@ -46,4 +46,4 @@ def propagationFeu(nbCellLignes, x, y, foret): # Algorithme gérant la propagati
                     listeCellEnFeu.append(j)
                     listeForet[j][i] = "3"   # Comme la cellule est un arbre qui va prendre feu, alors on le met à l'état 3, soit arbres en feu
 
-    return list(listeCellEnFeu), list(listeForet)
+    return list(listeCellEnFeu), list(listeForet)   # On retourne la liste des cellules en feu et la liste forêt
