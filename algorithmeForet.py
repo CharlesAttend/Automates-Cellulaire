@@ -6,8 +6,7 @@ from random import randint                     # Import de la fonction randint d
 
 ################################################################################################################################################################
 
-def propagationFeu(nbCellLignes, x, y, foret): # Algorithme gérant la propagation du feu
-
+def propagationFeu(nbCellLignes, x, y, foret, p): # Algorithme gérant la propagation du feu
     clicX, clicY = x, y # On récupère les coordonnées de la cellule par rapport à la double-liste forêt
     listeForet = list(foret)
     listeCellEnFeu = []   # Liste retournée par la fonction, elle contient les coordonnées dans la double-liste forêt des cellules où le feu va se propager
@@ -41,7 +40,7 @@ def propagationFeu(nbCellLignes, x, y, foret): # Algorithme gérant la propagati
         for i in range(xMin, xMax+1):
 
             if(i != clicX or j != clicY): # Si la cellule à tester est la cellule déjà en feu, on ne fait rien
-                if(listeForet[j][i] == "1" and randint(0, 100) < 45): # Si la cellule voisine est un arbre, alors on l'ajoute dans la liste des cellules à incendier
+                if(listeForet[j][i] == "1" and randint(0, 100) < p): # Si la cellule voisine est un arbre, alors on l'ajoute dans la liste des cellules à incendier
                     listeCellEnFeu.append(i)
                     listeCellEnFeu.append(j)
                     listeForet[j][i] = "3"   # Comme la cellule est un arbre qui va prendre feu, alors on le met à l'état 3, soit arbres en feu

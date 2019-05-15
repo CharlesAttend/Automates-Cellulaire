@@ -31,6 +31,8 @@ def reset():
                                                                             #On reprend donc ici le path du fichier et les arguments
 
 def buttonPlusSimu():
+    if not textBoxProba.get() == "":
+        vg.setProba(int(textBoxProba.get()))
     lancer_chrono()
     sim_auto()
 
@@ -114,7 +116,7 @@ def refreshTxPath():                                   # Réactualise l'emplacem
 def sim_auto():
     updateMap([], vg.getBurnedCell())                                   # La cellule mise en feu au départ se transforme en cellule d'abre en cendre
     for i in range(0, len(vg.getCellToCheck()), 2):
-        tmpCellEnFeu, tmpListeForet = algoForet.propagationFeu(vg.getNbCellules(), vg.returnCellToCheck(i), vg.returnCellToCheck(i+1), vg.getListeForet()) #On test d'abord si le feu peut se propager
+        tmpCellEnFeu, tmpListeForet = algoForet.propagationFeu(vg.getNbCellules(), vg.returnCellToCheck(i), vg.returnCellToCheck(i+1), vg.getListeForet(), vg.getProba()) #On test d'abord si le feu peut se propager
         vg.setNewListeForet(tmpListeForet)                              # On modifie la liste contenant la génération de forêt, car si des arbres ont brûlés, la génération a été modifiéé
 
         for j in range(0, len(tmpCellEnFeu), 2):
@@ -124,7 +126,7 @@ def sim_auto():
     vg.changeCellToCheck(list(cellEnFeu))                               # On affecte la liste des cellules en feu à la liste des cellules sur lesquelles on va tester la propagation du feu au tour prochain
 
     if(len(cellEnFeu) > 0):
-     updateMap(cellEnFeu, vg.getBurnedCell())                           # On affiche les nouveaux arbres à brûler si  il y en a
+        updateMap(cellEnFeu, vg.getBurnedCell())                           # On affiche les nouveaux arbres à brûler si  il y en a
     else:
         stoper_chrono()
 
@@ -136,7 +138,7 @@ def sim_auto():
 def pasapas():
     updateMap([], vg.getBurnedCell())                                   # La cellule mise en feu au départ se transforme en cellule d'abre en cendre
     for i in range(0, len(vg.getCellToCheck()), 2):
-        tmpCellEnFeu, tmpListeForet = algoForet.propagationFeu(vg.getNbCellules(), vg.returnCellToCheck(i), vg.returnCellToCheck(i+1), vg.getListeForet()) #On test d'abord si le feu peut se propager
+        tmpCellEnFeu, tmpListeForet = algoForet.propagationFeu(vg.getNbCellules(), vg.returnCellToCheck(i), vg.returnCellToCheck(i+1), vg.getListeForet(), vg.getProba()) #On test d'abord si le feu peut se propager
         vg.setNewListeForet(tmpListeForet)                              # On modifie la liste contenant la génération de forêt, car si des arbres ont brûlés, la génération a été modifiéé
 
         for j in range(0, len(tmpCellEnFeu), 2):
@@ -146,7 +148,7 @@ def pasapas():
     vg.changeCellToCheck(list(cellEnFeu))                               # On affecte la liste des cellules en feu à la liste des cellules sur lesquelles on va tester la propagation du feu au tour prochain
 
     if(len(cellEnFeu) > 0):
-     updateMap(cellEnFeu, vg.getBurnedCell())                           # On affiche les nouveaux arbres à brûler si  il y en a
+        updateMap(cellEnFeu, vg.getBurnedCell())                           # On affiche les nouveaux arbres à brûler si  il y en a
 
     vg.setBurnedCell(list(cellEnFeu))                                   # On ajoute les cellules en feu à la liste des cellules à mettre en cendre à la prochaine génération
     vg.augmentBurnedTrees(len(cellEnFeu)//2)                            # On ajoute le nombre d'arbre brûlés durant cette génération au compteur d'abres brûlés
@@ -199,7 +201,7 @@ vg.setListeForet()
 
 Fenetre = Tk()
 Fenetre.title("Fenetre de simulation")
-Fenetre.geometry('1000x1000')
+Fenetre.geometry('1500x1000')
 canvas = Canvas(Fenetre, width = vg.getLargeur(), height = vg.getHauteur(), background ='white')
 menubar = Menu(Fenetre)
 
@@ -212,18 +214,22 @@ dimensions.add_command(label = "50x50", command = cinquante)
 menubar.add_cascade(label = "Fichier", menu = menufichier)
 menubar.add_cascade(label = "Dimensions", menu = dimensions)
 
+auto = Button(Fenetre, text = "Simulation Automatique", bg = "green", command = buttonPlusSimu, bd=4)
+manuel = Button(Fenetre, text = "Simulation Pas à Pas", bg = "blue", command = pasapas, bd=4)
+resetButton = Button(Fenetre, text = "RESET", bg = "red", command = reset, bd=4)
+textBoxProba = Entry(Fenetre, justify="center", bd=4)
 resultat = Label(Fenetre, text = "")
 surfaceBrulee = Label(Fenetre, text = "")
 message = Label(Fenetre, text="")
-auto = Button(Fenetre, text = "Simulation Automatique", bg = "green", command = buttonPlusSimu)
-manuel = Button(Fenetre, text = "Simulation Pas à Pas", bg = "blue", command = pasapas)
-resetButton = Button(Fenetre, text = "RESET", bg = "red", command = reset)
 
-resetButton.grid(row = 3, column = 0, sticky = "n")
 auto.grid(row = 0, column = 0, sticky = "n")
 manuel.grid(row = 1, column = 0, sticky = "n")
-resultat.grid(row = 0, column = 2, sticky = "n")
-surfaceBrulee.grid(row = 0, column = 3, sticky = "n")
+resetButton.grid(row = 2, column = 0, sticky = "n")
+Label(Fenetre, text="Probabilité:").grid(row = 3, column = 0, sticky = "n")
+textBoxProba.grid(row = 4, column = 0, sticky = "n")
+
+resultat.grid(row = 0, column = 1, sticky = "n")
+surfaceBrulee.grid(row = 0, column = 2, sticky = "n")
 
 message.grid(row = 1, column = 2, sticky = "n")
 

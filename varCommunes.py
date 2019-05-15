@@ -16,9 +16,8 @@ class varGlobales():  # Classe stockant quelques 'variables'/constantes pour evi
         self.nbCellules = nbCell        # Nombre de cellules par lignes<<<<<<< HEAD
         self.burnedTrees = 0            # Nombre d'arbre brûlés
         self.TTtree = 0                 # Nombre d'arbres aux débuts de la simulation
-
+        self.proba = 50 
         self.nomCsv  = 'csv.csv'        # Nom du csv permettant la generation du csv
-
         self.listeForet = []            # Liste contenant la génération de forêt
         self.listeCellulesEnFeu = []    # Liste contenant les coordonnées des cellules à "mettre en feu"
         self.listeCellToCheck = []      # Liste contenant les coordonnées des cellules sur lesquelles on va tester la propagation du feu
@@ -27,6 +26,9 @@ class varGlobales():  # Classe stockant quelques 'variables'/constantes pour evi
 ###########################################################################################################################################
 
     # Fonctions dites "Accesseurs", elles retournent les valeurs des differents attributs de la classe
+    def getProba(self):
+        return self.proba
+
     def getTTtree(self):
         return self.TTtree
 
@@ -64,7 +66,9 @@ class varGlobales():  # Classe stockant quelques 'variables'/constantes pour evi
 ###########################################################################################################################################
 
     # Fonctions dites "Mutateurs", elles permettent de modifier les valeurs des differents attributs de la classe
-
+    def setProba(self, p):
+        self.proba = p
+        
     def setTTtree(self, tree):
         self.TTtree = tree
 
