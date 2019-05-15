@@ -5,8 +5,7 @@
 
 ##################################################################################################################################################
 
-from os import system
-
+from os import system, execl
 def bootstrap():                                # Update les bibliothèques importantes
     system("python -m pip install -U pip")
     system("python -m pip install -U pillow")
@@ -26,6 +25,9 @@ import csv
 import classDialectCsv
 
 ##################################################################################################################################################
+def reset():
+    execl(sys.executable, sys.executable, *sys.argv)                        #Execute l'executable en argument, tout en remplaçant le processus du deuxième argument + les arguments
+                                                                            #On reprend donc ici le path du fichier et les arguments
 
 def buttonPlusSimu():
     lancer_chrono()
@@ -187,7 +189,9 @@ message = Label(Fenetre, text="")
 auto = Button(Fenetre, text = "Simulation Automatique", bg = "green", command = buttonPlusSimu, bd=4)
 manuel = Button(Fenetre, text = "Simulation Pas à Pas", bg = "blue", command = pasapas, bd=4)
 textBox = Entry(Fenetre, text="Taille de la grille", justify="center", bd=4)
+resetButton = Button(Fenetre, text = "RESET", bg = "red", command = reset)
 
+resetButton.grid(row = 3, column = 0, sticky = "n")
 textBox.grid(row = 3, column = 0, sticky = "n")
 auto.grid(row = 0, column = 0, sticky = "n")
 manuel.grid(row = 1, column = 0, sticky = "n")

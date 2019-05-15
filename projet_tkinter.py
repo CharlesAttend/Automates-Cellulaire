@@ -5,7 +5,7 @@
 
 ##################################################################################################################################################
 
-from os import system
+from os import system, execl
 
 def bootstrap():                                # Update les bibliothèques importantes
     system("python -m pip install -U pip")
@@ -26,6 +26,9 @@ import csv
 import classDialectCsv
 
 ##################################################################################################################################################
+def reset():
+    execl(sys.executable, sys.executable, *sys.argv)                        #Execute l'executable en argument, tout en remplaçant le processus du deuxième argument + les arguments
+                                                                            #On reprend donc ici le path du fichier et les arguments
 
 def buttonPlusSimu():
     lancer_chrono()
@@ -214,7 +217,9 @@ surfaceBrulee = Label(Fenetre, text = "")
 message = Label(Fenetre, text="")
 auto = Button(Fenetre, text = "Simulation Automatique", bg = "green", command = buttonPlusSimu)
 manuel = Button(Fenetre, text = "Simulation Pas à Pas", bg = "blue", command = pasapas)
+resetButton = Button(Fenetre, text = "RESET", bg = "red", command = reset)
 
+resetButton.grid(row = 3, column = 0, sticky = "n")
 auto.grid(row = 0, column = 0, sticky = "n")
 manuel.grid(row = 1, column = 0, sticky = "n")
 resultat.grid(row = 0, column = 2, sticky = "n")
