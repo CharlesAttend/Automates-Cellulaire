@@ -74,7 +74,7 @@ def Clic(event):
     listeForet[Y][X] = "3"
 
     vg.setNewListeForet(listeForet)
- updateMap(vg.getCellEnFeu(), [])
+    updateMap(vg.getCellEnFeu(), [])
     vg.augmentBurnedCell(vg.getCellEnFeu())
     vg.augmentBurnedTrees(1)
     vg.emptyCellEnFeu()
@@ -109,7 +109,7 @@ def refreshTxPath():                                   # Réactualise l'emplacem
 # Déroulement de l'algorithme :
 
 def sim_auto():
- updateMap([], vg.getBurnedCell())                               # La cellule mise en feu au départ se transforme en cellule d'abre en cendre
+    updateMap([], vg.getBurnedCell())                                   # La cellule mise en feu au départ se transforme en cellule d'abre en cendre
     for i in range(0, len(vg.getCellToCheck()), 2):
         tmpCellEnFeu, tmpListeForet = algoForet.propagationFeu(vg.getNbCellules(), vg.returnCellToCheck(i), vg.returnCellToCheck(i+1), vg.getListeForet()) #On test d'abord si le feu peut se propager
         vg.setNewListeForet(tmpListeForet)                              # On modifie la liste contenant la génération de forêt, car si des arbres ont brûlés, la génération a été modifiéé
@@ -121,7 +121,7 @@ def sim_auto():
     vg.changeCellToCheck(list(cellEnFeu))                               # On affecte la liste des cellules en feu à la liste des cellules sur lesquelles on va tester la propagation du feu au tour prochain
 
     if(len(cellEnFeu) > 0):
-     updateMap(cellEnFeu, vg.getBurnedCell())                    # On affiche les nouveaux arbres à brûler si  il y en a
+     updateMap(cellEnFeu, vg.getBurnedCell())                           # On affiche les nouveaux arbres à brûler si  il y en a
     else:
         stoper_chrono()
 
@@ -131,7 +131,7 @@ def sim_auto():
     canvas.after(100, sim_auto)
 
 def pasapas():
- updateMap([], vg.getBurnedCell())                               # La cellule mise en feu au départ se transforme en cellule d'abre en cendre
+    updateMap([], vg.getBurnedCell())                                   # La cellule mise en feu au départ se transforme en cellule d'abre en cendre
     for i in range(0, len(vg.getCellToCheck()), 2):
         tmpCellEnFeu, tmpListeForet = algoForet.propagationFeu(vg.getNbCellules(), vg.returnCellToCheck(i), vg.returnCellToCheck(i+1), vg.getListeForet()) #On test d'abord si le feu peut se propager
         vg.setNewListeForet(tmpListeForet)                              # On modifie la liste contenant la génération de forêt, car si des arbres ont brûlés, la génération a été modifiéé
@@ -143,7 +143,7 @@ def pasapas():
     vg.changeCellToCheck(list(cellEnFeu))                               # On affecte la liste des cellules en feu à la liste des cellules sur lesquelles on va tester la propagation du feu au tour prochain
 
     if(len(cellEnFeu) > 0):
-     updateMap(cellEnFeu, vg.getBurnedCell())                    # On affiche les nouveaux arbres à brûler si  il y en a
+     updateMap(cellEnFeu, vg.getBurnedCell())                           # On affiche les nouveaux arbres à brûler si  il y en a
 
     vg.setBurnedCell(list(cellEnFeu))                                   # On ajoute les cellules en feu à la liste des cellules à mettre en cendre à la prochaine génération
     vg.augmentBurnedTrees(len(cellEnFeu)//2)                            # On ajoute le nombre d'arbre brûlés durant cette génération au compteur d'abres brûlés
