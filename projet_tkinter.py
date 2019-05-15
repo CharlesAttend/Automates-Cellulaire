@@ -74,7 +74,7 @@ def Clic(event):
     listeForet[Y][X] = "3"
 
     vg.setNewListeForet(listeForet)
-    updateCoolMap(vg.getCellEnFeu(), [])
+ updateMap(vg.getCellEnFeu(), [])
     vg.augmentBurnedCell(vg.getCellEnFeu())
     vg.augmentBurnedTrees(1)
     vg.emptyCellEnFeu()
@@ -109,7 +109,7 @@ def refreshTxPath():                                   # Réactualise l'emplacem
 # Déroulement de l'algorithme :
 
 def sim_auto():
-    updateCoolMap([], vg.getBurnedCell())                               # La cellule mise en feu au départ se transforme en cellule d'abre en cendre
+ updateMap([], vg.getBurnedCell())                               # La cellule mise en feu au départ se transforme en cellule d'abre en cendre
     for i in range(0, len(vg.getCellToCheck()), 2):
         tmpCellEnFeu, tmpListeForet = algoForet.propagationFeu(vg.getNbCellules(), vg.returnCellToCheck(i), vg.returnCellToCheck(i+1), vg.getListeForet()) #On test d'abord si le feu peut se propager
         vg.setNewListeForet(tmpListeForet)                              # On modifie la liste contenant la génération de forêt, car si des arbres ont brûlés, la génération a été modifiéé
@@ -121,7 +121,7 @@ def sim_auto():
     vg.changeCellToCheck(list(cellEnFeu))                               # On affecte la liste des cellules en feu à la liste des cellules sur lesquelles on va tester la propagation du feu au tour prochain
 
     if(len(cellEnFeu) > 0):
-        updateCoolMap(cellEnFeu, vg.getBurnedCell())                    # On affiche les nouveaux arbres à brûler si  il y en a
+     updateMap(cellEnFeu, vg.getBurnedCell())                    # On affiche les nouveaux arbres à brûler si  il y en a
     else:
         stoper_chrono()
 
@@ -131,7 +131,7 @@ def sim_auto():
     canvas.after(100, sim_auto)
 
 def pasapas():
-    updateCoolMap([], vg.getBurnedCell())                               # La cellule mise en feu au départ se transforme en cellule d'abre en cendre
+ updateMap([], vg.getBurnedCell())                               # La cellule mise en feu au départ se transforme en cellule d'abre en cendre
     for i in range(0, len(vg.getCellToCheck()), 2):
         tmpCellEnFeu, tmpListeForet = algoForet.propagationFeu(vg.getNbCellules(), vg.returnCellToCheck(i), vg.returnCellToCheck(i+1), vg.getListeForet()) #On test d'abord si le feu peut se propager
         vg.setNewListeForet(tmpListeForet)                              # On modifie la liste contenant la génération de forêt, car si des arbres ont brûlés, la génération a été modifiéé
@@ -143,7 +143,7 @@ def pasapas():
     vg.changeCellToCheck(list(cellEnFeu))                               # On affecte la liste des cellules en feu à la liste des cellules sur lesquelles on va tester la propagation du feu au tour prochain
 
     if(len(cellEnFeu) > 0):
-        updateCoolMap(cellEnFeu, vg.getBurnedCell())                    # On affiche les nouveaux arbres à brûler si  il y en a
+     updateMap(cellEnFeu, vg.getBurnedCell())                    # On affiche les nouveaux arbres à brûler si  il y en a
 
     vg.setBurnedCell(list(cellEnFeu))                                   # On ajoute les cellules en feu à la liste des cellules à mettre en cendre à la prochaine génération
     vg.augmentBurnedTrees(len(cellEnFeu)//2)                            # On ajoute le nombre d'arbre brûlés durant cette génération au compteur d'abres brûlés
@@ -151,24 +151,20 @@ def pasapas():
 
 # Fin des fonctions concernant l'algorithme
 
-def updateProMap(cellEnFeu):
-    pass
-def createProMap():
-    pass
 
-def updateCoolMap(cellEnFeu, burnedCell):
+def updateMap(cellEnFeu, burnedCell):                               #Ici on update l'affichage par un boucle qui prend une liste de cellule à update
     for i in range(0, len(cellEnFeu), 2):
         canvas.itemconfigure(str(cellEnFeu[i])+","+str(cellEnFeu[i+1]), image=burningTree)
     for i in range(0, len(burnedCell), 2):
         canvas.itemconfigure(str(burnedCell[i])+","+str(burnedCell[i+1]), image=burnedTree)
     stats()
 
-def createCoolMap(event):
-    algocsv.createCsv()
+def createMap(event):
+    algocsv.createCsv()                                     #On créé un csv
     cordY = 0
     gridY = 0
     totalTree = 0
-    with open("csv.csv", "r", newline='') as f:
+    with open(vg.getNomCsv(), "r", newline='') as f:
         canvas.delete("all")                                # Reset du canvas précédent
         reader = csv.reader(f, classDialectCsv.Dialect())
         for row in reader:                                  # On regarde d'abord les lignes
@@ -176,7 +172,7 @@ def createCoolMap(event):
             gridX = 0
             for i in row:                                   # Ici c'est la boucle des collones || On met la valeur de la case dans i
                 i = int(i)                                  # Mon reader renvoie un i sous forme de String donc je le converti
-                #On test le i, 0=grass, 1=tree
+                #On test le i, 0=grass, 1=tree, else=eau
                 if i == 1:
                     canvas.create_image(cordX, cordY, anchor=tkinter.NW, image=tree, tag=str(gridX)+","+str(gridY))     
                     totalTree += 1
@@ -192,9 +188,9 @@ def createCoolMap(event):
 
 ##################################################################################################################################################
 
-vg = VC.varGlobales(800, 800, 50) # vg est une instance de varGlobales
+vg = VC.varGlobales(800, 800, 10) # vg est une instance de varGlobales
 
-algocsv = AC.algoCSV(vg.getNomCsv(), vg.getNbCellules())
+algocsv = AC.algoCSV(vg)
 
 vg.setListeForet()
 
@@ -227,14 +223,13 @@ surfaceBrulee.grid(row = 0, column = 3, sticky = "n")
 message.grid(row = 1, column = 2, sticky = "n")
 
 canvas.bind("<Button-1>", Clic)
-canvas.bind("<Button-3>", createCoolMap)
+canvas.bind("<Button-3>", createMap)
 
 # Affichage du menu
 Fenetre.config(menu = menubar)
 
 # Utilisation d'un dictionnaire pour conserver une référence
 canvas.place(relx = 0.5, rely = 0.5, anchor = CENTER)
-gifdict = {}
 
 # Définition des textures en dehors des fonctions (pour eviter de Fenetre.mainloop()):
 tailleImg = vg.getLengthCell()
@@ -246,6 +241,7 @@ burnedTree = ImageTk.PhotoImage(Image.open("textures/"+str(tailleImg)+"/burned_t
 burningGrass = ImageTk.PhotoImage(Image.open("textures/"+str(tailleImg)+"/burning_tree.png"))
 burnedGrass = ImageTk.PhotoImage(Image.open("textures/"+str(tailleImg)+"/burned_grass.png"))
 
-flag = 0
+flag = 0                                                    #On init flag ici pour pouvoir arreter le chrono dans d'autres fonctions
 
+createMap(0)                                            #On crée un map au démarage 
 Fenetre.mainloop()
