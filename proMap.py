@@ -31,7 +31,7 @@ def reset():
 
 def buttonPlusSimu():
     if not textBoxProba.get() == "":
-        vg.setProba(int(textBoxProba.get()))
+        vg.setProba(float(textBoxProba.get()))
     lancer_chrono()
     sim_auto()
 
@@ -147,7 +147,10 @@ def updateMap(cellEnFeu, burnedCell):                               #Ici on upda
     stats()
 
 def createMap(event):
-    vg.setNbCell(int(textBox.get()))
+    if textBox.get() == "":
+        vg.setNbCell(50)
+    else:
+        vg.setNbCell(int(textBox.get()))
     tailleImg = vg.getLengthCell()
     algocsv.createCsv()                                     #On créé un csv
     cordY = 0
