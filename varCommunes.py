@@ -16,7 +16,7 @@ class varGlobales():  # Classe stockant quelques 'variables'/constantes pour evi
         self.nbCellules = nbCell        # Nombre de cellules par lignes<<<<<<< HEAD
         self.burnedTrees = 0            # Nombre d'arbre brûlés
         self.TTtree = 0                 # Nombre d'arbres aux débuts de la simulation
-        self.proba = 50 
+        self.proba = 0.5
         self.nomCsv  = 'csv.csv'        # Nom du csv permettant la generation du csv
         self.listeForet = []            # Liste contenant la génération de forêt
         self.listeCellulesEnFeu = []    # Liste contenant les coordonnées des cellules à "mettre en feu"

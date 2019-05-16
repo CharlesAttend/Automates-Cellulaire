@@ -2,7 +2,7 @@
 
 ################################################################################################################################################################
 
-from random import randint                     # Import de la fonction randint du module Random pour ajouter de la probabilité à la propagation du feu
+from random import random                     # Import de la fonction randint du module Random pour ajouter de la probabilité à la propagation du feu
 
 ################################################################################################################################################################
 
@@ -40,7 +40,7 @@ def propagationFeu(nbCellLignes, x, y, foret, p): # Algorithme gérant la propag
         for i in range(xMin, xMax+1):
 
             if(i != clicX or j != clicY): # Si la cellule à tester est la cellule déjà en feu, on ne fait rien
-                if(listeForet[j][i] == "1" and randint(0, 100) < p): # Si la cellule voisine est un arbre, alors on l'ajoute dans la liste des cellules à incendier
+                if(listeForet[j][i] == "1" and random() < p): # Si la cellule voisine est un arbre, alors on l'ajoute dans la liste des cellules à incendier
                     listeCellEnFeu.append(i)
                     listeCellEnFeu.append(j)
                     listeForet[j][i] = "3"   # Comme la cellule est un arbre qui va prendre feu, alors on le met à l'état 3, soit arbres en feu
