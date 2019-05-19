@@ -32,7 +32,7 @@ def reset():
 
 def buttonPlusSimu():
     if not textBoxProba.get() == "":
-        vg.setProba(int(textBoxProba.get()))
+        vg.setProba(float(textBoxProba.get()))
     lancer_chrono()
     sim_auto()
 
