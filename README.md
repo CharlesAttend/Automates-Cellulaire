@@ -15,7 +15,7 @@ Par Augustin Viard, Charles Vin et Benjamin Hubinet
 
 ![propagation_feu_10_10png](https://user-images.githubusercontent.com/38909289/57470199-91475280-7288-11e9-958b-cf5e7f21c309.png)
 
-#### Propagation du feu sur un forêt de dimensions 100x100 avec des probabilitées différentes sur la version proMap:
+#### Propagation du feu sur un forêt de dimensions 100x100 avec des probabilités différentes sur la version proMap:
 
 ![yolopng](https://raw.githubusercontent.com/vaine4/Automates-Cellulaire/master/ressources%20projet/yolo.png)
 
