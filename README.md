@@ -28,4 +28,4 @@ Cela fait que la génération 50x50 représente en réalité une surface de 1 he
 
 -Toutes les textures utilisées ont été réalisées par Augustin.
 
--Le fichier proMap permet la génération avec une taille perssonalisée et une meilleur visualisation avec une suppression des textures
+-Le fichier proMap permet la génération avec une taille personanlisée et une meilleure visualisation grâce à la suppression des textures
