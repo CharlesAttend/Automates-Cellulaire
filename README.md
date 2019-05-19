@@ -15,6 +15,10 @@ Par Augustin Viard, Charles Vin et Benjamin Hubinet
 
 ![propagation_feu_10_10png](https://user-images.githubusercontent.com/38909289/57470199-91475280-7288-11e9-958b-cf5e7f21c309.png)
 
+#### Propagation du feu sur un forêt de dimensions 100x100 avec des probabilitées différentes sur la version proMap:
+
+![yolopng](https://raw.githubusercontent.com/vaine4/Automates-Cellulaire/master/ressources%20projet/yolo.png)
+
 ## Informations complémentaires :
 
 -Chaque cellule a une surface de 4m².
@@ -23,3 +27,5 @@ Cela fait que la génération 50x50 représente en réalité une surface de 1 he
 -Lorsqu'une cellule de type arbre est en feu, l'algorithme va tester les 8 cellules adjacentes à celle-ci, si c'est un arbre et qu'une certaine probabilité est vérifiée (dans notre cas : 0.45, soit 45% de chance que le feu se propage), alors le feu se propage.
 
 -Toutes les textures utilisées ont été réalisées par Augustin.
+
+-Le fichier proMap permet la génération avec une taille perssonalisée et une meilleur visualisation avec une suppression des textures
