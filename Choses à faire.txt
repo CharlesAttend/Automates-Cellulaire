@@ -1,2 +1,0 @@
-- Faire un bouton de Reset : Il faudra appeler toutes les fonctions avec le préfixe 'empty', tu les trouveras dans le fichier varCommunes.py tout en bas
-- Afficher la surface de forêt brulée, faut que tu trouves la surface au sol moyenne d'un arbre
